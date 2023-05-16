@@ -1,0 +1,34 @@
+﻿.invalid{
+    border:1px solid red;
+}
+.disable-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: none;
+    background: none;
+    height: 100%;
+    color: #777;
+    letter-spacing: .1em;
+}
+
+.disable-input {
+    color: #777;
+    font-weight:200;
+}
+.position-relative{
+    position:relative;
+}
+
+.display-none {
+    display: none;
+}
+
+.display-grid-col-1fr-60px{
+    grid-template-columns:1fr 60px;
+}
+
+.border-bottom-1px-808080 {
+    border-bottom: 1px solid #808080
+}
