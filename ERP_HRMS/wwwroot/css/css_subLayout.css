@@ -44,8 +44,11 @@ body {
     z-index: 100;
     height: var(--headerheigth);
 }
-.main-layout-header-company-logo{
-    width:100%;
+.main-layout-header-company-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 .company-logo-image{
     max-height:50px;
