@@ -52,7 +52,7 @@ function clickBurgerMenu() {
     const jsSubLayout01MenuSubCont = document.querySelector('.jsSubLayout01MenuSubCont');
     if (jsSubLayout01MenuSubCont.classList.contains('display-none')) {
         jsSubLayout01MenuSubCont.classList.remove('display-none')
-        alert('git branch')
+       
     } else {
         jsSubLayout01MenuSubCont.classList.toggle('menu-animate-open')
         jsSubLayout01MenuSubCont.classList.toggle('menu-animate-close')
