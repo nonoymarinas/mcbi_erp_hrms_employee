@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'mcbi-hrms'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C00F336E901944FD97EB984BFDC91D4B }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_534C7CA8720A4037BE78C4A7AA3A9F30 }}
           package: .
