@@ -112,7 +112,8 @@ async function clickContactUpdateBtn(e) {
 
     //validation of input data
     if (e.target.getAttribute('name') == 'MobileNumber') {
-        if (!isContactsRequiredFieldsComplete()) return;
+        alert('empty')
+        if (isContactsRequiredFieldsComplete()) return;
     }
 
     //check regex
