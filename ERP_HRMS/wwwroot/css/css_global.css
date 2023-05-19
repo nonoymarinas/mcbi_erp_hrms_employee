@@ -268,3 +268,7 @@
         color: #ffff;
     }
 
+.max-width-zero{
+    max-width:0;
+}
+
