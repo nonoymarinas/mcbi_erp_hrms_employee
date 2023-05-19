@@ -31,10 +31,21 @@ body {
     width: 100%;
 }
 
+.main-layout-header-company-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.company-logo-image {
+    max-height: 50px;
+}
+
 .sublayout01-header-cont {
     display: grid;
     grid-template-columns: auto 1fr 60px;
-    background: #dcdcdc;
+    background: #ffd800;
     padding: .3em .5em;
     align-self: center;
     position: fixed;
@@ -44,15 +55,7 @@ body {
     z-index: 100;
     height: var(--headerheigth);
 }
-.main-layout-header-company-logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-.company-logo-image{
-    max-height:50px;
-}
+
 .main-burger-menu {
     display: flex;
     flex-direction: column;
@@ -134,6 +137,38 @@ body {
     }
 }
 
+
+.submenu-animate-open {
+    animation: maxWidth100Percent 1s forwards;
+    padding: 0;
+}
+
+.submenu-animate-close {
+    animation: maxHeightZeroPercent 1s forwards;
+    padding: 0;
+    border: none;
+}
+
+@keyframes maxHeightZeroPercent {
+    0% {
+        max-height: 350px;
+    }
+
+    100% {
+        max-height: 0;
+    }
+}
+
+@keyframes maxHeight100Percent {
+    0% {
+        max-height: 0;
+    }
+
+    100% {
+        max-height: 300px;
+    }
+}
+
 .menu-sub01-ul {
     overflow: hidden;
 }
@@ -169,6 +204,9 @@ body {
     }
 }
 
+.main-menu-employee-sub-ul {
+    overflow: hidden;
+}
 
 .sublayout01-content-sub-cont {
     grid-column-start: 2;
@@ -328,7 +366,7 @@ body {
 }
 
 .main-layout-header-title-text {
-    font-size: 1em;
+    font-size: 1.1em;
     font-weight: 400
 }
 

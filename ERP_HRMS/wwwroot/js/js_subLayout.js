@@ -25,6 +25,11 @@
     const jsMainMenuHomeLi = document.querySelector('.jsMainMenuHomeLi');
     jsMainMenuHomeLi.addEventListener('click', clickMenuHomeIcon)
 
+
+    //click Employee menu
+    const jsMainMenuEmployeeLi = document.querySelector('.jsMainMenuEmployeeLi');
+    jsMainMenuEmployeeLi.addEventListener('click', clickMainMenuEmployee)
+
    
     //click new employee main menu
     const jsMainMenuNewEmployeeSubLi = document.querySelector('.jsMainMenuNewEmployeeSubLi');
@@ -87,6 +92,17 @@ async function clickMenuHomeIcon() {
     jsSublayout01ContentSubCont.appendChild(jsHomeMainCont);
 
     await homePage();
+}
+
+async function clickMainMenuEmployee(e) {
+    console.log(e.target)
+    const jsMainMenuEmployeeSubUl = document.querySelector('.jsMainMenuEmployeeSubUl');
+    if (jsMainMenuEmployeeSubUl.classList.contains('display-none')) {
+        jsMainMenuEmployeeSubUl.classList.remove('display-none')
+    } else {
+        jsMainMenuEmployeeSubUl.classList.toggle('submenu-animate-open')
+        jsMainMenuEmployeeSubUl.classList.toggle('submenu-animate-close')
+    }
 }
 
 async function clickMainMenuNewEmployee() {
