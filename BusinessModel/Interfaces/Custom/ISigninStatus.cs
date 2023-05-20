@@ -8,6 +8,6 @@ namespace BusinessModel
 {
 	public interface ISigninStatus
 	{
-		public Task<ReturnGetSigninStatusModel> GetSigninStatus();
+		public Task<ReturnGetSigninDataModel> GetSigninStatus();
 	}
 }

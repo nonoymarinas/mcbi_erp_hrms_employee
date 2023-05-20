@@ -4,21 +4,21 @@ using BusinessModel;
 
 namespace DataAccess
 {
-	public class SaveSigninDataAccess : ISigninStatus
+	public class GetSigninDataAccess : ISigninStatus
 	{
 		private readonly ConnectionSettings _connection;
 		private readonly ParamSignInUsernameAndPasswordModels? _signindata;
 
-		public SaveSigninDataAccess(ConnectionSettings connection, ParamSignInUsernameAndPasswordModels? signindata)
+		public GetSigninDataAccess(ConnectionSettings connection, ParamSignInUsernameAndPasswordModels? signindata)
 		{
 			_connection = connection;
 			_signindata = signindata;
 		}
 
        
-		async public Task<ReturnGetSigninStatusModel> GetSigninStatus()
+		async public Task<ReturnGetSigninDataModel> GetSigninStatus()
 		{
-			ReturnGetSigninStatusModel returnData = new();
+			ReturnGetSigninDataModel returnData = new();
 
 			using (SqlConnection conn = new SqlConnection(_connection.SQLString))
 			{
@@ -26,20 +26,12 @@ namespace DataAccess
 				using (SqlCommand cmd = new SqlCommand())
 				{
 					cmd.Connection = conn;
-					cmd.CommandText = "[speedx.global.user].[spSaveSiginData]";
+					cmd.CommandText = "[speedx.global.user].[spGetSiginData]";
 					cmd.CommandType = CommandType.StoredProcedure;
 
 					cmd.Parameters.Add(new SqlParameter("@UserName", SqlDbType.NVarChar));
 					cmd.Parameters["@UserName"].Value = _signindata.UserName;
 
-
-					cmd.Parameters.Add(new SqlParameter("@HashSaltedIStillLoveYou", SqlDbType.NVarChar));
-					cmd.Parameters["@HashSaltedIStillLoveYou"].Value = _signindata.HashSaltedIStillLoveYou;
-
-					cmd.Parameters.Add(new SqlParameter("@Salt", SqlDbType.NVarChar));
-					cmd.Parameters["@Salt"].Value = _signindata.Salt;
-
-					
 					using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
 					{
 						//Check for errors and if true, retreive the error message!
@@ -58,7 +50,11 @@ namespace DataAccess
 							if (reader.HasRows)
 							{
 								reader.Read();
+								returnData.HashIStillLoveYouWithSalt = reader["HashIStillLoveYouWithSalt"].ToString();
+								returnData.Salt = reader["Salt"].ToString();
 								returnData.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
+								returnData.IsUsernameExist = Convert.ToBoolean(reader["IsUsernameExist"]);
+
 							}
 							
 						}

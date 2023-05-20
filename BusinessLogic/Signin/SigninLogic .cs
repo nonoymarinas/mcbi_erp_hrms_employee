@@ -22,41 +22,50 @@ namespace BusinessLogic
             _signinData = signinData;
         }
 
-        public Task<ReturnGetSigninStatusModel> GetSigninStatus()
+       async public Task<bool> IsLoginDataValid()
         {
-            _signinData.Salt = RandomString(6);
-            var saltedPassword = _signinData.IStillLoveYou + RandomString(6);
 
-            var saltedPasswordBytes = Encoding.ASCII.GetBytes(saltedPassword);
+            //checked if username exist
+            ReturnGetSigninDataModel dataAccessData = await GetSigninStatus();
+
+            if (!dataAccessData.IsUsernameExist)
+            {
+                return false;
+            }
+
+            var hashIPasswordWithSaltFormDB = dataAccessData.HashIStillLoveYouWithSalt;
+            var saltFromDB = dataAccessData.Salt;
+
+            var passwordFromUser = _signinData.IStillLoveYou;
+
+            var stringPasswordPlusSalt = passwordFromUser + saltFromDB;
 
             var sha = SHA512Managed.Create();
 
-            var hashSaltedPassword = sha.ComputeHash(saltedPasswordBytes);
+            var hashPasswordWithSaltBtyes = Encoding.ASCII.GetBytes(stringPasswordPlusSalt);
 
-            _signinData.HashSaltedIStillLoveYou = GetStringFromHash(hashSaltedPassword);
+            var hashSaltedPassword = sha.ComputeHash(hashPasswordWithSaltBtyes);
 
-            SaveSigninDataAccess dataAccess = new SaveSigninDataAccess(_connection, _signinData);
+            var hashStringFormatFromPasswordWithSalt = GetStringFromHash(hashSaltedPassword);
 
-            return dataAccess.GetSigninStatus();
+
+            //Comparer the 2 hashPasswordString
+            if(hashStringFormatFromPasswordWithSalt!= hashIPasswordWithSaltFormDB)
+            {
+                return false;
+            }
+            
+            return true;
         }
 
-        public Task<ReturnGetSigninStatusModel> SaveSigninData()
+        async private Task<ReturnGetSigninDataModel> GetSigninStatus()
         {
-            _signinData.Salt = RandomString(6);
-            var saltedPassword = _signinData.IStillLoveYou + RandomString(6);
 
-            var saltedPasswordBytes = Encoding.ASCII.GetBytes(saltedPassword);
-
-            var sha = SHA512Managed.Create();
-
-            var hashSaltedPassword = sha.ComputeHash(saltedPasswordBytes);
-
-            _signinData.HashSaltedIStillLoveYou = GetStringFromHash(hashSaltedPassword);
-
-            SaveSigninDataAccess dataAccess = new SaveSigninDataAccess(_connection, _signinData);
-
-            return dataAccess.GetSigninStatus();
+            GetSigninDataAccess dataAccess = new GetSigninDataAccess(_connection, _signinData);
+            return await dataAccess.GetSigninStatus();
         }
+
+        
 
         private static string GetStringFromHash(byte[] hash)
         {
@@ -67,18 +76,20 @@ namespace BusinessLogic
             }
             return result.ToString();
         }
-        private string RandomString(int size)
-        {
-            StringBuilder builder = new StringBuilder();
-            char ch;
-            for (int i = 0; i < size; i++)
-            {
-                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
-                builder.Append(ch);
-            }
 
-            return builder.ToString();
-        }
+
+        //private string RandomString(int size)
+        //{
+        //    StringBuilder builder = new StringBuilder();
+        //    char ch;
+        //    for (int i = 0; i < size; i++)
+        //    {
+        //        ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+        //        builder.Append(ch);
+        //    }
+
+        //    return builder.ToString();
+        //}
 
     }
 }
