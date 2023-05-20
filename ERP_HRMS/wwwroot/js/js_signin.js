@@ -78,13 +78,13 @@
         let isValid = true;
 
         //username
-        const jsSigninUserEmailInput = document.querySelector('.jsSigninUserEmailInput');
-        if (!regexPatterns.emailAddress.test(jsSigninUserEmailInput.value)) {
-            jsSigninUserEmailInput.classList.add('invalid');
-            isValid = false
-        } else {
-            jsSigninUserEmailInput.classList.remove('invalid');
-        }
+        //const jsSigninUserEmailInput = document.querySelector('.jsSigninUserEmailInput');
+        //if (!regexPatterns.emailAddress.test(jsSigninUserEmailInput.value)) {
+        //    jsSigninUserEmailInput.classList.add('invalid');
+        //    isValid = false
+        //} else {
+        //    jsSigninUserEmailInput.classList.remove('invalid');
+        //}
 
         //password
         const jsSigninUserPasswordInput = document.querySelector('.jsSigninUserPasswordInput');

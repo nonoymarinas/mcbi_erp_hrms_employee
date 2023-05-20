@@ -20,14 +20,7 @@ namespace ERP_HRMS.Controllers
             return View();
         }
 
-        [Route("save-username-password")]
-        public IActionResult SaveUsernameAndPassword(ParamSignInUsernameAndPasswordModels signinData)
-        {
-            SiginLogic dataLogic = new SiginLogic(_connection,signinData);
-            dataLogic.SaveSigninData();
-            return Json(dataLogic.SaveSigninData());
-        }
-
+        
         [Route("signin-username-password")]
         public IActionResult ValidateUsernameAndPassword(ParamSignInUsernameAndPasswordModels signinData)
         {

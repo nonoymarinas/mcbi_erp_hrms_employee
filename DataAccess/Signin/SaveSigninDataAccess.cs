@@ -4,12 +4,12 @@ using BusinessModel;
 
 namespace DataAccess
 {
-	public class SignStatusDataAccess : ISigninStatus
+	public class SaveSigninDataAccess : ISigninStatus
 	{
 		private readonly ConnectionSettings _connection;
 		private readonly ParamSignInUsernameAndPasswordModels? _signindata;
 
-		public SignStatusDataAccess(ConnectionSettings connection, ParamSignInUsernameAndPasswordModels? signindata)
+		public SaveSigninDataAccess(ConnectionSettings connection, ParamSignInUsernameAndPasswordModels? signindata)
 		{
 			_connection = connection;
 			_signindata = signindata;
@@ -26,7 +26,7 @@ namespace DataAccess
 				using (SqlCommand cmd = new SqlCommand())
 				{
 					cmd.Connection = conn;
-					cmd.CommandText = "[speedx.hrms.benifits].[spSaveBenifits]";
+					cmd.CommandText = "[speedx.global.user].[spSaveSiginData]";
 					cmd.CommandType = CommandType.StoredProcedure;
 
 					cmd.Parameters.Add(new SqlParameter("@UserName", SqlDbType.NVarChar));

@@ -24,7 +24,20 @@ namespace BusinessLogic
 
         public Task<ReturnGetSigninStatusModel> GetSigninStatus()
         {
-            
+            _signinData.Salt = RandomString(6);
+            var saltedPassword = _signinData.IStillLoveYou + RandomString(6);
+
+            var saltedPasswordBytes = Encoding.ASCII.GetBytes(saltedPassword);
+
+            var sha = SHA512Managed.Create();
+
+            var hashSaltedPassword = sha.ComputeHash(saltedPasswordBytes);
+
+            _signinData.HashSaltedIStillLoveYou = GetStringFromHash(hashSaltedPassword);
+
+            SaveSigninDataAccess dataAccess = new SaveSigninDataAccess(_connection, _signinData);
+
+            return dataAccess.GetSigninStatus();
         }
 
         public Task<ReturnGetSigninStatusModel> SaveSigninData()
@@ -40,7 +53,7 @@ namespace BusinessLogic
 
             _signinData.HashSaltedIStillLoveYou = GetStringFromHash(hashSaltedPassword);
 
-            SignStatusDataAccess dataAccess = new SignStatusDataAccess(_connection, _signinData);
+            SaveSigninDataAccess dataAccess = new SaveSigninDataAccess(_connection, _signinData);
 
             return dataAccess.GetSigninStatus();
         }
