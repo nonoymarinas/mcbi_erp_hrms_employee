@@ -111,9 +111,9 @@ function clickContactEditBtn(e) {
 async function clickContactUpdateBtn(e) {
 
     //validation of input data
-    if (e.target.getAttribute('name') == 'MobileNumber') {
-        alert('empty')
-        if (isContactsRequiredFieldsComplete()) return;
+
+    if (e.target.closest('.jsInputBtnCont').querySelector('.jsContactsInput').getAttribute('name') == 'MobileNumber') {
+        if (!isContactsRequiredFieldsComplete()) return;
     }
 
     //check regex

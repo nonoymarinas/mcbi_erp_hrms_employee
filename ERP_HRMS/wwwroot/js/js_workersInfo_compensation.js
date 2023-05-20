@@ -159,9 +159,11 @@ function clickCompensationEditBtn(e) {
 async function clickCompensationUpdateBtn(e) {
 
     //validation of input data
-    if (e.target.getAttribute('name') == 'BasicSalary') {
-        if (!isCompensationRequiredFieldsComplete()) return;
+    if (e.target.closest('.jsInputBtnCont').querySelector('.jsContactsInput').getAttribute('name') == 'BasicSalary') {
+        if (!isContactsRequiredFieldsComplete()) return;
     }
+
+
     //validate regex
     if (!isRegexCompensationValidationPassed()) return;
 
