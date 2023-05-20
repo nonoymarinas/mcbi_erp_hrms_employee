@@ -10,62 +10,53 @@ using DataAccess;
 
 namespace BusinessLogic
 {
-	public class SiginLogic : ISigninStatus
+	public class SiginLogic : ISigninStatus,IIsLoginDataValid
 	{
 		private readonly ConnectionSettings _connection;
-        private readonly ParamSignInUsernameAndPasswordModels? _signinData;
+        private readonly ParamSignInDataModels? _signinData;
         private static Random random = new Random((int)DateTime.Now.Ticks);
 
-        public SiginLogic(IOptions<ConnectionSettings> connection, ParamSignInUsernameAndPasswordModels signinData)
+        public SiginLogic(IOptions<ConnectionSettings> connection, ParamSignInDataModels signinData)
         {
             _connection = connection.Value;
             _signinData = signinData;
         }
 
-       async public Task<bool> IsLoginDataValid()
+       
+        async public Task<bool> IsLoginDataValid()
         {
-
-            //checked if username exist
+            //checked if username exist in database
             ReturnGetSigninDataModel dataAccessData = await GetSigninStatus();
+            if (!dataAccessData.IsUsernameExist) return false;
 
-            if (!dataAccessData.IsUsernameExist)
-            {
-                return false;
-            }
-
-            var hashIPasswordWithSaltFormDB = dataAccessData.HashIStillLoveYouWithSalt;
+            //begin build hash password from users input and salt from database
             var saltFromDB = dataAccessData.Salt;
-
             var passwordFromUser = _signinData.IStillLoveYou;
-
             var stringPasswordPlusSalt = passwordFromUser + saltFromDB;
 
+            //begin hashing
             var sha = SHA512Managed.Create();
+            //convert password to bytes
+            var bytesPasswordWithSalt = Encoding.ASCII.GetBytes(stringPasswordPlusSalt);
+            //compute hash value
+            var hashPasswordWithSalt = sha.ComputeHash(bytesPasswordWithSalt);
+            //convert hash to string
+            var hashStringFormatPasswordWithSalt = GetStringFromHash(hashPasswordWithSalt);
 
-            var hashPasswordWithSaltBtyes = Encoding.ASCII.GetBytes(stringPasswordPlusSalt);
+            //get the hash password with salt from database
+            var hashPasswordWithSaltFormDB = dataAccessData.HashIStillLoveYouWithSalt;
 
-            var hashSaltedPassword = sha.ComputeHash(hashPasswordWithSaltBtyes);
-
-            var hashStringFormatFromPasswordWithSalt = GetStringFromHash(hashSaltedPassword);
-
-
-            //Comparer the 2 hashPasswordString
-            if(hashStringFormatFromPasswordWithSalt!= hashIPasswordWithSaltFormDB)
-            {
-                return false;
-            }
+            //Compare the 2 hashPasswordString
+            if (hashStringFormatPasswordWithSalt != hashPasswordWithSaltFormDB) return false;
             
             return true;
         }
 
-        async private Task<ReturnGetSigninDataModel> GetSigninStatus()
+        async public Task<ReturnGetSigninDataModel> GetSigninStatus()
         {
-
             GetSigninDataAccess dataAccess = new GetSigninDataAccess(_connection, _signinData);
             return await dataAccess.GetSigninStatus();
         }
-
-        
 
         private static string GetStringFromHash(byte[] hash)
         {
@@ -76,6 +67,8 @@ namespace BusinessLogic
             }
             return result.ToString();
         }
+
+      
 
 
         //private string RandomString(int size)

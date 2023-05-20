@@ -47,6 +47,7 @@
 
         const data = await fetchData.postData('signin-username-password', options);
 
+        console.log(data)
 
         return isUsernameAndPasswordValid;
     }

@@ -7,9 +7,9 @@ namespace DataAccess
 	public class GetSigninDataAccess : ISigninStatus
 	{
 		private readonly ConnectionSettings _connection;
-		private readonly ParamSignInUsernameAndPasswordModels? _signindata;
+		private readonly ParamSignInDataModels? _signindata;
 
-		public GetSigninDataAccess(ConnectionSettings connection, ParamSignInUsernameAndPasswordModels? signindata)
+		public GetSigninDataAccess(ConnectionSettings connection, ParamSignInDataModels? signindata)
 		{
 			_connection = connection;
 			_signindata = signindata;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessModel
 {
-    public class ParamSignInUsernameAndPasswordModels
+    public class ParamSignInDataModels
     {
         public string? UserName { get; set; }
         public string? IStillLoveYou { get; set; }

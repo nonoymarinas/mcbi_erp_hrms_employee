@@ -20,13 +20,13 @@ namespace ERP_HRMS.Controllers
             return View();
         }
 
-        
+
         [Route("signin-username-password")]
-        public IActionResult ValidateUsernameAndPassword(ParamSignInUsernameAndPasswordModels signinData)
+        async public Task<IActionResult> ValidateLogin(ParamSignInDataModels signinData)
         {
             SiginLogic dataLogic = new SiginLogic(_connection, signinData);
-            dataLogic.GetSigninStatus();
-            return Json(signinData);
+
+            return Json(await dataLogic.IsLoginDataValid());
         }
     }
 }
