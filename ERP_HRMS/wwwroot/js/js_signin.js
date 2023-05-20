@@ -6,7 +6,6 @@
 
         if (!await validateUsernameAndPassword()) return;
 
-
         const jsMainLayoutCont = document.querySelector('.jsMainLayoutCont');
         jsMainLayoutCont.innerHTML = '';
 
@@ -16,6 +15,22 @@
 
         await subLayout01()
     }
+
+    const jsSigninPasswordSvgEyesIcon = document.querySelector('.jsSigninPasswordSvgEyesIcon');
+    jsSigninPasswordSvgEyesIcon.addEventListener('click',clickEyesIconSvg)
+
+    function clickEyesIconSvg(e) {
+        const jsSigninUserPasswordInput = e.target.closest('.jsSigninUserPasswordCont').querySelector('.jsSigninUserPasswordInput');
+
+        if (jsSigninUserPasswordInput.getAttribute('type') == 'password') {
+            jsSigninUserPasswordInput.setAttribute('type', 'text');
+        } else {
+            jsSigninUserPasswordInput.setAttribute('type', 'password');
+        }
+
+        
+    }
+
 
     async function validateUsernameAndPassword() {
         //check if required fields are complete or not empty
@@ -47,7 +62,13 @@
 
         const data = await fetchData.postData('signin-username-password', options);
 
-        console.log(data)
+        if (!data) {
+            isUsernameAndPasswordValid = true;
+            document.querySelector('.jsErrorLoginText').classList.remove('display-none')
+        } else {
+            document.querySelector('.jsErrorLoginText').classList.add('display-none')
+        }
+        
 
         return isUsernameAndPasswordValid;
     }
@@ -65,10 +86,10 @@
 
         const jsSigninUserPasswordInput = document.querySelector('.jsSigninUserPasswordInput');
         if (isNullOrWhiteSpace(jsSigninUserPasswordInput.value)) {
-            jsSigninUserPasswordInput.classList.add('invalid');
+            jsSigninUserPasswordInput.parentNode.classList.add('invalid');
             isValid = false
         } else {
-            jsSigninUserPasswordInput.classList.remove('invalid');
+            jsSigninUserPasswordInput.parentNode.classList.remove('invalid');
         }
 
         return isValid;

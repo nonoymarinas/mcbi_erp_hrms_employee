@@ -84,3 +84,8 @@
     font-weight:400;
     cursor:context-menu;
 }
+
+.error-login-text{
+    color:#ff0000;
+    font-weight:300;
+}
