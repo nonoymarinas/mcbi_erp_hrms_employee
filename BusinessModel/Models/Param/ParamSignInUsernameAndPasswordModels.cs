@@ -10,6 +10,8 @@ namespace BusinessModel
     {
         public string? UserName { get; set; }
         public string? IStillLoveYou { get; set; }
+        public string? HashSaltedIStillLoveYou { get; set; }
+        public string? Salt { get; set; }
 
     }
 }

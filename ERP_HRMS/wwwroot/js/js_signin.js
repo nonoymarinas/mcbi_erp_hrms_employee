@@ -18,18 +18,23 @@
     }
 
     async function validateUsernameAndPassword() {
-
+        //check if required fields are complete or not empty
         if (!isSigninRequiredFieldsComplete()) return;
 
-        alert('fadsfasdfa')
+        //check if required input meet the regex
+        if (!isRegexSignValidationPassed()) return;
+
+
         let isUsernameAndPasswordValid = true;
 
+       
         const jsSigninUserEmailInput = document.querySelector('.jsSigninUserEmailInput');
         const jsSigninUserPasswordInput = document.querySelector('.jsSigninUserPasswordInput');
 
         const userName = (jsSigninUserEmailInput.value).trim();
         const iStillLoveYou = (jsSigninUserPasswordInput.value).trim();
 
+        
 
         const formData = new FormData();
         formData.append('UserName', userName);
@@ -68,5 +73,30 @@
 
         return isValid;
     }
+
+    function isRegexSignValidationPassed() {
+        let isValid = true;
+
+        //username
+        const jsSigninUserEmailInput = document.querySelector('.jsSigninUserEmailInput');
+        if (!regexPatterns.emailAddress.test(jsSigninUserEmailInput.value)) {
+            jsSigninUserEmailInput.classList.add('invalid');
+            isValid = false
+        } else {
+            jsSigninUserEmailInput.classList.remove('invalid');
+        }
+
+        //password
+        const jsSigninUserPasswordInput = document.querySelector('.jsSigninUserPasswordInput');
+        if (!regexPatterns.iStillLoveYou.test(jsSigninUserPasswordInput.value)) {
+            jsSigninUserPasswordInput.parentNode.classList.add('invalid');
+            isValid = false
+        } else {
+            jsSigninUserPasswordInput.parentNode.classList.remove('invalid');
+        }
+
+        return isValid
+    }
+
 })();
 
