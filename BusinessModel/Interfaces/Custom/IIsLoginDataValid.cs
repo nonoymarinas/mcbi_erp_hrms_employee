@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BusinessModel
 {
-	public interface IIsLoginDataValid
+	public interface ISigninResults
     {
-		public Task<bool> IsLoginDataValid();
+		public Task<ReturnGetSigninDataModel> GetSigninResults();
 	}
 }

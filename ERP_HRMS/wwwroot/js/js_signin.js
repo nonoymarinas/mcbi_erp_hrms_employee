@@ -3,9 +3,10 @@
     jsSiginLoginBtn.addEventListener('click', clickSignBtn)
 
     async function clickSignBtn() {
-
+        //if false, meaning password validation fail
         if (!await validateUsernameAndPassword()) return;
 
+        //continue of password ok
         const jsMainLayoutCont = document.querySelector('.jsMainLayoutCont');
         jsMainLayoutCont.innerHTML = '';
 
@@ -62,14 +63,17 @@
 
         const data = await fetchData.postData('signin-username-password', options);
 
-        if (!data) {
-            isUsernameAndPasswordValid = true;
-            document.querySelector('.jsErrorLoginText').classList.remove('display-none')
-        } else {
-            document.querySelector('.jsErrorLoginText').classList.add('display-none')
-        }
+        if (data) {
+            if (data.statusCodeNumber == 1) {
+                isUsernameAndPasswordValid = true;
+                document.querySelector('.jsErrorLoginText').classList.add('display-none')
+                
+            } else if (data.statusCodeNumber == 4) {
+                isUsernameAndPasswordValid = false;
+                document.querySelector('.jsErrorLoginText').classList.remove('display-none')
+            }
+        } 
         
-
         return isUsernameAndPasswordValid;
     }
 

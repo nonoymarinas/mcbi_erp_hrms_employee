@@ -179,7 +179,9 @@ const fetchData = {
             dataResult = data
             if (data.statusCodeNumber == 1) {
                 dataResult = data
-            } else {
+            } else if (data.statusCodeNumber == 4){
+                dataResult = data
+            }else {
                 throw alertMessages.databaseError
             }
         }).catch((error) => {
@@ -546,7 +548,7 @@ function formatDate(date) {
 const localData = {
     personalInfo: {
         masterPersonID: 0,
-        employeeNumber:'',
+        employeeNumber: '',
         firstName: '',
         middleName: '',
         lastName: '',
@@ -630,5 +632,5 @@ const allEmployeeRefData = {
         }
         return linkedList;
     },
-    
+
 }

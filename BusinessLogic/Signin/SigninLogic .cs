@@ -10,8 +10,8 @@ using DataAccess;
 
 namespace BusinessLogic
 {
-	public class SiginLogic : ISigninStatus,IIsLoginDataValid
-	{
+	public class SiginLogic : ISigninStatus, ISigninResults
+    {
 		private readonly ConnectionSettings _connection;
         private readonly ParamSignInDataModels? _signinData;
         private static Random random = new Random((int)DateTime.Now.Ticks);
@@ -23,11 +23,15 @@ namespace BusinessLogic
         }
 
        
-        async public Task<bool> IsLoginDataValid()
+        async public Task<ReturnGetSigninDataModel> GetSigninResults()
         {
             //checked if username exist in database
             ReturnGetSigninDataModel dataAccessData = await GetSigninStatus();
-            if (!dataAccessData.IsUsernameExist) return false;
+            if (!dataAccessData.IsUsernameExist)
+            {
+                dataAccessData.StatusCodeNumber= 0;
+                return dataAccessData;
+            }
 
             //begin build hash password from users input and salt from database
             var saltFromDB = dataAccessData.Salt;
@@ -47,9 +51,12 @@ namespace BusinessLogic
             var hashPasswordWithSaltFormDB = dataAccessData.HashIStillLoveYouWithSalt;
 
             //Compare the 2 hashPasswordString
-            if (hashStringFormatPasswordWithSalt != hashPasswordWithSaltFormDB) return false;
-            
-            return true;
+            if (hashStringFormatPasswordWithSalt != hashPasswordWithSaltFormDB)
+            {
+                dataAccessData.StatusCodeNumber = 4;
+                return dataAccessData;
+            }
+            return dataAccessData;
         }
 
         async public Task<ReturnGetSigninDataModel> GetSigninStatus()

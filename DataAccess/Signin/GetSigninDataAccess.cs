@@ -64,14 +64,10 @@ namespace DataAccess
                                 {
                                     returnData.IsUsernameExist = false;
                                 }
-
+                                returnData.StatusCodeNumber = Convert.ToInt32(reader["StatusCodeNumber"]);
 
                             }
-                            reader.NextResult();
-                            if (reader.HasRows)
-                            {
-                                returnData.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
-                            }
+                            
 
                         }
                     }

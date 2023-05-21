@@ -26,7 +26,7 @@ namespace ERP_HRMS.Controllers
         {
             SiginLogic dataLogic = new SiginLogic(_connection, signinData);
 
-            return Json(await dataLogic.IsLoginDataValid());
+            return Json(await dataLogic.GetSigninResults());
         }
     }
 }
