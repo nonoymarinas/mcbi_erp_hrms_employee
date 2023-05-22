@@ -75,21 +75,37 @@ namespace BusinessLogic
             return result.ToString();
         }
 
-      
 
+        public string SaveUserNamePassword()
+        {
+            string password = "abc123";
+            var salt = RandomString(6);
 
-        //private string RandomString(int size)
-        //{
-        //    StringBuilder builder = new StringBuilder();
-        //    char ch;
-        //    for (int i = 0; i < size; i++)
-        //    {
-        //        ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
-        //        builder.Append(ch);
-        //    }
+            var passwordWithSalt = password + salt;
+            var sha = SHA512Managed.Create();
 
-        //    return builder.ToString();
-        //}
+            var passwordBytes = Encoding.ASCII.GetBytes(passwordWithSalt);
+
+            var hashPasswordWithSalt = sha.ComputeHash(passwordBytes);
+
+            var passwordStr = GetStringFromHash(hashPasswordWithSalt);
+
+            return passwordStr;
+
+        }
+
+        private string RandomString(int size)
+        {
+            StringBuilder builder = new StringBuilder();
+            char ch;
+            for (int i = 0; i < size; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+
+            return builder.ToString();
+        }
 
     }
 }
