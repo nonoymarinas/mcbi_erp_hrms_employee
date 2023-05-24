@@ -9,9 +9,10 @@ namespace BusinessModel
 {
 	public class ReturnGetSigninDataModel : DBStandardReturn
 	{
-		public string? HashIStillLoveYouWithSalt { get; set; }
-		public bool IsUsernameExist { get; set; } = true;
-		public string? Salt { get; set; }
+	
+		public LoginDataModel? LoginData { get; set; }
 
-	}
+        public CompanyLoginDataDataModel? CompanyLoginData { get; set; }
+
+    }
 }

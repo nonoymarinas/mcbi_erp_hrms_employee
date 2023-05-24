@@ -4,7 +4,7 @@
 
     async function clickSignBtn() {
         //if false, meaning password validation fail
-        if (!await validateUsernameAndPassword()) return;
+        if (await validateUsernameAndPassword() == false) return;
 
         //continue of password ok
         const jsMainLayoutCont = document.querySelector('.jsMainLayoutCont');
@@ -34,27 +34,25 @@
 
 
     async function validateUsernameAndPassword() {
+        let isUsernameAndPasswordValid = false;
+
         //check if required fields are complete or not empty
-        if (!isSigninRequiredFieldsComplete()) return;
+        if (isSigninRequiredFieldsComplete() == false) return isUsernameAndPasswordValid;
 
         //check if required input meet the regex
-        if (!isRegexSignValidationPassed()) return;
+        if (isRegexSignValidationPassed() == false) return isUsernameAndPasswordValid;
 
-
-        let isUsernameAndPasswordValid = true;
-
-       
         const jsSigninUserEmailInput = document.querySelector('.jsSigninUserEmailInput');
         const jsSigninUserPasswordInput = document.querySelector('.jsSigninUserPasswordInput');
 
         const userName = (jsSigninUserEmailInput.value).trim();
         const iStillLoveYou = (jsSigninUserPasswordInput.value).trim();
 
-        
 
         const formData = new FormData();
         formData.append('UserName', userName);
         formData.append('IStillLoveYou', iStillLoveYou)
+        formData.append('ErpModuleNumber', 1)
 
         const options = {
             method: 'POST',
@@ -62,16 +60,15 @@
         }
 
         const data = await fetchData.postData('signin-username-password', options);
-
-        if (data) {
+        console.log(data);
+        if (data!=null) {
             if (data.statusCodeNumber == 1) {
                 isUsernameAndPasswordValid = true;
                 document.querySelector('.jsErrorLoginText').classList.add('display-none')
-                
-            } else if (data.statusCodeNumber == 4) {
-                isUsernameAndPasswordValid = false;
-                document.querySelector('.jsErrorLoginText').classList.remove('display-none')
-            }
+            } 
+        } else {
+            isUsernameAndPasswordValid = false;
+            document.querySelector('.jsErrorLoginText').classList.remove('display-none')
         } 
         
         return isUsernameAndPasswordValid;

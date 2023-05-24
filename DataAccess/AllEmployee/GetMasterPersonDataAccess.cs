@@ -6,19 +6,19 @@ namespace DataAccess
 {
     public class GetMasterPersonDataAccess : IGetMasterPersonData
     {
-        private readonly ConnectionSettings _connection;
+        private readonly string connString = DynamicConnetionString.ConnectionString;
 
-        public GetMasterPersonDataAccess(ConnectionSettings connection)
-        {
-            _connection = connection;
-        }
+        //public GetMasterPersonDataAccess(ConnectionSettings connection)
+        //{
+        //    _connection = connection;
+        //}
 
         async public Task<ReturnGetMasterPersonDataModel> GetMasterPersonData()
         {
             ReturnGetMasterPersonDataModel data = new();
            List<MasterPersonData> dataList = new List<MasterPersonData>();
 
-            using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+            using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand())

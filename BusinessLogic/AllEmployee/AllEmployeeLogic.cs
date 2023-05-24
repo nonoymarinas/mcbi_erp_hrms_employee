@@ -11,22 +11,22 @@ namespace BusinessLogic
 {
     public class AllEmployeeLogic : IGetMasterPersonData, IGetMasterPersonByID
     {
-        private readonly ConnectionSettings _connection;
-        private readonly ParamMasterPersonByIDModel _masterID;
-        public AllEmployeeLogic(IOptions<ConnectionSettings> connection)
+   
+        private readonly ParamMasterPersonByIDModel? _masterID;
+       
+        public AllEmployeeLogic()
         {
-            _connection = connection.Value;
            
         }
-        public AllEmployeeLogic(IOptions<ConnectionSettings> connection,ParamMasterPersonByIDModel masterID)
+
+        public AllEmployeeLogic(ParamMasterPersonByIDModel masterID)
         {
-            _connection = connection.Value;
             _masterID = masterID;
 
         }
         async public Task<ReturnGetMasterPersonDataModel> GetMasterPersonData()
         {
-            GetMasterPersonDataAccess accessData = new GetMasterPersonDataAccess(_connection);
+            GetMasterPersonDataAccess accessData = new GetMasterPersonDataAccess();
             ReturnGetMasterPersonDataModel data = await accessData.GetMasterPersonData();
 
             for (var i = 0; i < data.MasterPersonList.Count; i++){
@@ -45,7 +45,7 @@ namespace BusinessLogic
 
         async public Task<ReturnGetEmployeeDataByIDModel> GetMasterPersonByID()
         {
-            GetEmployeeDataByIDDataAccess accessData = new GetEmployeeDataByIDDataAccess(_connection,_masterID);
+            GetEmployeeDataByIDDataAccess accessData = new GetEmployeeDataByIDDataAccess(_masterID);
             return await accessData.GetMasterPersonByID();
         }
     }

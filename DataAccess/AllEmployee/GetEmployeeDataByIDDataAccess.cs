@@ -6,12 +6,11 @@ namespace DataAccess
 {
     public class GetEmployeeDataByIDDataAccess : IGetMasterPersonByID
     {
-        private readonly ConnectionSettings _connection;
+        private readonly string connString = DynamicConnetionString.ConnectionString;
         private readonly ParamMasterPersonByIDModel _masterID;
 
-        public GetEmployeeDataByIDDataAccess(ConnectionSettings connection, ParamMasterPersonByIDModel masterID)
+        public GetEmployeeDataByIDDataAccess(ParamMasterPersonByIDModel masterID)
         {
-            _connection = connection;
             _masterID = masterID;
         }
 
@@ -20,7 +19,7 @@ namespace DataAccess
             ReturnGetEmployeeDataByIDModel returnData = new();
 
 
-            using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+            using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand())

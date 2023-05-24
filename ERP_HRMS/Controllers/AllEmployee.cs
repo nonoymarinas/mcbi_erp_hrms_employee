@@ -8,12 +8,12 @@ namespace ERP_HRMS.Controllers
 {
     public class AllEmployee : Controller
     {
-        private readonly IOptions<ConnectionSettings> _connection;
+       
 
-        public AllEmployee(IOptions<ConnectionSettings> connection)
-        {
-            _connection = connection;
-        }
+        //public AllEmployee(IOptions<ConnectionSettings> connection)
+        //{
+        //    _connection = connection;
+        //}
         public IActionResult MainPage()
         {
             return View();
@@ -21,14 +21,14 @@ namespace ERP_HRMS.Controllers
         [Route("all-employee-data")]
         async public Task<IActionResult> GetMasterPersonData()
         {
-            AllEmployeeLogic dataLogic = new(_connection);
+            AllEmployeeLogic dataLogic = new();
             return Json(await dataLogic.GetMasterPersonData());
         }
 
         [Route("single-employee-data")]
         async public Task<IActionResult> GetMasterPersonDataByID(ParamMasterPersonByIDModel masterID)
         {
-            AllEmployeeLogic dataLogic = new(_connection, masterID);
+            AllEmployeeLogic dataLogic = new( masterID);
             return Json(await dataLogic.GetMasterPersonByID());
         }
     }

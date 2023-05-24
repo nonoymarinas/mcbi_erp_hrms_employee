@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace BusinessModel
 {
-    public class ParamSignInDataModels
+    public class LoginDataModel
     {
-        public string? UserName { get; set; }
-        public int ErpModuleNumber { get; set; }
         public string? IStillLoveYou { get; set; }
         public string? HashSaltedIStillLoveYou { get; set; }
         public string? Salt { get; set; }
+        public bool IsUsernameExist { get; set; }
 
     }
 }

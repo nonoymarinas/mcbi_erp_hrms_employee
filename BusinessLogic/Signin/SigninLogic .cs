@@ -27,14 +27,13 @@ namespace BusinessLogic
         {
             //checked if username exist in database
             ReturnGetSigninDataModel dataAccessData = await GetSigninStatus();
-            if (!dataAccessData.IsUsernameExist)
+            if (dataAccessData.LoginData.IsUsernameExist == false)
             {
-                dataAccessData.StatusCodeNumber= 0;
                 return dataAccessData;
             }
 
             //begin build hash password from users input and salt from database
-            var saltFromDB = dataAccessData.Salt;
+            var saltFromDB = dataAccessData.LoginData.Salt;
             var passwordFromUser = _signinData.IStillLoveYou;
             var stringPasswordPlusSalt = passwordFromUser + saltFromDB;
 
@@ -48,7 +47,7 @@ namespace BusinessLogic
             var hashStringFormatPasswordWithSalt = GetStringFromHash(hashPasswordWithSalt);
 
             //get the hash password with salt from database
-            var hashPasswordWithSaltFormDB = dataAccessData.HashIStillLoveYouWithSalt;
+            var hashPasswordWithSaltFormDB = dataAccessData.LoginData.HashSaltedIStillLoveYou;
 
             //Compare the 2 hashPasswordString
             if (hashStringFormatPasswordWithSalt != hashPasswordWithSaltFormDB)

@@ -176,11 +176,10 @@ const fetchData = {
             }
 
         }).then((data) => {
-            dataResult = data
             if (data.statusCodeNumber == 1) {
                 dataResult = data
-            } else if (data.statusCodeNumber == 4){
-                dataResult = data
+            } else if (data.statusCodeNumber == 4) {
+                dataResult = null;
             }else {
                 throw alertMessages.databaseError
             }
