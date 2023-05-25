@@ -159,7 +159,7 @@ function clickCompensationEditBtn(e) {
 async function clickCompensationUpdateBtn(e) {
 
     //validation of input data
-    if (e.target.closest('.jsInputBtnCont').querySelector('.jsContactsInput').getAttribute('name') == 'BasicSalary') {
+    if (e.target.closest('.jsInputBtnCont').querySelector('.jsCompensation').getAttribute('name') == 'BasicSalary') {
         if (!isContactsRequiredFieldsComplete()) return;
     }
 
