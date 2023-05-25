@@ -130,6 +130,7 @@
         document.querySelector('.jsSSSNumber').value = localData.benifits.sssNumber;
         document.querySelector('.jsPagIbigNumber').value = localData.benifits.pagIbigNumber;
         document.querySelector('.jsPhilHealthNumber').value = localData.benifits.philHealthNumber;
+        document.querySelector('.jsTINNumber').value = localData.benifits.tinNumber;
 
         //disable save button
         disableBeniftsSaveAndEnableEditBtn();
