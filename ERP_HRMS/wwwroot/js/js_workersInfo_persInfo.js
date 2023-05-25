@@ -51,7 +51,7 @@ async function clickPersInfoSaveBtn(e) {
     jsWorkerInfoSaveBtn.querySelector('.jsSpinnerCont').remove();
 
     //validate return data
-    if (data) {
+    if (data != null) {
         alertCustom.isConfirmedOk(alertContainer.successAlert, alertMessages.saveSuccessfull)
     } else {
         return
