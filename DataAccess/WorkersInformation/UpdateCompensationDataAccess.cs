@@ -57,6 +57,11 @@ namespace DataAccess
                                 dataModel.MasterPersonID = Convert.ToInt32(reader["MasterPersonID"]);
                                 dataModel.PropertyName = reader["PropertyName"].ToString();
                                 dataModel.PropertyValue = reader["PropertyValue"].ToString();
+                            }
+                            reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
                                 dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
                             }
 
