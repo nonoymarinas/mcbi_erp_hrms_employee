@@ -39,7 +39,8 @@ const alertMessages = {
     failedToLoadHeader: 'Save successfully \n But failed to load header!',
     passwordDonotMatch: 'Confirm password did not match!\nPlease check..',
     usernamePasswordNotFound: 'Username or Password do not match or don\'t exist!',
-    areYouSureYouWantToClose: 'Are you sure you want to close?'
+    areYouSureYouWantToClose: 'Are you sure you want to close?',
+    nameExistInDatabase: 'This name exist on records! \n You need admin approval to insert!'
 }
 
 const alertContainer = {
@@ -178,9 +179,16 @@ const fetchData = {
         }).then((data) => {
             if (data.statusCodeNumber == 1) {
                 dataResult = data
+            } else if (data.statusCodeNumber == 2) {
+                dataResult = data
+                alertCustom.isConfirmedOk(alertContainer.successAlert, alertMessages.updateSuccessfull)
+            } else if (data.statusCodeNumber == 3) {
+                dataResult = null;
+                throw alertMessages.nameExistInDatabase
             } else if (data.statusCodeNumber == 4) {
                 dataResult = null;
-            }else {
+            } else {
+                dataResult = null;
                 throw alertMessages.databaseError
             }
         }).catch((error) => {
@@ -560,6 +568,7 @@ const localData = {
         sssNumber: '',
         pagIbigNumber: '',
         philHealthNumber: '',
+        tinNumber: '',
         isDataSaved: false
     },
 
@@ -595,6 +604,7 @@ const allEmployeeLocalData = {
         sssNumber: '',
         pagIbigNumber: '',
         philHealthNumber: '',
+        tinNumber: '',
     },
 
     contacts: {

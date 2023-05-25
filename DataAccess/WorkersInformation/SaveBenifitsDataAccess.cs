@@ -6,12 +6,11 @@ namespace DataAccess
 {
 	public class SaveBenifitsDataAccess : ISaveBenifits
 	{
-		private readonly ConnectionSettings _connection;
-		private readonly ParamBenifitsModel? _benifits;
+		private readonly ParamSaveBenifitsModel? _benifits;
+		private string connString = GlobalValues.ConnectionString;
 
-		public SaveBenifitsDataAccess(ConnectionSettings connection, ParamBenifitsModel? benifits)
+		public SaveBenifitsDataAccess(ParamSaveBenifitsModel? benifits)
 		{
-			_connection = connection;
 			_benifits = benifits;
 		}
 
@@ -20,7 +19,7 @@ namespace DataAccess
 		{
 			ReturnSaveBenifitsModel dataModel = new();
 
-			using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				conn.Open();
 				using (SqlCommand cmd = new SqlCommand())
@@ -45,8 +44,11 @@ namespace DataAccess
 					cmd.Parameters.Add(new SqlParameter("@PhilHealthNumber", SqlDbType.NVarChar));
 					cmd.Parameters["@PhilHealthNumber"].Value = _benifits.PhilHealthNumber;
 
-					
-					using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    cmd.Parameters.Add(new SqlParameter("@TINNumber", SqlDbType.NVarChar));
+                    cmd.Parameters["@TINNumber"].Value = _benifits.TINNumber;
+
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
 					{
 						//Check for errors and if true, retreive the error message!
 
@@ -69,10 +71,16 @@ namespace DataAccess
 								dataModel.SSSNumber = reader["SSSNumber"].ToString();
 								dataModel.PagIbigNumber = reader["PagibigNumber"].ToString();
 								dataModel.PhilHealthNumber = reader["PhilhealthNumber"].ToString();
-								dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
-							}
-							
-						}
+                                dataModel.TINNumber = reader["TINNumber"].ToString();
+                            }
+							reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
+                            }
+
+                        }
 					}
 				}
 			}

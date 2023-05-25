@@ -6,12 +6,12 @@ namespace DataAccess
 {
 	public class UpdateContactsDataAccess : IUpdateContacts
 	{
-		private readonly ConnectionSettings _connection;
+		private string connString = GlobalValues.ConnectionString;
 		private readonly ParamUpdateContactsModel? _contacts;
 
-		public UpdateContactsDataAccess(ConnectionSettings connection, ParamUpdateContactsModel? contacts)
+		public UpdateContactsDataAccess(ParamUpdateContactsModel? contacts)
 		{
-			_connection = connection;
+			
 			_contacts = contacts;
 		}
 
@@ -20,7 +20,7 @@ namespace DataAccess
         {
 			ReturnUpdateContactModel dataModel = new();
 
-			using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				conn.Open();
 				using (SqlCommand cmd = new SqlCommand())
@@ -59,10 +59,15 @@ namespace DataAccess
                                 dataModel.MasterPersonID = Convert.ToInt32(reader["MasterPersonID"]);
                                 dataModel.PropertyName = reader["PropertyName"].ToString();
                                 dataModel.PropertyValue = reader["PropertyValue"].ToString();
+                            }
+							reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
                                 dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
                             }
 
-						}
+                        }
 					}
 				}
 			}

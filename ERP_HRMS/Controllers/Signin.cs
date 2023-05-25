@@ -29,7 +29,7 @@ namespace ERP_HRMS.Controllers
             SiginLogic dataLogic = new SiginLogic(_connection, signinData);
             ReturnGetSigninDataModel data = await dataLogic.GetSigninResults();
 
-            DynamicConnetionString.ConnectionString = data.CompanyLoginData.ConnectionString;
+            GlobalValues.ConnectionString = data.CompanyLoginData.ConnectionString;
 
             return Json(await dataLogic.GetSigninResults());
         }

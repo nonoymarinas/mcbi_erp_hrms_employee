@@ -6,12 +6,11 @@ namespace DataAccess
 {
 	public class SavePersonalInformationDataAccess: ISavePersonalInfo
 	{
-		private readonly ConnectionSettings _connection;
+		private string connString = GlobalValues.ConnectionString;
 		private readonly ParamPersonalInfoModel? _personalInfo;
 
-		public SavePersonalInformationDataAccess(ConnectionSettings connection, ParamPersonalInfoModel? personalInfo)
+		public SavePersonalInformationDataAccess(ParamPersonalInfoModel? personalInfo)
 		{
-			_connection = connection;
 			_personalInfo= personalInfo;
 		}
 
@@ -20,7 +19,7 @@ namespace DataAccess
 		{
 			ReturnSavePersonalInfoModels dataModel = new();
 
-			using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				conn.Open();
 				using (SqlCommand cmd = new SqlCommand())

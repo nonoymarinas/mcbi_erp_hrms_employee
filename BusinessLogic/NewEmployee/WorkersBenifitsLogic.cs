@@ -11,31 +11,29 @@ namespace BusinessLogic
 {
 	public class WorkersBenifitsLogic : ISaveBenifits, IUpdateBenifits
 	{
-		private readonly ConnectionSettings _connection;
-		private readonly ParamBenifitsModel? _benifits;
+		
+		private readonly ParamSaveBenifitsModel? _benifits;
         private readonly ParamUpdateBenifitsModel? _updateBenifits;
 
 
-        public WorkersBenifitsLogic(IOptions<ConnectionSettings> connection,  ParamBenifitsModel benifits)
+        public WorkersBenifitsLogic(ParamSaveBenifitsModel benifits)
 		{
-			_connection = connection.Value;
 			_benifits = benifits;
 		}
-        public WorkersBenifitsLogic(IOptions<ConnectionSettings> connection, ParamUpdateBenifitsModel updateBenifits)
+        public WorkersBenifitsLogic(ParamUpdateBenifitsModel updateBenifits)
         {
-            _connection = connection.Value;
             _updateBenifits = updateBenifits;
         }
 
         async public Task<ReturnSaveBenifitsModel> SaveBenifits()
 		{
-			SaveBenifitsDataAccess dataAccessData = new(_connection, _benifits);
+			SaveBenifitsDataAccess dataAccessData = new(_benifits);
 			return await dataAccessData.SaveBenifits();
 		}
 
 		async public Task<ReturnUpdateBenifitsModel> UpdateBenifits()
         {
-			UpdateBenifitsDataAccess dataAccessData = new(_connection, _updateBenifits);
+			UpdateBenifitsDataAccess dataAccessData = new(_updateBenifits);
 			return await dataAccessData.UpdateBenifits();
 		}
     }

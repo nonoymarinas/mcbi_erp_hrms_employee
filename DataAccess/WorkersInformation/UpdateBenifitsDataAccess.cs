@@ -6,12 +6,11 @@ namespace DataAccess
 {
 	public class UpdateBenifitsDataAccess : IUpdateBenifits
 	{
-		private readonly ConnectionSettings _connection;
+		private string connString = GlobalValues.ConnectionString;
 		private readonly ParamUpdateBenifitsModel? _benifits;
 
-		public UpdateBenifitsDataAccess(ConnectionSettings connection, ParamUpdateBenifitsModel? benifits)
+		public UpdateBenifitsDataAccess(ParamUpdateBenifitsModel? benifits)
 		{
-			_connection = connection;
 			_benifits = benifits;
 		}
 
@@ -20,7 +19,7 @@ namespace DataAccess
 		{
 			ReturnUpdateBenifitsModel dataModel = new();
 
-			using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				conn.Open();
 				using (SqlCommand cmd = new SqlCommand())

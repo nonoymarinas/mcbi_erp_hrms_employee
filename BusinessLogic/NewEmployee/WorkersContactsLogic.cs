@@ -11,29 +11,27 @@ namespace BusinessLogic
 {
 	public class WorkersContactsLogic : ISaveContacts,IUpdateContacts
 	{
-		private readonly ConnectionSettings _connection;
+	
 		private readonly ParamContactModel? _contacts;
         private readonly ParamUpdateContactsModel? _updateContacts;
 
-        public WorkersContactsLogic(IOptions<ConnectionSettings> connection, ParamContactModel contacts)
+        public WorkersContactsLogic(ParamContactModel contacts)
 		{
-			_connection = connection.Value;
 			_contacts = contacts;
 		}
-        public WorkersContactsLogic(IOptions<ConnectionSettings> connection, ParamUpdateContactsModel updateContacts)
+        public WorkersContactsLogic(ParamUpdateContactsModel updateContacts)
         {
-            _connection = connection.Value;
             _updateContacts = updateContacts;
         }
         async public Task<ReturnSaveContactModel> SaveContacts()
 		{
-			SaveContactsDataAccess dataAccessData = new(_connection, _contacts);
+			SaveContactsDataAccess dataAccessData = new(_contacts);
 			return await dataAccessData.SaveContacts();
 		}
 
         async public Task<ReturnUpdateContactModel> UpdateContacts()
         {
-			UpdateContactsDataAccess dataAccessData = new(_connection, _updateContacts);
+			UpdateContactsDataAccess dataAccessData = new(_updateContacts);
 			return await dataAccessData.UpdateContacts();
 		}
     }

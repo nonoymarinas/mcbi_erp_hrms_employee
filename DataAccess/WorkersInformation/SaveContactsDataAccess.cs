@@ -6,12 +6,12 @@ namespace DataAccess
 {
 	public class SaveContactsDataAccess : ISaveContacts
 	{
-		private readonly ConnectionSettings _connection;
+		
 		private readonly ParamContactModel? _contacts;
-
-		public SaveContactsDataAccess(ConnectionSettings connection, ParamContactModel? contacts)
+		private string connString = GlobalValues.ConnectionString;
+		public SaveContactsDataAccess(ParamContactModel? contacts)
 		{
-			_connection = connection;
+			
 			_contacts = contacts;
 		}
 
@@ -20,7 +20,7 @@ namespace DataAccess
         {
 			ReturnSaveContactModel dataModel = new();
 
-			using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				conn.Open();
 				using (SqlCommand cmd = new SqlCommand())
@@ -64,10 +64,16 @@ namespace DataAccess
 								dataModel.MobileNumber = reader["MobileNumber"].ToString();
 								dataModel.LandLineNumber = reader["LandlineNumber"].ToString();
 								dataModel.EmailAddress = reader["EmailAddress"].ToString();
-								dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
 							}
 
-						}
+							reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
+                            }
+
+                        }
 					}
 				}
 			}

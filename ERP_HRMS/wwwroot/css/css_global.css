@@ -48,6 +48,9 @@
 
 .alert-paragraph-ok {
     padding: 15px;
+    font-size:.85em;
+    font-family:Poppins,Arial;
+    font-weight:300;
 }
 
 .alert-img-cont-ok {

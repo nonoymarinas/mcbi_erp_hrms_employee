@@ -6,7 +6,7 @@ namespace DataAccess
 {
     public class GetEmployeeDataByIDDataAccess : IGetMasterPersonByID
     {
-        private readonly string connString = DynamicConnetionString.ConnectionString;
+        private readonly string connString = GlobalValues.ConnectionString;
         private readonly ParamMasterPersonByIDModel _masterID;
 
         public GetEmployeeDataByIDDataAccess(ParamMasterPersonByIDModel masterID)
@@ -72,6 +72,7 @@ namespace DataAccess
                                     SSSNumber = reader["SSSNumber"].ToString(),
                                     PagIbigNumber = reader["PagIbigNumber"].ToString(),
                                     PhilHealthNumber = reader["PhilHealthNumber"].ToString(),
+                                    TINNumber = reader["TINNumber"].ToString()
                                 };
 
                                 returnData.Benifits = workersBenifits;

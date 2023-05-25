@@ -6,7 +6,7 @@ namespace DataAccess
 {
     public class GetMasterPersonDataAccess : IGetMasterPersonData
     {
-        private readonly string connString = DynamicConnetionString.ConnectionString;
+        private readonly string connString = GlobalValues.ConnectionString;
 
         //public GetMasterPersonDataAccess(ConnectionSettings connection)
         //{

@@ -11,32 +11,30 @@ namespace BusinessLogic
 {
 	public class WorkersCompensationLogic : ISaveCompensation
 	{
-		private readonly ConnectionSettings _connection;
+	
 		private readonly ParamCompensationModel? _compensation;
         private readonly ParamUpdateCompensationModel? _updateCompensation;
 
 
-        public WorkersCompensationLogic(IOptions<ConnectionSettings> connection, ParamCompensationModel compensation)
+        public WorkersCompensationLogic(ParamCompensationModel compensation)
 		{
-			_connection = connection.Value;
 			_compensation = compensation;
 		}
 
-        public WorkersCompensationLogic(IOptions<ConnectionSettings> connection, ParamUpdateCompensationModel updateCompensation)
+        public WorkersCompensationLogic(ParamUpdateCompensationModel updateCompensation)
         {
-            _connection = connection.Value;
             _updateCompensation = updateCompensation;
         }
 
         async public Task<ReturnSaveCompensationModel> SaveCompensation()
         {
-			SaveCompensationDataAccess dataAccessData = new(_connection, _compensation);
+			SaveCompensationDataAccess dataAccessData = new(_compensation);
 			return await dataAccessData.SaveCompensation();
 		}
 
         async public Task<ReturnUpdateCompensationModel> UpdateCompensation()
         {
-            UpdateCompensationDataAccess dataAccessData = new(_connection, _updateCompensation);
+            UpdateCompensationDataAccess dataAccessData = new(_updateCompensation);
             return await dataAccessData.UpdateCompensation();
         }
 

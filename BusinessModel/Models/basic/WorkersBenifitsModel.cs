@@ -12,6 +12,7 @@ namespace BusinessModel
         public string? SSSNumber { get; set; }
         public string? PagIbigNumber { get; set; }
         public string? PhilHealthNumber { get; set; }
+        public string? TINNumber { get; set; }
 
     }
 }

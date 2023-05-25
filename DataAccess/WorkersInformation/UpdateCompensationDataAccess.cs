@@ -6,12 +6,11 @@ namespace DataAccess
 {
 	public class UpdateCompensationDataAccess : IUpdateCompensation
     {
-		private readonly ConnectionSettings _connection;
+		private  string connString=GlobalValues.ConnectionString;
 		private readonly ParamUpdateCompensationModel? _compensation;
 
-		public UpdateCompensationDataAccess(ConnectionSettings connection, ParamUpdateCompensationModel? compensation)
+		public UpdateCompensationDataAccess(ParamUpdateCompensationModel? compensation)
 		{
-			_connection = connection;
             _compensation = compensation;
 		}
 
@@ -19,7 +18,7 @@ namespace DataAccess
         {
             ReturnUpdateCompensationModel dataModel = new();
 
-            using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+            using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand())

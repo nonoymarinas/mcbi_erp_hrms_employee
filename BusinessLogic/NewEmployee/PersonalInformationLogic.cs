@@ -11,31 +11,30 @@ namespace BusinessLogic
 {
 	public class PersonalInformationLogic:ISavePersonalInfo, IUpdatePersonalInfo
 	{
-		private readonly ConnectionSettings _connection;
+		
 		private readonly ParamPersonalInfoModel? _personalInfo;
 		private readonly ParamUpdatePersonalInfoModel? _updatepersonalInfo;
 
-		public PersonalInformationLogic(IOptions<ConnectionSettings> connection, ParamPersonalInfoModel personalInfo)
+		public PersonalInformationLogic(ParamPersonalInfoModel personalInfo)
 		{
-			_connection = connection.Value;
+			
 			_personalInfo = personalInfo;
 		}
 
-		public PersonalInformationLogic(IOptions<ConnectionSettings> connection, ParamUpdatePersonalInfoModel updatepersonalInfo)
+		public PersonalInformationLogic(ParamUpdatePersonalInfoModel updatepersonalInfo)
 		{
-			_connection = connection.Value;
 			_updatepersonalInfo = updatepersonalInfo;
 		}
 
 		async public Task<ReturnSavePersonalInfoModels> SavePersonalInfo()
 		{
-			SavePersonalInformationDataAccess dataAccessData = new(_connection,_personalInfo);
+			SavePersonalInformationDataAccess dataAccessData = new(_personalInfo);
 			return await dataAccessData.SavePersonalInfo();
 		}
 
 		async public Task<ReturnUpdatePersonalInfoModels> UpdatePersonalInfo()
 		{
-			UpdatePersonalInformationDataAccess dataAccessData = new(_connection, _updatepersonalInfo);
+			UpdatePersonalInformationDataAccess dataAccessData = new( _updatepersonalInfo);
 			return await dataAccessData.UpdatePersonalInfo();
 		}
 

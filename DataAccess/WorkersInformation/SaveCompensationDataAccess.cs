@@ -6,21 +6,19 @@ namespace DataAccess
 {
 	public class SaveCompensationDataAccess : ISaveCompensation
 	{
-		private readonly ConnectionSettings _connection;
+		private  string connString = GlobalValues.ConnectionString;
 		private readonly ParamCompensationModel _compensation;
 
-		public SaveCompensationDataAccess(ConnectionSettings connection, ParamCompensationModel compensation)
+		public SaveCompensationDataAccess(ParamCompensationModel compensation)
 		{
-			_connection = connection;
 			_compensation = compensation;
 		}
 
-       
 		async public Task<ReturnSaveCompensationModel> SaveCompensation()
 		{
 			ReturnSaveCompensationModel dataModel = new();
 
-			using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				conn.Open();
 				using (SqlCommand cmd = new SqlCommand())
@@ -80,10 +78,16 @@ namespace DataAccess
 								dataModel.DayPerMonth = Convert.ToInt32(reader["DayPerMonth"]);
 								dataModel.BasicSalary = Convert.ToDecimal(reader["BasicSalary"]);
 								dataModel.Allowance = Convert.ToDecimal(reader["Allowance"]);
-								dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
 							}
 
-						}
+							reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
+                            }
+
+                        }
 					}
 				}
 			}

@@ -52,18 +52,19 @@ async function clickBenifitsSaveBtn(e) {
     //fetch api
     const data = await fetchData.postData('save-benifits', options)
 
-    if (data) {
+    if (data != null) {
         alertCustom.isConfirmedOk(alertContainer.successAlert, alertMessages.saveSuccessfull)
     } else {
         return
     }
-
+    console.log(data)
     //update local data
 
     localData.benifits.umidNumber = (data.umidNumber == 'null') ? '' : data.umidNumber;
     localData.benifits.sssNumber = (data.sssNumber == 'null') ? '' : data.sssNumber;
     localData.benifits.pagIbigNumber = (data.pagIbigNumber == 'null') ? '' : data.pagIbigNumber;
     localData.benifits.philHealthNumber = (data.philHealthNumber == 'null') ? '' : data.philHealthNumber;
+    localData.benifits.tinNumber = (data.tinNumber == 'null') ? '' : data.tinNumber;
 
     //disable save buttons and enable edit
     disableBeniftsSaveAndEnableEditBtn()

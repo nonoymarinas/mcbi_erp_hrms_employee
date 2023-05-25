@@ -6,12 +6,11 @@ namespace DataAccess
 {
 	public class UpdatePersonalInformationDataAccess: IUpdatePersonalInfo
 	{
-		private readonly ConnectionSettings _connection;
+		private string connString = GlobalValues.ConnectionString;
 		private readonly ParamUpdatePersonalInfoModel? _personalInfo;
 
-		public UpdatePersonalInformationDataAccess(ConnectionSettings connection, ParamUpdatePersonalInfoModel? personalInfo)
+		public UpdatePersonalInformationDataAccess(ParamUpdatePersonalInfoModel? personalInfo)
 		{
-			_connection = connection;
 			_personalInfo= personalInfo;
 		}
 
@@ -20,7 +19,7 @@ namespace DataAccess
 		{
 			ReturnUpdatePersonalInfoModels dataModel = new();
 
-			using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+			using (SqlConnection conn = new SqlConnection(connString))
 			{
 				conn.Open();
 				using (SqlCommand cmd = new SqlCommand())

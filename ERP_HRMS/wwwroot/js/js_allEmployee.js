@@ -60,12 +60,12 @@
         localData.personalInfo.isActive = false;
         localData.personalInfo.isDataSaved = true;
 
-        console.log(dateFormat.yyyymmddDashed(data.personalInfo.dateOfBirth))
-
+     
         localData.benifits.umidNumber = data.benifits.umidNumber;
         localData.benifits.sssNumber = data.benifits.sssNumber;
         localData.benifits.pagIbigNumber = data.benifits.pagIbigNumber;
         localData.benifits.philHealthNumber = data.benifits.philHealthNumber;
+        localData.benifits.tinNumber = data.benifits.tinNumber;
         localData.benifits.isDataSaved = true;
 
         localData.contacts.mobileNumber = data.contacts.mobileNumber;
@@ -81,6 +81,8 @@
         localData.compensation.dayPerMonth = data.compensation.dayPerMonth;
         localData.compensation.isSalaryFixed = data.compensation.isSalaryFixed;
         localData.compensation.isDataSaved = true;
+
+        console.log(localData.personalInfo)
 
         await employeeDetailsView();
 

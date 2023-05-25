@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessModel
 {
-    public static class DynamicConnetionString
+    public static class GlobalValues
     {
         public static string? ConnectionString { get; set; }
     }
