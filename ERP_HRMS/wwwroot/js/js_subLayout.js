@@ -88,7 +88,7 @@ async function clickMenuHomeIcon() {
     const view = await fetchData.viewData('/Home/MainPage');
 
     const jsHomeMainCont = view.querySelector('.jsHomeMainCont');
-    console.log(jsHomeMainCont)
+   
     jsSublayout01ContentSubCont.innerHTML = '';
     jsSublayout01ContentSubCont.appendChild(jsHomeMainCont);
 
@@ -96,7 +96,7 @@ async function clickMenuHomeIcon() {
 }
 
 async function clickMainMenuEmployee(e) {
-    console.log(e.target)
+   
     const jsMainMenuEmployeeSubUl = document.querySelector('.jsMainMenuEmployeeSubUl');
     if (jsMainMenuEmployeeSubUl.classList.contains('display-none')) {
         jsMainMenuEmployeeSubUl.classList.remove('display-none')

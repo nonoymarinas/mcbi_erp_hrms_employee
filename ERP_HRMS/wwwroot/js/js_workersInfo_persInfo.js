@@ -157,7 +157,6 @@ async function clickPersInfoUpdateBtn(e) {
     localData.personalInfo[input.getAttribute('data-name')] = data.propertyValue;
     localData.personalInfo.isActive = false;
 
-    console.log(localData.personalInfo)
 
     //change text update to edit
     e.target.textContent = 'EDIT'

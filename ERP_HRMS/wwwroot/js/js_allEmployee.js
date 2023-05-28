@@ -1,7 +1,7 @@
 ﻿async function allEmployee() {
     //load reference data
     const linkedList = await allEmployeeRefData.getMasterPersonData()
-    console.log(linkedList)
+   
 
     const jsSearchInput = document.querySelector('.jsSearchInput');
     jsSearchInput.addEventListener('input', inputSearchName)
@@ -43,10 +43,10 @@
             method: 'POST',
             body: formData
         }
-        console.log(MasterPersonID)
+       
         const data = await fetchData.postData('single-employee-data', options)
 
-        console.log(data)
+       
 
         if (!data) return;
 
@@ -82,7 +82,7 @@
         localData.compensation.isSalaryFixed = data.compensation.isSalaryFixed;
         localData.compensation.isDataSaved = true;
 
-        console.log(localData.personalInfo)
+      
 
         await employeeDetailsView();
 

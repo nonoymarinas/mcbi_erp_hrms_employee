@@ -149,7 +149,6 @@ async function clickContactUpdateBtn(e) {
     //update data and change elemenet appearance
     localData.contacts[jsContactsInput.getAttribute('data-name')] = data.propertyValue;
 
-    console.log(localData.contacts)
 
     //change text update to edit
     e.target.textContent = 'EDIT'

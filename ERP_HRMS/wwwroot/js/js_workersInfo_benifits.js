@@ -57,7 +57,7 @@ async function clickBenifitsSaveBtn(e) {
     } else {
         return
     }
-    console.log(data)
+
     //update local data
 
     localData.benifits.umidNumber = (data.umidNumber == 'null') ? '' : data.umidNumber;
@@ -96,7 +96,7 @@ function clickBenifitsEditBtn(e) {
 
     //enable input
     let jsBenifitsInput = e.target.closest('.jsInputBtnCont').querySelector('.jsBenifitsInput');
-    console.log(jsBenifitsInput)
+  
     jsBenifitsInput.removeAttribute('disabled');
     jsBenifitsInput.classList.remove('disable-input');
 
@@ -133,17 +133,12 @@ async function clickBenifitsUpdateBtn(e) {
     formData.append('PropertyValue', PropertyValue)
 
 
-    for (const pair of formData.entries()) {
-        console.log(`${pair[0]}, ${pair[1]}`);
-    }
-
-
     const options = {
         method: 'POST',
         body: formData
     }
     let data = await fetchData.postData('update-benifits', options)
-    console.log(data)
+ 
 
     // remove spinner
     e.target.querySelector('.jsSpinnerCont').remove();
@@ -153,7 +148,6 @@ async function clickBenifitsUpdateBtn(e) {
     //update data and change elemenet appearance
     localData.benifits[jsBenifitsInput.getAttribute('data-name')] = data.propertyValue;
 
-    console.log(localData.benifits)
 
     //change text update to edit
     e.target.textContent = 'EDIT'
@@ -187,8 +181,7 @@ function clickBenifitsCancelBtn() {
     for (let i = 0; i < jsBenifitsInputs.length; i++) {
         //find active input by searching disabled attribute
         if (!jsBenifitsInputs[i].hasAttribute('disabled')) {
-            console.log(jsBenifitsInputs[i])
-
+           
             //disable inputs
             jsBenifitsInputs[i].setAttribute('disabled', true);
             jsBenifitsInputs[i].classList.add('disable-input');
@@ -226,9 +219,9 @@ function isRegexBenifitsValidationPassed() {
     const jsUMIDNumber = document.querySelector('.jsUMIDNumber');
     if (!jsUMIDNumber.hasAttribute('disabled')) {
         if (!isNullOrWhiteSpace(jsUMIDNumber.value)) {
-            console.log(regexPatterns.umidNumber.test(jsUMIDNumber.value))
+
             if (!regexPatterns.umidNumber.test(jsUMIDNumber.value)) {
-                console.log('UMIDNumber')
+               
                 jsUMIDNumber.classList.add('invalid');
                 isValid = false
             } else {
@@ -241,7 +234,7 @@ function isRegexBenifitsValidationPassed() {
     if (!jsSSSNumber.hasAttribute('disabled')) {
         if (!isNullOrWhiteSpace(jsSSSNumber.value)) {
             if (!regexPatterns.sssNumber.test(jsSSSNumber.value)) {
-                console.log('SSSNumber')
+               
                 jsSSSNumber.classList.add('invalid');
                 isValid = false
             } else {
@@ -255,7 +248,7 @@ function isRegexBenifitsValidationPassed() {
     if (!jsPagIbigNumber.hasAttribute('disabled')) {
         if (!isNullOrWhiteSpace(jsPagIbigNumber.value)) {
             if (!regexPatterns.pagibigNumber.test(jsPagIbigNumber.value)) {
-                console.log('PagIbigNumber')
+              
                 jsPagIbigNumber.classList.add('invalid');
                 isValid = false
             } else {
@@ -269,7 +262,7 @@ function isRegexBenifitsValidationPassed() {
     if (!jsPagIbigNumber.hasAttribute('disabled')) {
         if (!isNullOrWhiteSpace(jsPhilHealthNumber.value)) {
             if (!regexPatterns.philihealthNumber.test(jsPhilHealthNumber.value)) {
-                console.log('PhilHealthNumber')
+              
                 jsPhilHealthNumber.classList.add('invalid');
                 isValid = false
             } else {

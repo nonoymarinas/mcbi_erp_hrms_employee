@@ -60,7 +60,7 @@
         }
 
         const data = await fetchData.postData('signin-username-password', options);
-        console.log(data);
+      
         if (data!=null) {
             if (data.statusCodeNumber == 1) {
                 isUsernameAndPasswordValid = true;

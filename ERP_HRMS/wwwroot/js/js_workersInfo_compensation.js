@@ -71,10 +71,7 @@ async function clickCompensationSaveBtn() {
     formData.append('HourPerDay', 8)
     formData.append('DayPerMonth', 26)
 
-    for (const pair of formData.entries()) {
-        console.log(`${pair[0]}, ${pair[1]}`);
-    }
-
+   
     let options = {
         method: 'POST',
         body: formData
@@ -103,7 +100,7 @@ async function clickCompensationSaveBtn() {
     localData.compensation.allowance = data.allowance;
     localData.compensation.isDataSaved = true;
 
-    console.log(localData.compensation)
+  
 
     //disable save buttons and enable edit
     disableCompensationSaveAndEnableEditBtn()
@@ -178,10 +175,10 @@ async function clickCompensationUpdateBtn(e) {
     let PropertyValue;
     if (PropertyName == 'RatePeriod') {
         PropertyValue = jsCompensation.selectedOptions[0].getAttribute('data-id');
-        console.log(PropertyValue)
+      
     } else if (PropertyName == 'IsSalaryFixed') {
         PropertyValue = jsCompensation.selectedOptions[0].getAttribute('data-id');
-        console.log(PropertyValue)
+      
     }
     else {
         PropertyValue = jsCompensation.value;
@@ -199,8 +196,7 @@ async function clickCompensationUpdateBtn(e) {
     }
 
     let data = await fetchData.postData('update-compensation', options)
-    console.log('ok')
-    console.log(data)
+   
 
     // remove spinner
     e.target.querySelector('.jsSpinnerCont').remove();
