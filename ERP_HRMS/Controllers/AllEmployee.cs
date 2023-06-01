@@ -31,5 +31,11 @@ namespace ERP_HRMS.Controllers
             AllEmployeeLogic dataLogic = new( masterID);
             return Json(await dataLogic.GetMasterPersonByID());
         }
+
+        [Route("select-image-source")]
+        async public Task<IActionResult> GetViewImageSource()
+        {
+            return View();
+        }
     }
 }

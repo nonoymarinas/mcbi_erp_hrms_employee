@@ -87,6 +87,7 @@ namespace DataAccess
                                 compLoginData.ActiveText = reader["ActiveText"].ToString();
                                 compLoginData.DisabledText = reader["DisabledText"].ToString();
                                 compLoginData.InputBorder = reader["InputBorder"].ToString();
+                                compLoginData.MainHeaderBackGround = reader["MainHeaderBackGround"].ToString();
                                 compLoginData.MainHeaderText = reader["MainHeaderText"].ToString();
                                 compLoginData.MainTitleText = reader["MainTitleText"].ToString();
                                 compLoginData.PageBackGround = reader["PageBackGround"].ToString();

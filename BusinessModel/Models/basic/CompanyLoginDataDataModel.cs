@@ -13,6 +13,7 @@ namespace BusinessModel
         public string? ActiveText { get; set; }
         public string? DisabledText { get; set; }
         public string? InputBorder { get; set; }
+        public string? MainHeaderBackGround { get; set; }
         public string? MainHeaderText { get; set; }
         public string? MainTitleText { get; set; }
         public string? PageBackGround { get; set; }

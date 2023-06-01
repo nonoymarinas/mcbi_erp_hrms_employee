@@ -65,12 +65,20 @@
             if (data.statusCodeNumber == 1) {
                 isUsernameAndPasswordValid = true;
                 document.querySelector('.jsErrorLoginText').classList.add('display-none')
+
+                //update company object data
+                updateCompanyDetailsObject()
             } 
         } else {
             isUsernameAndPasswordValid = false;
             document.querySelector('.jsErrorLoginText').classList.remove('display-none')
         } 
-        
+
+        function updateCompanyDetailsObject() {
+            companyDetailsData.mainHeaderBackGround = data.companyLoginData.mainHeaderBackGround
+        }
+
+
         return isUsernameAndPasswordValid;
     }
 

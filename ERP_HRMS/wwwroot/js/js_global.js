@@ -554,7 +554,7 @@ function formatDate(date) {
 //global-workers information sheet
 const localData = {
     personalInfo: {
-        masterPersonID: 0,
+        masterPersonID: '',
         employeeNumber: '',
         firstName: '',
         middleName: '',
@@ -587,6 +587,38 @@ const localData = {
         basicSalary: '',
         allowance: '',
         isDataSaved: false
+    },
+    resetAllData: function () {
+        this.personalInfo.masterPersonID = ''
+        this.personalInfo.employeeNumber = ''
+        this.personalInfo.firstName = ''
+        this.personalInfo.middleName = ''
+        this.personalInfo.lastName = ''
+        this.personalInfo.dateOfBirth = ''
+        this.personalInfo.isActive = false
+        this.personalInfo.isDataSaved = false
+
+        this.benifits.umidNumber = ''
+        this.benifits.sssNumber = ''
+        this.benifits.pagIbigNumber = ''
+        this.benifits.philHealthNumber = ''
+        this.benifits.tinNumber = ''
+        this.benifits.tinNumber = ''
+        this.benifits.isDataSaved = false
+
+        this.contacts.mobileNumber = ''
+        this.contacts.landLineNumber = ''
+        this.contacts.emailAddress = ''
+        this.contacts.isDataSaved = false
+
+        this.compensation.ratePeriodID= ''
+        this.compensation.isSalaryFixed = ''
+        this.compensation.currencyID = ''
+        this.compensation.hourPerDay = ''
+        this.compensation.dayPerMonth = ''
+        this.compensation.basicSalary = ''
+        this.compensation.allowance = ''
+        this.compensation.isDataSaved = false
     }
 }
 
@@ -622,6 +654,29 @@ const allEmployeeLocalData = {
         allowance: '',
     }
 }
+
+const companyDetailsData = {
+    mainHeaderBackGround: ''
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //global-local variables
 let isPersonInfoSave = false;

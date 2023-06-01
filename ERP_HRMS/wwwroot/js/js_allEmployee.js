@@ -199,10 +199,11 @@
 
         //insert picture container
         let htmlString = `<div class="worker-imageid-main-cont jsWorkerImageIDMainCont">
-                            <div class="worker-imageid-sub-cont">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="worker-image-svg-cont">
+                            <div class="worker-imageid-sub-cont jsWorkerImageIdSubCont">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="worker-image-svg-cont jsWorkerImageSVG">
                                     <path  class="worker-image-svg-path" d="M336 128a112 112 0 1 0 -224 0 112 112 0 1 0 224 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM16 482.3c0 7.6 6.1 13.7 13.7 13.7H418.3c7.6 0 13.7-6.1 13.7-13.7C432 392.7 359.3 320 269.7 320H178.3C88.7 320 16 392.7 16 482.3zm-16 0C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
                                 </svg>
+                                 <img class="employee-image jsEmployeeImage"/>
                             </div>
                         </div>`
 
@@ -221,7 +222,69 @@
         //change title text
         const jsWorkerInfoTitleText = document.querySelector('.jsWorkerInfoTitleText');
         jsWorkerInfoTitleText.textContent = 'Employee Information'
+
+        //add event listener to image profile
+        jsWorkerImageIDMainCont.querySelector('.jsWorkerImageIdSubCont').addEventListener('click',clickEmployeeImageProfile)
+
     }
 
+    async function clickEmployeeImageProfile() {
+
+        const view = await fetchData.viewData('select-image-source');
+        const jsAllEmpImageSourceMainCont = view.querySelector('.jsAllEmpImageSourceMainCont');
+
+        document.body.appendChild(jsAllEmpImageSourceMainCont);
+
+        const jsImageSourceClose = jsAllEmpImageSourceMainCont.querySelector('.jsImageSourceClose');
+        jsImageSourceClose.addEventListener('click', clickImageSourceClose)
+
+        function clickImageSourceClose() {
+            jsAllEmpImageSourceMainCont.remove();
+        }
+
+        const jsEmployeeImageSourceGalleryLabel = jsAllEmpImageSourceMainCont.querySelector('.jsEmployeeImageSourceGalleryLabel');
+        jsEmployeeImageSourceGalleryLabel.addEventListener('click', clickLabelChooseFromGallery)
+        function clickLabelChooseFromGallery() {
+            document.querySelector('.jsEmployeeImageFile').click();
+        }
+
+        const jsEmployeeImageFile = jsAllEmpImageSourceMainCont.querySelector('.jsEmployeeImageFile');
+        jsEmployeeImageFile.addEventListener('change', changeInputFile)
+        function changeInputFile() {
+            jsAllEmpImageSourceMainCont.remove();
+            readInputEmployeeImageFileInput()
+        }
+
+        
+        function readInputEmployeeImageFileInput() {
+            document.querySelector('.jsWorkerImageSVG').classList.add('display-none');
+            const image = document.querySelector('.jsEmployeeImage');
+
+            const file = jsEmployeeImageFile.files[0]
+
+            // Check if the file is an image.
+
+            if (file.type && !file.type.startsWith('image/')) {
+
+                console.log('File is not an image.', file.type, file);
+
+                return;
+
+            }
+
+            const reader = new FileReader();
+
+            reader.addEventListener('load', (e) => {
+
+                image.src = e.target.result;
+                console.log(e.target.result)
+
+            });
+
+            reader.readAsDataURL(file);
+
+        }
+    }
+    
 
 }

@@ -1,4 +1,9 @@
 ﻿async function subLayout01() {
+    console.log(companyDetailsData.mainHeaderBackGround)
+    console.log(document.querySelector('.jsMainLayoutHeaderCont'))
+    //update appearance and company details
+    document.querySelector('.jsMainLayoutHeaderCont').style.setProperty('--mainHeaderBackgroundColor',companyDetailsData.mainHeaderBackGround)
+
     //insert padding to body
     document.querySelector('body').classList.add('body-padding-top-bottom')
 
