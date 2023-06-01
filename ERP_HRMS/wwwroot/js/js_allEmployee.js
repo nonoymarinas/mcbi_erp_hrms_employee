@@ -84,12 +84,12 @@
 
       
 
-        await employeeDetailsView();
+        await employeeDetailsView(e);
 
         
     }
 
-    async function employeeDetailsView() {
+    async function employeeDetailsView(e) {
         //fetch view for display
         const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
         const view = await fetchData.viewData('employee-detail-page');
@@ -98,7 +98,7 @@
         jsSublayout01ContentSubCont.innerHTML = '';
         jsSublayout01ContentSubCont.appendChild(jsWorkersInfoMainCont);
 
-        await newEmployee();
+        await newEmployee(e);
 
         persInfoAfterSaved();
         benifitsAfterSaved();
