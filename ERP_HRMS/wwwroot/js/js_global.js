@@ -147,7 +147,7 @@ const fetchData = {
     },
 
     getData: async function (dataUrl) {
-        let dataResult;
+        let dataResult = null;
         await fetch(dataUrl).then((res) => {
             if (res.ok) {
                 return res.json();
@@ -661,23 +661,6 @@ const companyDetailsData = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //global-local variables
 let isPersonInfoSave = false;
 
@@ -687,13 +670,20 @@ const allEmployeeRefData = {
         //note: parameters is an integer (1,2,3,..) see database meaning for numbers
         //for now 1 is for ViewSalesByDate, 2 is ViewSalesByAgent
         let linkedList;
+
+        //spinner on
+        document.body.appendChild(spinnerType01());
         const data = await fetchData.getData('all-employee-data')
-        if (data) {
+        if (data != null) {
             linkedList = new LinkedList(data.masterPersonList[0])
             for (i = 1; i < data.masterPersonList.length; i++) {
                 linkedList.push(data.masterPersonList[i])
             }
         }
+
+        //spinner on
+        document.querySelector('.jsSpinnerCont').remove();
+
         return linkedList;
     },
 

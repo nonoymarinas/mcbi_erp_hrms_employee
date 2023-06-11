@@ -1,8 +1,10 @@
 ﻿async function newEmployee(e) {
 
-    if (e.target.classList.contains('jsMainMenuNewEmployeeSubLi')) {
+    if (eventIndicator.newEmplooyee.isClick == true) {
         //reset global data, meaning this function is used at new employee, and it needs to be reset
         localData.resetAllData();
+        //reset indicator
+        eventIndicator.newEmplooyee.isClick = false;
     }
     
     await personalInfo();

@@ -32,3 +32,9 @@
     },
 
 }
+
+const eventIndicator = {
+    newEmplooyee: {
+        isClick: false,
+    }
+}

@@ -111,7 +111,7 @@ async function clickMainMenuEmployee(e) {
     }
 }
 
-async function clickMainMenuNewEmployee(e) {
+async function clickMainMenuNewEmployee() {
     const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
     const view = await fetchData.viewData('employee-detail-page');
 
@@ -119,7 +119,9 @@ async function clickMainMenuNewEmployee(e) {
     jsSublayout01ContentSubCont.innerHTML = '';
     jsSublayout01ContentSubCont.appendChild(jsWorkersInfoMainCont);
 
-    await newEmployee(e);
+    //event eventIndicator
+    eventIndicator.newEmplooyee.isClick = true;
+    await newEmployee();
 }
 
 async function clickMainMenuAllEmployee() {

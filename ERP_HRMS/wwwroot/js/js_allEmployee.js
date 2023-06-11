@@ -1,8 +1,6 @@
 ﻿async function allEmployee() {
     //load reference data
     const linkedList = await allEmployeeRefData.getMasterPersonData()
-   
-
     const jsSearchInput = document.querySelector('.jsSearchInput');
     jsSearchInput.addEventListener('input', inputSearchName)
     let jsSearchCont = document.querySelector('.jsSearchCont');
@@ -34,7 +32,7 @@
 
     const jsAllEmpSearchBtn = document.querySelector('.jsAllEmpSearchBtn');
     jsAllEmpSearchBtn.addEventListener('click', clickSearchBtn);
-    async function clickSearchBtn(e) {
+    async function clickSearchBtn() {
         const MasterPersonID = document.querySelector('.jsSearchInput').getAttribute('data-id');
         const formData = new FormData();
         formData.append('MasterPersonID', MasterPersonID)
@@ -84,7 +82,7 @@
 
       
 
-        await employeeDetailsView(e);
+        await employeeDetailsView();
 
         
     }
