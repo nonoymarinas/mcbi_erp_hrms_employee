@@ -72,7 +72,7 @@ input:-webkit-autofill:active {
     grid-template-columns: 1fr 60px;
     border: 1px solid #505050;
     background: rgba(100,100,100,.1);
-    border-radius: 5px;
+    /*border-radius: 5px;*/
 }
 
 .item-svg-icon {
@@ -99,7 +99,7 @@ input:-webkit-autofill:active {
 }
 
 .input-btn {
-    background: none;
+    background: #d5d5d5;
     border: none;
     color: #808080;
     width: 100%;
@@ -123,7 +123,7 @@ input:-webkit-autofill:active {
     }
 
 .edit-btn-active:active {
-    background: #606060;
+    /*background: #606060;*/
     color: #d5d5d5;
 }
 
@@ -139,13 +139,14 @@ input:-webkit-autofill:active {
 
 .workerinfo-persinfo-title-cont {
     display: grid;
-    grid-template-columns: 1fr 60px 60px;
+    grid-template-columns: 1fr 70px 70px;
     width: 100%;
+    grid-gap:10px;
     /*background:#d5d5d5;*/
     /*color:#222;*/
     /*border-radius:5px;*/
     margin-top: 1em;
-    border: 1px solid #505050;
+    /*border: 1px solid #505050;*/
 }
 
 .workerinfo-btn {
@@ -154,7 +155,7 @@ input:-webkit-autofill:active {
     align-items: center;
     width: 100%;
     border: none;
-    background: none;
+    background: #179009;
     height: 100%;
     color: #d5d5d5;
     letter-spacing: .1em;
@@ -174,9 +175,9 @@ input:-webkit-autofill:active {
     }
 
 .workerinfo-sub-title-text {
-    padding: .3em;
-    font-size: 1em;
-    font-weight: 300;
+    padding: .3em 0;
+    font-size: 1.2em;
+    font-weight: 500;
 }
 
 .workerinfo-item-select {
