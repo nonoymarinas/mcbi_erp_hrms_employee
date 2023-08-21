@@ -54,14 +54,12 @@ input:-webkit-autofill:active {
     grid-template-columns: 110px 1fr;
     width: 100%;
     margin-top: 1em;
-    /*grid-gap:10px;*/
 }
 .workerinfo-emp-number-cont {
     display: grid;
     grid-template-columns: 110px 1fr;
     width: 100%;
     margin-top: 1em;
-    /*padding-right:1em;*/
 }
 .employee-number-text{
     color:#ffffff;
@@ -72,7 +70,6 @@ input:-webkit-autofill:active {
     grid-template-columns: 1fr 60px;
     border: 1px solid #505050;
     background: rgba(100,100,100,.1);
-    /*border-radius: 5px;*/
 }
 
 .item-svg-icon {
@@ -142,11 +139,7 @@ input:-webkit-autofill:active {
     grid-template-columns: 1fr 70px 70px;
     width: 100%;
     grid-gap:10px;
-    /*background:#d5d5d5;*/
-    /*color:#222;*/
-    /*border-radius:5px;*/
     margin-top: 1em;
-    /*border: 1px solid #505050;*/
 }
 
 .workerinfo-btn {
