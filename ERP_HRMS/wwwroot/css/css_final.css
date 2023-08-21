@@ -29,7 +29,9 @@
 .display-grid-col-1fr-60px{
     grid-template-columns:1fr 60px;
 }
-
+.display-grid-col-1fr-80px {
+    grid-template-columns: 1fr 80px;
+}
 .border-bottom-1px-808080 {
     border-bottom: 1px solid #808080
 }

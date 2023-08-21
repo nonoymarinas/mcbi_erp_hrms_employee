@@ -24,8 +24,8 @@ input:-webkit-autofill:active {
     display: grid;
     grid-template-columns: 1fr 40px;
     width: 100%;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #fff;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #969696;
     margin-bottom: 1em;
 }
 
@@ -45,6 +45,7 @@ input:-webkit-autofill:active {
 
 .allemployee-search-label {
     margin-bottom: .5em;
+    color:#969696;
 }
 
 .allemployee-input-cont {
@@ -52,13 +53,12 @@ input:-webkit-autofill:active {
     grid-template-columns: 1fr 60px;
     border: 1px solid #505050;
     background: rgba(100,100,100,.1);
-    border-radius: 5px;
     position: relative;
 }
 
 .allemployee-search-input {
     width: 100%;
-    padding: .7em;
+    padding: .5em;
     background: none;
     border: none;
     outline: none;

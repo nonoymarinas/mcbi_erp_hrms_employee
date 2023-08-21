@@ -191,7 +191,7 @@
         //change grid of header
         const jsWorkerHeaderTitleConts = document.querySelectorAll('.jsWorkerHeaderTitleCont');
         for (let i = 0; i < jsWorkerHeaderTitleConts.length; i++) {
-            jsWorkerHeaderTitleConts[i].classList.add('display-grid-col-1fr-60px');
+            jsWorkerHeaderTitleConts[i].classList.add('display-grid-col-1fr-80px');
         }
 
 
@@ -213,9 +213,9 @@
         //insert
         jsWorkerInfoSubCont.insertBefore(jsWorkerImageIDMainCont, jsPersInfoHeaderTitleCont);
 
-        //change bottom border
-        const jsWorkerInfoTitleCont = document.querySelector('.jsWorkerInfoTitleCont');
-        jsWorkerInfoTitleCont.classList.add('border-bottom-1px-808080');
+        ////change bottom border
+        //const jsWorkerInfoTitleCont = document.querySelector('.jsWorkerInfoTitleCont');
+        //jsWorkerInfoTitleCont.classList.add('border-bottom-1px-808080');
 
         //change title text
         const jsWorkerInfoTitleText = document.querySelector('.jsWorkerInfoTitleText');

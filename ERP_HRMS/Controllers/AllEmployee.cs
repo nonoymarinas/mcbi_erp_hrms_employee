@@ -9,11 +9,6 @@ namespace ERP_HRMS.Controllers
     public class AllEmployee : Controller
     {
        
-
-        //public AllEmployee(IOptions<ConnectionSettings> connection)
-        //{
-        //    _connection = connection;
-        //}
         public IActionResult MainPage()
         {
             return View();
@@ -33,7 +28,7 @@ namespace ERP_HRMS.Controllers
         }
 
         [Route("select-image-source")]
-        async public Task<IActionResult> GetViewImageSource()
+        public IActionResult GetViewImageSource()
         {
             return View();
         }
