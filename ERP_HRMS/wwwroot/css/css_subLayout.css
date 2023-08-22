@@ -44,7 +44,7 @@ body {
 .sublayout01-header-cont {
     display: grid;
     grid-template-columns: auto 1fr 60px;
-    background: var(--mainHeaderBackgroundColor);
+    background: #3282ff;
     padding: .3em .5em;
     align-self: center;
     position: fixed;

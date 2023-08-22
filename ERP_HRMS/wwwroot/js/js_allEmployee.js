@@ -33,48 +33,48 @@
     const jsAllEmpSearchBtn = document.querySelector('.jsAllEmpSearchBtn');
     jsAllEmpSearchBtn.addEventListener('click', clickSearchBtn);
     async function clickSearchBtn() {
-        const MasterPersonID = document.querySelector('.jsSearchInput').getAttribute('data-id');
-        const formData = new FormData();
-        formData.append('MasterPersonID', MasterPersonID)
-        const options = {
-            method: 'POST',
-            body: formData
-        }
+        //const MasterPersonID = document.querySelector('.jsSearchInput').getAttribute('data-id');
+        //const formData = new FormData();
+        //formData.append('MasterPersonID', MasterPersonID)
+        //const options = {
+        //    method: 'POST',
+        //    body: formData
+        //}
        
-        const data = await fetchData.postData('single-employee-data', options)
+        //const data = await fetchData.postData('single-employee-data', options)
 
-        if (!data) return;
+        //if (!data) return;
 
-        //save data to employee local data
-        localData.personalInfo.masterPersonID = data.personalInfo.masterPersonID;
-        localData.personalInfo.employeeNumber = data.personalInfo.employeeNumber;
-        localData.personalInfo.firstName = data.personalInfo.firstName;
-        localData.personalInfo.middleName = data.personalInfo.middleName;
-        localData.personalInfo.lastName = data.personalInfo.lastName;
-        localData.personalInfo.dateOfBirth = dateFormat.yyyymmddDashed(data.personalInfo.dateOfBirth);
-        localData.personalInfo.isActive = false;
-        localData.personalInfo.isDataSaved = true;
+        ////save data to employee local data
+        //localData.personalInfo.masterPersonID = data.personalInfo.masterPersonID;
+        //localData.personalInfo.employeeNumber = data.personalInfo.employeeNumber;
+        //localData.personalInfo.firstName = data.personalInfo.firstName;
+        //localData.personalInfo.middleName = data.personalInfo.middleName;
+        //localData.personalInfo.lastName = data.personalInfo.lastName;
+        //localData.personalInfo.dateOfBirth = dateFormat.yyyymmddDashed(data.personalInfo.dateOfBirth);
+        //localData.personalInfo.isActive = false;
+        //localData.personalInfo.isDataSaved = true;
 
-        localData.benifits.umidNumber = data.benifits.umidNumber;
-        localData.benifits.sssNumber = data.benifits.sssNumber;
-        localData.benifits.pagIbigNumber = data.benifits.pagIbigNumber;
-        localData.benifits.philHealthNumber = data.benifits.philHealthNumber;
-        localData.benifits.tinNumber = data.benifits.tinNumber;
-        localData.benifits.isDataSaved = true;
+        //localData.benifits.umidNumber = data.benifits.umidNumber;
+        //localData.benifits.sssNumber = data.benifits.sssNumber;
+        //localData.benifits.pagIbigNumber = data.benifits.pagIbigNumber;
+        //localData.benifits.philHealthNumber = data.benifits.philHealthNumber;
+        //localData.benifits.tinNumber = data.benifits.tinNumber;
+        //localData.benifits.isDataSaved = true;
 
-        localData.contacts.mobileNumber = data.contacts.mobileNumber;
-        localData.contacts.landLineNumber = data.contacts.landLineNumber;
-        localData.contacts.emailAddress = data.contacts.emailAddress;
-        localData.contacts.isDataSaved = true;
+        //localData.contacts.mobileNumber = data.contacts.mobileNumber;
+        //localData.contacts.landLineNumber = data.contacts.landLineNumber;
+        //localData.contacts.emailAddress = data.contacts.emailAddress;
+        //localData.contacts.isDataSaved = true;
 
-        localData.compensation.basicSalary = data.compensation.basicSalary;
-        localData.compensation.allowance = data.compensation.allowance;
-        localData.compensation.currencyID = data.compensation.currencyID;
-        localData.compensation.ratePeriodID = data.compensation.ratePeriodID;
-        localData.compensation.hourPerDay = data.compensation.hourPerDay;
-        localData.compensation.dayPerMonth = data.compensation.dayPerMonth;
-        localData.compensation.isSalaryFixed = data.compensation.isSalaryFixed;
-        localData.compensation.isDataSaved = true;
+        //localData.compensation.basicSalary = data.compensation.basicSalary;
+        //localData.compensation.allowance = data.compensation.allowance;
+        //localData.compensation.currencyID = data.compensation.currencyID;
+        //localData.compensation.ratePeriodID = data.compensation.ratePeriodID;
+        //localData.compensation.hourPerDay = data.compensation.hourPerDay;
+        //localData.compensation.dayPerMonth = data.compensation.dayPerMonth;
+        //localData.compensation.isSalaryFixed = data.compensation.isSalaryFixed;
+        //localData.compensation.isDataSaved = true;
 
         //await employeeDetailsView();
 
