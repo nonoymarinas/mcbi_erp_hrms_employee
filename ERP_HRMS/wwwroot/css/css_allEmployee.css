@@ -287,11 +287,13 @@ input:-webkit-autofill:active {
     padding: .3em;
     border: 1px solid rgba(100,100,100,.4);
 }
-
+.emp-det-label{
+    font-size:.85em;
+    color:#555;
+}
 .emp-det-sub-cont {
     width: 100%;
-    margin-bottom:30px;
-    
+    margin-bottom: 30px;
 }
 
 .emp-det-sub-title-cont {
@@ -305,7 +307,7 @@ input:-webkit-autofill:active {
 
 .emp-det-sub-item-cont {
     width: 100%;
-    /*padding: 0 .3em;*/
+    padding: 0 .2em;
 }
 
 .emp-det-sub-ind-cont {
