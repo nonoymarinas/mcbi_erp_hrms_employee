@@ -40,6 +40,7 @@ input:-webkit-autofill:active {
     width: 100%;
     background:#111;
     border-bottom:1px solid rgba(100,100,100,.8);
+    z-index:1;
 }
 
 .workerinfo-item-main-cont {
@@ -91,9 +92,26 @@ input:-webkit-autofill:active {
     align-self: center;
     font-size: .85em;
 }
-
+.workerinfo-photo-main-cont{
+    display:grid;
+    grid-template-columns:auto 1fr;
+}
+.workerinfo-image-cont{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:160px;
+    width:160px;
+    border:1px solid #777;
+    border-radius:10px;
+}
+.workersinfo-image-svg {
+    fill: #999;
+    max-height: 90%;
+    max-width: 90%;
+}
 .workerinfo-item-input {
-    padding: .4em;
+    padding: .3em;
     font-size: .9em;
     border: none;
     background: none;
@@ -105,7 +123,7 @@ input:-webkit-autofill:active {
 .input-btn {
     background: #d5d5d5;
     border: none;
-    color: #808080;
+    color: #111;
     width: 100%;
     padding: 0 .7em;
     position: relative;
@@ -155,9 +173,9 @@ input:-webkit-autofill:active {
     align-items: center;
     width: 100%;
     border: none;
-    background: #179009;
+    background: #d5d5d5;
     height: 100%;
-    color: #d5d5d5;
+    color: #222;
     letter-spacing: .1em;
     cursor: pointer;
 }
@@ -170,13 +188,13 @@ input:-webkit-autofill:active {
 
     .workerinfo-btn:active {
         border: #808080;
-        background: #d5d5d5;
+        background: #999;
         color: #111;
     }
 
 .workerinfo-sub-title-text {
     padding: .3em 0;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: 500;
 }
 

@@ -6,11 +6,11 @@ using Microsoft.Extensions.Options;
 
 namespace ERP_HRMS.Controllers
 {
-    public class WorkersInformation : Controller
+    public class NewEmployee : Controller
     {
 		
 		[Route("employee-detail-page")]
-		public IActionResult MainPage()
+		public IActionResult NewEmployeeMainPage()
         {
             return View();
         }

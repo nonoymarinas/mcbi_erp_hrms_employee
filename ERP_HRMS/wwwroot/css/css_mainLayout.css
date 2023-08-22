@@ -1,7 +1,8 @@
 ﻿* {
     --headerHeight: 60px;
+    --subHeaderHeight: 40px;
     --headerFooter: 60px;
-    --mainHeaderBackgroundColor:#999;
+    --mainHeaderBackgroundColor: #999;
     font-family: Poppins,SansSerif,Verdana, Geneva, Tahoma;
 }
 

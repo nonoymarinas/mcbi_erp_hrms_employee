@@ -5,6 +5,14 @@
             <h2 class="workerinfo-title-text jsWorkerInfoTitleText">Workers Information Sheet</h2>
             <h2 class="workerinfo-title-close">&times;</h2>
         </div>
+        @*photo*@
+        <div class="workerinfo-photo-main-cont ">
+            <div class="workerinfo-image-cont">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="workersinfo-image-svg">
+                    <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
+                </svg>
+            </div>
+        </div>
 
         @*personal information*@
         <div class="workerinfo-persinfo-title-cont jsWorkerHeaderTitleCont jsPersInfoHeaderTitleCont">
@@ -26,7 +34,6 @@
             </div>
             <div class="workerinfo-item-cont">
                 <label class="workerinfo-item-label">Middle Name :</label>
-
                 <div class="workerinfo-input-icon-cont jsInputBtnCont">
                     <input name="MiddleName" class="workerinfo-item-input jsMiddleName validate jsPersInfoInput" data-name="middleName" />
                     <button class="position-relative input-btn jsWorkerInfoEditBtn">EDIT</button>
@@ -34,7 +41,6 @@
             </div>
             <div class="workerinfo-item-cont">
                 <label class="workerinfo-item-label">Last Name :</label>
-
                 <div class="workerinfo-input-icon-cont jsInputBtnCont">
                     <input name="LastName" class="workerinfo-item-input jsLastName validate jsPersInfoInput" data-name="lastName" />
                     <button class="position-relative input-btn jsWorkerInfoEditBtn">EDIT</button>
@@ -42,10 +48,20 @@
             </div>
             <div class="workerinfo-item-cont">
                 <label class="workerinfo-item-label">Birth Date :</label>
-
                 <div class="workerinfo-input-icon-cont jsInputBtnCont">
                     <input name="DateOfBirth" type="date" class="workerinfo-item-input jsDateOfBirth validate jsPersInfoInput" data-name="dateOfBirth" />
                     <button class="position-relative input-btn jsWorkerInfoEditBtn">EDIT</button>
+                </div>
+            </div>
+            <div class="workerinfo-item-cont">
+                <label class="workerinfo-item-label">Gender :</label>
+                <div class="workerinfo-input-icon-cont jsInputBtnCont">
+                    <select name="Gender" class="workerinfo-item-select jsPersInfoInput jsGender">
+                        <option class="workerinfo-item-options" value="0" data-id=0 selected>Select</option>
+                        <option class="workerinfo-item-options" value="1" data-id=1>Male</option>
+                        <option class="workerinfo-item-options" value="2" data-id=2>Female</option>
+                    </select>
+                    <button class="input-btn jsPersInfoInputEditBtn">EDIT</button>
                 </div>
             </div>
         </div>
@@ -104,7 +120,7 @@
         <div class="workerinfo-item-main-cont jsWorkerInfoItemContactMainCont">
             <div class="workerinfo-item-cont">
                 <label class="workerinfo-item-label">Mobile No* :</label>
-                
+
                 <div class="workerinfo-input-icon-cont jsInputBtnCont">
                     <input name="MobileNumber" class="workerinfo-item-input jsMobileNumber jsContactsInput" data-name="mobileNumber" />
                     <button class="input-btn jsContactsEditBtn">EDIT</button>

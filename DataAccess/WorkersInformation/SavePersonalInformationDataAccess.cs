@@ -28,7 +28,10 @@ namespace DataAccess
 					cmd.CommandText = "[speedx.hrms.master].[spSavePersonalInformation]";
 					cmd.CommandType = CommandType.StoredProcedure;
 
-					cmd.Parameters.Add(new SqlParameter("@FirstName", SqlDbType.NVarChar));
+                    cmd.Parameters.Add(new SqlParameter("@MasterPersonUserID", SqlDbType.Int));
+                    cmd.Parameters["@MasterPersonUserID"].Value = _personalInfo.MasterPersonUserID;
+
+                    cmd.Parameters.Add(new SqlParameter("@FirstName", SqlDbType.NVarChar));
 					cmd.Parameters["@FirstName"].Value = _personalInfo.FirstName;
 
 					cmd.Parameters.Add(new SqlParameter("@MiddleName", SqlDbType.NVarChar));
@@ -40,7 +43,10 @@ namespace DataAccess
 					cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.Date));
 					cmd.Parameters["@DateOfBirth"].Value = _personalInfo.DateOfBirth;
 
-					using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    cmd.Parameters.Add(new SqlParameter("@Gender", SqlDbType.Int));
+                    cmd.Parameters["@Gender"].Value = _personalInfo.Gender;
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
 					{
 						//Check for errors and if true, retreive the error message!
 
@@ -64,7 +70,8 @@ namespace DataAccess
 								dataModel.MiddleName = reader["MiddleName"].ToString();
 								dataModel.LastName = reader["LastName"].ToString();
 								dataModel.DateOfBirth = reader["DateOfBirth"].ToString();
-								dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
+                                dataModel.Gender = Convert.ToInt32(reader["Gender"]);
+                                dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodenumber"]);
 							}
 							
 						}

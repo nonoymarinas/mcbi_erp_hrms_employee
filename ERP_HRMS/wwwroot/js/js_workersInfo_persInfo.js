@@ -36,8 +36,13 @@ async function clickPersInfoSaveBtn(e) {
     let jsPersInfoInputs = document.querySelector('.jsWorkerInfoItemPersInfoMainCont').querySelectorAll('.jsPersInfoInput');
     let formData = new FormData();
 
+    formData.append('MasterPersonUserID',1)
     for (let i = 0; i < jsPersInfoInputs.length; i++) {
         formData.append(`${jsPersInfoInputs[i].getAttribute('name')}`, jsPersInfoInputs[i].value)
+    }
+
+    for (const pair of formData.entries()) {
+        console.log(`${pair[0]}, ${pair[1]}`);
     }
 
     const options = {
@@ -46,7 +51,7 @@ async function clickPersInfoSaveBtn(e) {
     }
 
     let data = await fetchData.postData('save-personal-information', options)
-
+    console.log(data)
     //remove spinner
     jsWorkerInfoSaveBtn.querySelector('.jsSpinnerCont').remove();
 

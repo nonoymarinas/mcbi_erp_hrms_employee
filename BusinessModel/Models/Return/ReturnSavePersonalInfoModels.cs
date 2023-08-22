@@ -16,5 +16,6 @@ namespace BusinessModel
 		public string? MiddleName { get; set; }
 		public string? LastName { get; set; }
 		public string? DateOfBirth { get; set; }
+		public int ? Gender { get; set; }
 	}
 }

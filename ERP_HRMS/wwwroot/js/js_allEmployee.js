@@ -36,15 +36,12 @@
         const MasterPersonID = document.querySelector('.jsSearchInput').getAttribute('data-id');
         const formData = new FormData();
         formData.append('MasterPersonID', MasterPersonID)
-
         const options = {
             method: 'POST',
             body: formData
         }
        
         const data = await fetchData.postData('single-employee-data', options)
-
-       
 
         if (!data) return;
 
@@ -58,7 +55,6 @@
         localData.personalInfo.isActive = false;
         localData.personalInfo.isDataSaved = true;
 
-     
         localData.benifits.umidNumber = data.benifits.umidNumber;
         localData.benifits.sssNumber = data.benifits.sssNumber;
         localData.benifits.pagIbigNumber = data.benifits.pagIbigNumber;
@@ -80,12 +76,22 @@
         localData.compensation.isSalaryFixed = data.compensation.isSalaryFixed;
         localData.compensation.isDataSaved = true;
 
-      
+        //await employeeDetailsView();
 
-        await employeeDetailsView();
-
-        
+        await displayEmployeeDetails();
     }
+
+    async function displayEmployeeDetails() {
+        //fetch view for display
+        const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
+        const view = await fetchData.viewData('single-employee-display-view');
+
+        const jsEmployeeDetailsMainCont = view.querySelector('.jsEmployeeDetailsMainCont');
+        jsSublayout01ContentSubCont.innerHTML = '';
+        jsSublayout01ContentSubCont.appendChild(jsEmployeeDetailsMainCont);
+    }
+
+
 
     async function employeeDetailsView(e) {
         //fetch view for display
@@ -102,10 +108,9 @@
         benifitsAfterSaved();
         contactsAfterSaved();
         compensationAfterSaved();
-
         modifiyUIDisplay();
-
     }
+
     async function persInfoAfterSaved() {
         //personal information
         document.querySelector('.jsEmployeeNumberText').textContent = localData.personalInfo.employeeNumber;

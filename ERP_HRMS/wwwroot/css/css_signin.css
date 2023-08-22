@@ -7,45 +7,36 @@
     background:#ffffff;
 }
 .sigin-header-text-cont {
-    display: flex;
-    justify-content: center;
+    
     align-items: flex-end;
-    text-align: center;
-    justify-self: center;
-    /*border: 1px solid red;*/
-    max-width: 600px;
-    padding: 1em 2em;
+    justify-self: self-start;
     width: 100%;
+    margin-bottom:20px;
 }
 .sigin-header-text {
-    font-size:1.2em;
+    font-size:1.5em;
 }
 .signin-user-cont {
     justify-self: center;
     grid-row-start: 2;
-    max-width: 600px;
+    max-width: 400px;
     padding: 1em 2em;
     width: 100%;
 }
-.signin-user-title-text{
-    font-size:1.5em;
-    padding:0 .5em;
-}
+
 .signin-user-email-input {
     border: 1px solid #808080;
     background: none;
     width: 100%;
-    padding: .75em;
+    padding: .5em;
     margin: .75em 0;
-    border-radius: 7px;
     outline:none;
 }
 .signin-user-password-input {
     border: none;
     background: none;
     width: 100%;
-    padding: .75em;
-    border-radius: 7px;
+    padding: .5em;
     outline:none;
 }
 .signin-user-password-cont {
@@ -53,7 +44,6 @@
     grid-template-columns: 1fr 50px;
     border: 1px solid #808080;
     margin: .75em 0;
-    border-radius: 7px;
 }
 
 .signin-user-password-svg-cont {
@@ -67,6 +57,7 @@
     display: flex;
     justify-content:center;
     margin: 1em 0;
+    display:none;
     
 }
 .forgot-password-text {
@@ -77,15 +68,33 @@
     display:flex;
     justify-content:center;
     margin: .75em 0;
-    padding: .65em;
-    border-radius: 7px;
+    padding: .5em;
     background:#555;
     color:#ffffff;
     font-weight:400;
     cursor:context-menu;
+    width:100%;
+    border:none;
 }
+    .signin-login-btn:hover {
+        background: #999;
+    }
 
 .error-login-text{
     color:#ff0000;
     font-weight:300;
+}
+.login-text-cont{
+    display:grid;
+    grid-template-columns:30px 1fr;
+    margin-bottom:10px;
+}
+.signin-lock-icon-svg{
+    height:20px;
+    align-self:center;
+}
+.signin-user-title-text {
+    font-size: 1em;
+    align-self:self-end;
+    font-weight:500;
 }

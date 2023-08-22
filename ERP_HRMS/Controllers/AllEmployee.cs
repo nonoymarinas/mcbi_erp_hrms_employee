@@ -13,6 +13,7 @@ namespace ERP_HRMS.Controllers
         {
             return View();
         }
+
         [Route("all-employee-data")]
         async public Task<IActionResult> GetMasterPersonData()
         {
@@ -31,6 +32,12 @@ namespace ERP_HRMS.Controllers
         public IActionResult GetViewImageSource()
         {
             return View();
+        }
+
+        [Route("single-employee-display-view")]
+        public IActionResult GetViewSingleEmployeeDisplay()
+        {
+            return View("SingleEmployeeDisplay");
         }
     }
 }
