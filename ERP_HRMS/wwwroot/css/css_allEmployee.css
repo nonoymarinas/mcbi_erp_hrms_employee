@@ -176,7 +176,7 @@ input:-webkit-autofill:active {
     margin-top: var(--subHeaderHeight);
     padding: 1em;
     max-width: 800px;
-    min-width: max-content;
+    /*min-width: max-content;*/
     background: #d5d5d5;
     width: 100%;
 }

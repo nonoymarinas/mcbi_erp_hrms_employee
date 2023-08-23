@@ -17,7 +17,13 @@ namespace DataAccess
         async public Task<ReturnGetEmployeeDataByIDModel> GetMasterPersonByID()
         {
             ReturnGetEmployeeDataByIDModel returnData = new();
-
+            List<Country> countryList = new();
+            List<Region> RegionList = new();
+            List<Gender> genderList = new();
+            List<Position> positionList = new();
+            List<Department> departmentList = new();
+            List<RatePeriod> ratePeriodList = new();
+            List<SalaryCondition> SalaryConditionList = new();
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -108,6 +114,89 @@ namespace DataAccess
 
                                 returnData.Compensation = workersCompensation;
                             }
+
+                            reader.NextResult();
+                            while (reader.Read())
+                            {
+                                countryList.Add(new Country()
+                                {
+                                    CountryID = Convert.ToInt32(reader["CountryID"]),
+                                    CountryName = reader["CountryName"].ToString(),
+                                });
+                            }
+                            returnData.CountryList= countryList;
+
+                            reader.NextResult();
+                            while (reader.Read())
+                            {
+                                RegionList.Add(new Region()
+                                {
+                                    CountryID = Convert.ToInt32(reader["CountryID"]),
+                                    RegionID = Convert.ToInt32(reader["RegionID"]),
+                                    RegionName = reader["RegionName"].ToString(),
+                                });
+                            }
+                            returnData.RegionList = RegionList;
+
+
+                            reader.NextResult();
+                            while (reader.Read())
+                            {
+                                genderList.Add(new Gender()
+                                {
+                                    GenderID = Convert.ToInt32(reader["GenderID"]),
+                                    GenderName = reader["GenderName"].ToString(),
+                                });
+                            }
+                            returnData.GenderList = genderList;
+
+
+                            reader.NextResult();
+                            while (reader.Read())
+                            {
+                                positionList.Add(new Position()
+                                {
+                                    PositionID = Convert.ToInt32(reader["PositionID"]),
+                                    PositionName = reader["PositionName"].ToString(),
+                                });
+                            }
+                            returnData.PositionList = positionList;
+
+
+                            reader.NextResult();
+                            while (reader.Read())
+                            {
+                                departmentList.Add(new Department()
+                                {
+                                    DepartmentID = Convert.ToInt32(reader["DepartmentID"]),
+                                    DepartmentName = reader["DepartmentName"].ToString(),
+                                });
+                            }
+                            returnData.DepartmentList = departmentList;
+
+
+                            reader.NextResult();
+                            while (reader.Read())
+                            {
+                                ratePeriodList.Add(new RatePeriod()
+                                {
+                                    RatePeriodID = Convert.ToInt32(reader["RatePeriodID"]),
+                                    RatePeriodName = reader["RatePeriodName"].ToString(),
+                                });
+                            }
+                            returnData.RatePeriodList = ratePeriodList;
+
+
+                            reader.NextResult();
+                            while (reader.Read())
+                            {
+                                SalaryConditionList.Add(new SalaryCondition()
+                                {
+                                    SalaryConditionID = Convert.ToInt32(reader["SalaryConditionID"]),
+                                    SalaryConditionName = reader["SalaryConditionName"].ToString(),
+                                });
+                            }
+                            returnData.SalaryConditionList = SalaryConditionList;
 
                             reader.NextResult();
                             if (reader.HasRows)

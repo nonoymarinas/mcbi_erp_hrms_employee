@@ -13,5 +13,15 @@ namespace BusinessModel
 		public WorkersBenifitsModel? Benifits { get; set; }
 		public WorkersContactsModel? Contacts { get; set; }
 		public WorkersCompensationModel? Compensation { get; set; }
+		public List<Gender>? GenderList { get; set; }
+		public List<Country>? CountryList { get; set; }
+		public List<Region>? RegionList { get; set; }
+		public List<Position>? PositionList { get; set; }
+		public List<Department>? DepartmentList { get; set; }
+		public List<RatePeriod>? RatePeriodList { get; set; }
+		public List<SalaryCondition>? SalaryConditionList { get; set; }
+
+
+
 	}
 }
