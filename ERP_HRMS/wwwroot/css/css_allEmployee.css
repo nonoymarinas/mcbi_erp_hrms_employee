@@ -255,7 +255,7 @@ input:-webkit-autofill:active {
 
     .emp-det-ind-item-btn:hover {
         background: #b5b5b5;
-        color:#222;
+        color: #222;
     }
 
     .emp-det-ind-item-btn:active {
@@ -287,10 +287,12 @@ input:-webkit-autofill:active {
     padding: .3em;
     border: 1px solid rgba(100,100,100,.4);
 }
-.emp-det-label{
-    font-size:.85em;
-    color:#555;
+
+.emp-det-label {
+    font-size: .85em;
+    color: #555;
 }
+
 .emp-det-sub-cont {
     width: 100%;
     margin-bottom: 30px;
@@ -314,4 +316,22 @@ input:-webkit-autofill:active {
     display: grid;
     grid-template-columns: 160px 1fr 50px;
     grid-gap: 30px;
+}
+
+.emp-det-ind-item-input {
+    background: none;
+    border: none;
+    color:#111;
+    font-weight:400;
+    font-size:1em;
+    padding:.1em .3em;
+    outline:none;
+}
+
+.input-enable {
+    background: #eeeeee;
+    border:1px solid rgba(9,9,9,.4);
+}
+.btn-text-color-red{
+    color:red;
 }

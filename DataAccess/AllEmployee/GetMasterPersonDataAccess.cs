@@ -8,11 +8,6 @@ namespace DataAccess
     {
         private readonly string connString = GlobalValues.ConnectionString;
 
-        //public GetMasterPersonDataAccess(ConnectionSettings connection)
-        //{
-        //    _connection = connection;
-        //}
-
         async public Task<ReturnGetMasterPersonDataModel> GetMasterPersonData()
         {
             ReturnGetMasterPersonDataModel data = new();

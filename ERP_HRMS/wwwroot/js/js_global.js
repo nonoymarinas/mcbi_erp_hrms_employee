@@ -686,5 +686,4 @@ const allEmployeeRefData = {
 
         return linkedList;
     },
-
 }

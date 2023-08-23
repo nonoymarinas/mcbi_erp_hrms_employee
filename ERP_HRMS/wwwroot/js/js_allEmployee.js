@@ -17,7 +17,7 @@
             let htmlString = `<li class="search-item-result-li jsSearchResultLi" data-id=${searchDataArray[i].masterPersonID}>${searchDataArray[i].fullName}</li>`
             let jsSearchResultLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSearchResultLi');
 
-            jsSearchResultLi.addEventListener('click',clickSearchResultLi)
+            jsSearchResultLi.addEventListener('click', clickSearchResultLi)
 
             function clickSearchResultLi(e) {
                 jsSearchInput.setAttribute('data-id', e.target.getAttribute('data-id'));
@@ -27,23 +27,23 @@
 
             jsSearchCont.appendChild(jsSearchResultLi);
         }
-       
+
     }
 
     const jsAllEmpSearchBtn = document.querySelector('.jsAllEmpSearchBtn');
     jsAllEmpSearchBtn.addEventListener('click', clickSearchBtn);
     async function clickSearchBtn() {
-        //const MasterPersonID = document.querySelector('.jsSearchInput').getAttribute('data-id');
-        //const formData = new FormData();
-        //formData.append('MasterPersonID', MasterPersonID)
-        //const options = {
-        //    method: 'POST',
-        //    body: formData
-        //}
-       
-        //const data = await fetchData.postData('single-employee-data', options)
+        const MasterPersonID = document.querySelector('.jsSearchInput').getAttribute('data-id');
+        const formData = new FormData();
+        formData.append('MasterPersonID', MasterPersonID)
+        const options = {
+            method: 'POST',
+            body: formData
+        }
 
-        //if (!data) return;
+        const data = await fetchData.postData('single-employee-data', options)
+
+        if (!data) return;
 
         ////save data to employee local data
         //localData.personalInfo.masterPersonID = data.personalInfo.masterPersonID;
@@ -89,6 +89,54 @@
         const jsEmployeeDetailsMainCont = view.querySelector('.jsEmployeeDetailsMainCont');
         jsSublayout01ContentSubCont.innerHTML = '';
         jsSublayout01ContentSubCont.appendChild(jsEmployeeDetailsMainCont);
+
+        await editAndUpdateFunction();
+    }
+
+    async function editAndUpdateFunction() {
+        const jsEmpDetEditInputBtns = document.querySelectorAll('.jsEmpDetEditInputBtn');
+        jsEmpDetEditInputBtns.forEach(item => {
+            item.addEventListener('click', handleClickInputEditBtn)
+        })
+
+        function handleClickInputEditBtn(e) {
+            const input = e.target.closest('.jsEmpDetIndCont').querySelector('input');
+            input.removeAttribute('disabled');
+            input.classList.add('input-enable');
+            e.target.textContent = 'save';
+            e.target.classList.add('btn-text-color-red');
+            e.target.removeEventListener('click', handleClickInputEditBtn);
+            e.target.addEventListener('click', handleClickInputSaveBtn);
+        }
+        async function handleClickInputSaveBtn(e) {
+            const input = e.target.closest('.jsEmpDetIndCont').querySelector('input');
+            //perform save operation
+            const formData = new FormData();
+            const value = input.value;
+            const name = input.getAttribute('name');
+            formData.append('name', name);
+            formData.append('value', value);
+
+            //change apperance here
+            input.setAttribute('disabled', true);
+            input.classList.remove('input-enable');
+            e.target.textContent = 'edit';
+            e.target.classList.remove('btn-text-color-red');
+            e.target.removeEventListener('click', handleClickInputSaveBtn);
+            e.target.addEventListener('click', handleClickInputEditBtn);
+        }
+
+
+
+        const jsEmpDetEditSelectBtns = document.querySelectorAll('.jsEmpDetEditSelectBtn')
+        jsEmpDetEditSelectBtns.forEach(item => {
+            item.addEventListener('click', handleClickSelectEditBtn)
+        })
+
+        function handleClickSelectEditBtn(e) {
+            const select = e.target.closest('.jsEmpDetIndCont').querySelector('select');
+            select.removeAttribute('disabled')
+        }
     }
 
 
@@ -122,12 +170,12 @@
         //disable save button
         disablePersInfoSaveAndEnableEditBtn();
         disablePersInfoInputBtn();
-        
+
         //this function should run manually because save button is disabled without clicking, so this function is not activated
         await personalInfoEditAndUpdate()
     }
 
-    async function benifitsAfterSaved()  {
+    async function benifitsAfterSaved() {
         //benifits information
         document.querySelector('.jsUMIDNumber').value = localData.benifits.umidNumber;
         document.querySelector('.jsSSSNumber').value = localData.benifits.sssNumber;
@@ -227,7 +275,7 @@
         jsWorkerInfoTitleText.textContent = 'Employee Information'
 
         //add event listener to image profile
-        jsWorkerImageIDMainCont.querySelector('.jsWorkerImageIdSubCont').addEventListener('click',clickEmployeeImageProfile)
+        jsWorkerImageIDMainCont.querySelector('.jsWorkerImageIdSubCont').addEventListener('click', clickEmployeeImageProfile)
 
     }
 
@@ -258,7 +306,7 @@
             readInputEmployeeImageFileInput()
         }
 
-        
+
         function readInputEmployeeImageFileInput() {
             document.querySelector('.jsWorkerImageSVG').classList.add('display-none');
             const image = document.querySelector('.jsEmployeeImage');
@@ -288,6 +336,6 @@
 
         }
     }
-    
+
 
 }
