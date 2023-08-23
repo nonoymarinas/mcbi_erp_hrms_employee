@@ -39,5 +39,11 @@ namespace ERP_HRMS.Controllers
         {
             return View("SingleEmployeeDisplay");
         }
+
+        [Route("update-employee-info")]
+        public IActionResult UpdateEmployeeInfo(ParamEmployeeInfoAttr empInfo)
+        {
+            return Json(empInfo);
+        }
     }
 }

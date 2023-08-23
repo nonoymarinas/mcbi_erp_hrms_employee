@@ -1,49 +1,49 @@
 ﻿async function allEmployee() {
     //load reference data
-    const linkedList = await allEmployeeRefData.getMasterPersonData()
-    const jsSearchInput = document.querySelector('.jsSearchInput');
-    jsSearchInput.addEventListener('input', inputSearchName)
-    let jsSearchCont = document.querySelector('.jsSearchCont');
-    function inputSearchName(e) {
-        if (e.target.value == '') {
-            jsSearchCont.classList.add('display-none');
-        } else if (jsSearchCont.classList.contains('display-none')) {
-            jsSearchCont.classList.remove('display-none');
-        }
+    //const linkedList = await allEmployeeRefData.getMasterPersonData()
+    //const jsSearchInput = document.querySelector('.jsSearchInput');
+    //jsSearchInput.addEventListener('input', inputSearchName)
+    //let jsSearchCont = document.querySelector('.jsSearchCont');
+    //function inputSearchName(e) {
+    //    if (e.target.value == '') {
+    //        jsSearchCont.classList.add('display-none');
+    //    } else if (jsSearchCont.classList.contains('display-none')) {
+    //        jsSearchCont.classList.remove('display-none');
+    //    }
 
-        jsSearchCont.innerHTML = '';
-        let searchDataArray = linkedList.linkedListIndexOf('fullName', e.target.value)
-        for (let i = 0; i < searchDataArray.length; i++) {
-            let htmlString = `<li class="search-item-result-li jsSearchResultLi" data-id=${searchDataArray[i].masterPersonID}>${searchDataArray[i].fullName}</li>`
-            let jsSearchResultLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSearchResultLi');
+    //    jsSearchCont.innerHTML = '';
+    //    let searchDataArray = linkedList.linkedListIndexOf('fullName', e.target.value)
+    //    for (let i = 0; i < searchDataArray.length; i++) {
+    //        let htmlString = `<li class="search-item-result-li jsSearchResultLi" data-id=${searchDataArray[i].masterPersonID}>${searchDataArray[i].fullName}</li>`
+    //        let jsSearchResultLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSearchResultLi');
 
-            jsSearchResultLi.addEventListener('click', clickSearchResultLi)
+    //        jsSearchResultLi.addEventListener('click', clickSearchResultLi)
 
-            function clickSearchResultLi(e) {
-                jsSearchInput.setAttribute('data-id', e.target.getAttribute('data-id'));
-                jsSearchInput.value = e.target.textContent;
-                jsSearchCont.classList.add('display-none');
-            }
+    //        function clickSearchResultLi(e) {
+    //            jsSearchInput.setAttribute('data-id', e.target.getAttribute('data-id'));
+    //            jsSearchInput.value = e.target.textContent;
+    //            jsSearchCont.classList.add('display-none');
+    //        }
 
-            jsSearchCont.appendChild(jsSearchResultLi);
-        }
+    //        jsSearchCont.appendChild(jsSearchResultLi);
+    //    }
 
-    }
+    //}
 
     const jsAllEmpSearchBtn = document.querySelector('.jsAllEmpSearchBtn');
     jsAllEmpSearchBtn.addEventListener('click', clickSearchBtn);
     async function clickSearchBtn() {
-        const MasterPersonID = document.querySelector('.jsSearchInput').getAttribute('data-id');
-        const formData = new FormData();
-        formData.append('MasterPersonID', MasterPersonID)
-        const options = {
-            method: 'POST',
-            body: formData
-        }
+        //const MasterPersonID = document.querySelector('.jsSearchInput').getAttribute('data-id');
+        //const formData = new FormData();
+        //formData.append('MasterPersonID', MasterPersonID)
+        //const options = {
+        //    method: 'POST',
+        //    body: formData
+        //}
 
-        const data = await fetchData.postData('single-employee-data', options)
+        //const data = await fetchData.postData('single-employee-data', options)
 
-        if (!data) return;
+        //if (!data) return;
 
         ////save data to employee local data
         //localData.personalInfo.masterPersonID = data.personalInfo.masterPersonID;
@@ -114,8 +114,21 @@
             const formData = new FormData();
             const value = input.value;
             const name = input.getAttribute('name');
-            formData.append('name', name);
-            formData.append('value', value);
+            formData.append('Name', name);
+            formData.append('Value', value);
+
+            for (const pair of formData.entries()) {
+                console.log(`${pair[0]}, ${pair[1]}`);
+            }
+
+            const options = {
+                method: 'POST',
+                body: formData
+            }
+
+            const data = await fetchData.postData('update-employee-info', options)
+
+            console.log(data);
 
             //change apperance here
             input.setAttribute('disabled', true);
