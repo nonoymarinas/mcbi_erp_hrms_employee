@@ -64,6 +64,7 @@ namespace DataAccess
                                     MiddleName = reader["MiddleName"].ToString(),
                                     LastName = reader["LastName"].ToString(),
                                     DateOfBirth = reader["DateOfBirth"].ToString(),
+                                    GenderID = Convert.ToInt32(reader["GenderID"]),
                                 };
 
                                 returnData.PersonalInfo = personalInfo;

@@ -82,6 +82,8 @@
     }
 
     async function displayEmployeeDetails(data) {
+        let htmlString;
+
         //fetch view for display
         const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
         const view = await fetchData.viewData('single-employee-display-view');
@@ -101,6 +103,59 @@
         //last name
         const lastName = document.querySelector('.jsPerInfoLastName');
         lastName.value = data.personalInfo.lastName;
+
+        //date of birth
+        const dateOfBirth = document.querySelector('.jsPerInfoDateOfBirth')
+        dateOfBirth.value = data.personalInfo.dateOfBirth
+
+        //gender
+        const gender = document.querySelector('.jsPerInfoGender');
+        gender.innerHTML = '';
+        htmlString = `<option class="emp-det-select-options jsSelectOption" value="0">Select</option>`;
+
+        let jsSelectOption = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSelectOption');
+        gender.appendChild(jsSelectOption);
+
+        data.genderList.forEach(item => {
+            //determine the selected value
+            if (data.personalInfo.genderID == item.genderID) {
+                htmlString = `<option class="emp-det-select-options jsSelectOption" value="${item.genderID}" selected>${item.genderName}</option>`;
+            } else {
+                htmlString = `<option class="emp-det-select-options jsSelectOption" value="${item.genderID}">${item.genderName}</option>`;
+            }
+            jsSelectOption = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSelectOption');
+            gender.appendChild(jsSelectOption);
+        })
+
+        //sss number
+        const sssNumber = document.querySelector('.jsBenifitsSssNo')
+        sssNumber.value = data.benifits.sssNumber
+
+        //philhealth number
+        const philhealthNumber = document.querySelector('.jsBenifitsPhilHealthNo')
+        philhealthNumber.value = data.benifits.philHealthNumber
+
+        //pagibig number
+        const pagibigNumber = document.querySelector('.jsBenifitsPagIbigNo')
+        pagibigNumber.value = data.benifits.pagIbigNumber
+
+
+
+        //tin number
+        const tinNumber = document.querySelector('.jsBenifitsTinNo')
+        tinNumber.value = data.benifits.tinNumber
+
+        //mobile number
+        const mobileNumber = document.querySelector('.jsContactsMobileNo');
+        mobileNumber.value = data.contacts.mobileNumber
+
+        //landline number
+        const landlineNumber = document.querySelector('.jsContactsLandlineNo');
+        landlineNumber.value = data.contacts.landLineNumber
+
+        //email add
+        const emailAddress = document.querySelector('.jsContactsEmailAdd');
+        emailAddress.value = data.contacts.emailAddress
 
         await editAndUpdateFunction();
     }
