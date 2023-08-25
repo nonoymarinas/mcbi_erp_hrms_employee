@@ -125,6 +125,15 @@ async function clickMainMenuNewEmployee() {
 }
 
 async function clickMainMenuAllEmployee() {
+    //spinner on
+    document.body.appendChild(spinnerType01());
+    const linkedList = await allEmployeeRefData.getMasterPersonData()
+
+    //spinner off
+    document.querySelector('.jsSpinnerCont').remove();
+
+    if (linkedList == null) return;
+    
     const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
     const view = await fetchData.viewData('/AllEmployee/MainPage');
 
@@ -132,7 +141,7 @@ async function clickMainMenuAllEmployee() {
     jsSublayout01ContentSubCont.innerHTML = '';
     jsSublayout01ContentSubCont.appendChild(jsAllEmployeeMainCont);
 
-    await allEmployee();
+    await allEmployee(linkedList);
 }
 
 function clickMainMenuLiToogleDisplay(e) {

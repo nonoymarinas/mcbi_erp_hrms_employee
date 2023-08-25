@@ -669,10 +669,9 @@ const allEmployeeRefData = {
     getMasterPersonData: async function () {
         //note: parameters is an integer (1,2,3,..) see database meaning for numbers
         //for now 1 is for ViewSalesByDate, 2 is ViewSalesByAgent
-        let linkedList;
+        let linkedList = null;
 
-        //spinner on
-        document.body.appendChild(spinnerType01());
+        
         const data = await fetchData.getData('all-employee-data')
         if (data != null) {
             linkedList = new LinkedList(data.masterPersonList[0])
@@ -681,8 +680,7 @@ const allEmployeeRefData = {
             }
         }
 
-        //spinner on
-        document.querySelector('.jsSpinnerCont').remove();
+        
 
         return linkedList;
     },

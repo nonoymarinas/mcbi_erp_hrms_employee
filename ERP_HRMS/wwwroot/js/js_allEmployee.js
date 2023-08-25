@@ -1,6 +1,5 @@
-﻿async function allEmployee() {
+﻿async function allEmployee(linkedList) {
     //load reference data
-    const linkedList = await allEmployeeRefData.getMasterPersonData()
     const jsSearchInput = document.querySelector('.jsSearchInput');
     jsSearchInput.addEventListener('input', inputSearchName)
     let jsSearchCont = document.querySelector('.jsSearchCont');
