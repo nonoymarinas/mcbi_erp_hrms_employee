@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'speedx-hrms-employee-records'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A05D3D5D40644017AD3D83D7EF03F8BB }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_195272BAF5CF496CB9C704437E6C8520 }}
           package: .
