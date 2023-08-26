@@ -424,7 +424,7 @@
                 arr.forEach(item => {
                     htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.cityID}">${item.cityName}</li>`
                     const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
-                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiProvince)
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiCity)
                     ul.appendChild(jsAllEmpCustomSelectLi);
                 })
             }
@@ -468,6 +468,12 @@
         }
 
         function handleInputAddressProvince(e) {
+            //note: input search all, while arrow only show what is inside the linkedlist
+            //procedure
+            //1.Update higher
+            //2.Clear lower
+            //3.Update linkedlist
+
             const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
             ul.innerHTML = '';
             const SearchString = e.target.value.trim();
@@ -546,6 +552,7 @@
         }
 
         function handleClickSelectLiProvince(e) {
+            const provinceID = e.currentTarget.getAttribute('data-id')
             //hide select ul
             const ul = e.target.closest('.jsAllEmpAddressUl');
             ul.classList.add('display-none')
@@ -554,6 +561,24 @@
             const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
             jsCustomSelectInput.value = e.currentTarget.textContent;
             jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+
+            //update city linkedlist
+            let cityArr = []
+            data.cityList.forEach(item => {
+                if (item.provinceID == provinceID) {
+                    cityArr.push(item)
+                }
+            })
+
+            cityLinkedlist = new LinkedList(cityArr[0])
+            for (let i = 1; i < cityArr.length; i++) {
+                cityLinkedlist.push(cityArr[i])
+            }
+
+            //clear city data
+            const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity');
+            jsCustomSelectInputCity.value = '';
+            jsCustomSelectInputCity.setAttribute('data-id', 0)
         }
 
         function handleClickSelectLiCity(e) {
