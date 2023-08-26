@@ -29,6 +29,10 @@
 
     }
 
+
+
+
+
     const jsAllEmpSearchBtn = document.querySelector('.jsAllEmpSearchBtn');
     jsAllEmpSearchBtn.addEventListener('click', clickSearchBtn);
     async function clickSearchBtn() {
@@ -44,43 +48,13 @@
         console.log(data)
         if (!data) return;
 
-        ////save data to employee local data
-        //localData.personalInfo.masterPersonID = data.personalInfo.masterPersonID;
-        //localData.personalInfo.employeeNumber = data.personalInfo.employeeNumber;
-        //localData.personalInfo.firstName = data.personalInfo.firstName;
-        //localData.personalInfo.middleName = data.personalInfo.middleName;
-        //localData.personalInfo.lastName = data.personalInfo.lastName;
-        //localData.personalInfo.dateOfBirth = dateFormat.yyyymmddDashed(data.personalInfo.dateOfBirth);
-        //localData.personalInfo.isActive = false;
-        //localData.personalInfo.isDataSaved = true;
-
-        //localData.benifits.umidNumber = data.benifits.umidNumber;
-        //localData.benifits.sssNumber = data.benifits.sssNumber;
-        //localData.benifits.pagIbigNumber = data.benifits.pagIbigNumber;
-        //localData.benifits.philHealthNumber = data.benifits.philHealthNumber;
-        //localData.benifits.tinNumber = data.benifits.tinNumber;
-        //localData.benifits.isDataSaved = true;
-
-        //localData.contacts.mobileNumber = data.contacts.mobileNumber;
-        //localData.contacts.landLineNumber = data.contacts.landLineNumber;
-        //localData.contacts.emailAddress = data.contacts.emailAddress;
-        //localData.contacts.isDataSaved = true;
-
-        //localData.compensation.basicSalary = data.compensation.basicSalary;
-        //localData.compensation.allowance = data.compensation.allowance;
-        //localData.compensation.currencyID = data.compensation.currencyID;
-        //localData.compensation.ratePeriodID = data.compensation.ratePeriodID;
-        //localData.compensation.hourPerDay = data.compensation.hourPerDay;
-        //localData.compensation.dayPerMonth = data.compensation.dayPerMonth;
-        //localData.compensation.isSalaryFixed = data.compensation.isSalaryFixed;
-        //localData.compensation.isDataSaved = true;
-
-        //await employeeDetailsView();
-
         await displayEmployeeDetails(data);
     }
 
     async function displayEmployeeDetails(data) {
+
+
+
         let htmlString;
 
         //fetch view for display
@@ -154,19 +128,75 @@
 
         //email add
         const emailAddress = document.querySelector('.jsContactsEmailAdd');
-        emailAddress.value = data.contacts.emailAddress
+        emailAddress.value = data.contacts.emailAddress;
 
-        await editAndUpdateFunction();
+
+        //address country
+        //(function country() {
+        //    const country = document.querySelector('.jsAddressCountry');
+        //    country.innerHTML = '';
+        //    let htmlString = `<option class="emp-det-select-options jsSelectOption" value="0">Select</option>`;
+
+        //    let jsSelectOption = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSelectOption');
+        //    country.appendChild(jsSelectOption);
+
+        //    data.countryList.forEach(item => {
+        //        //determine the selected value
+        //        if (data.philippineAddress.countryID == item.countryID) {
+        //            htmlString = `<option class="emp-det-select-options jsSelectOption" value="${item.countryID}" selected>${item.countryName}</option>`;
+        //        } else {
+        //            htmlString = `<option class="emp-det-select-options jsSelectOption" value="${item.countryID}">${item.countryName}</option>`;
+        //        }
+        //        jsSelectOption = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSelectOption');
+
+        //        jsSelectOption.addEventListener('click',handleClickOptionsCountry)
+
+        //        function handleClickOptionsCountry() {
+        //            alert('options')
+        //        }
+
+        //        country.appendChild(jsSelectOption);
+        //    })
+        //})();
+
+        //address region
+
+        await editAndUpdateFunction(data);
     }
 
-    async function editAndUpdateFunction() {
+    async function editAndUpdateFunction(data) {
+
+        //country address linkedlist
+        let countryLinkedlist = new LinkedList(data.countryList[0])
+        for (let i = 1; i < data.countryList.length; i++) {
+            countryLinkedlist.push(data.countryList[i])
+        }
+
+        //region address linkedlist
+        let regionLinkedlist = new LinkedList(data.regionList[0])
+        for (let i = 1; i < data.regionList.length; i++) {
+            regionLinkedlist.push(data.regionList[i])
+        }
+
+        //province address linkedlist
+        let provinceLinkedlist = new LinkedList(data.provinceList[0])
+        for (let i = 1; i < data.provinceList.length; i++) {
+            provinceLinkedlist.push(data.provinceList[i])
+        }
+
+        //city address linkedlist
+        let cityLinkedlist = new LinkedList(data.cityList[0])
+        for (let i = 1; i < data.cityList.length; i++) {
+            cityLinkedlist.push(data.cityList[i])
+        }
+
         const jsEmpDetEditInputBtns = document.querySelectorAll('.jsEmpDetEditInputBtn');
         jsEmpDetEditInputBtns.forEach(item => {
             item.addEventListener('click', handleClickInputEditBtn)
         })
 
         function handleClickInputEditBtn(e) {
-            const input = e.target.closest('.jsEmpDetIndCont').querySelector('input');
+            const input = e.target.closest('.jsEmpDetIndCont').querySelector('.jsInput');
             input.removeAttribute('disabled');
             input.classList.add('input-enable');
             e.target.textContent = 'save';
@@ -174,12 +204,14 @@
             e.target.removeEventListener('click', handleClickInputEditBtn);
             e.target.addEventListener('click', handleClickInputSaveBtn);
         }
+
         async function handleClickInputSaveBtn(e) {
-            const input = e.target.closest('.jsEmpDetIndCont').querySelector('input');
+            const input = e.target.closest('.jsEmpDetIndCont').querySelector('.jsInput');
             //perform save operation
             const formData = new FormData();
             const value = input.value;
             const name = input.getAttribute('name');
+            formData.append('MasterPersonID', data.personalInfo.masterPersonID)
             formData.append('Name', name);
             formData.append('Value', value);
 
@@ -192,9 +224,9 @@
                 body: formData
             }
 
-            const data = await fetchData.postData('update-employee-info', options)
+            const updateReturnData = await fetchData.postData('update-employee-info', options)
 
-            console.log(data);
+            console.log(updateReturnData);
 
             //change apperance here
             input.setAttribute('disabled', true);
@@ -205,17 +237,367 @@
             e.target.addEventListener('click', handleClickInputEditBtn);
         }
 
+        const jsEmpDetAddressEditBtn = document.querySelector('.jsEmpDetAddressEditBtn');
+        jsEmpDetAddressEditBtn.addEventListener('click', handleClickAddressEditBtn);
 
+        const jsEmpDetAddressCancelBtn = document.querySelector('.jsEmpDetAddressCancelBtn');
+        jsEmpDetAddressCancelBtn.addEventListener('click', handleClickAddressCancelBtn);
 
-        const jsEmpDetEditSelectBtns = document.querySelectorAll('.jsEmpDetEditSelectBtn')
-        jsEmpDetEditSelectBtns.forEach(item => {
-            item.addEventListener('click', handleClickSelectEditBtn)
-        })
-
-        function handleClickSelectEditBtn(e) {
-            const select = e.target.closest('.jsEmpDetIndCont').querySelector('select');
-            select.removeAttribute('disabled')
+        function handleClickAddressEditBtn(e) {
+            enableAddressEditMode()
         }
+
+        function handleClickAddressSaveBtn(e) {
+            disableAddressEditMode()
+        }
+
+        function handleClickAddressCancelBtn() {
+            disableAddressEditMode()
+        }
+
+        function enableAddressEditMode() {
+            const jsAllEmpCustomSelectInputArrowConts = document.querySelectorAll('.jsAllEmpCustomSelectInputArrowCont');
+            jsAllEmpCustomSelectInputArrowConts.forEach(item => {
+                enableCustomSelectInput(item)
+            })
+
+            const jsEmpDetAddressEditBtn = document.querySelector('.jsEmpDetAddressEditBtn');
+            jsEmpDetAddressEditBtn.textContent = 'Save';
+            jsEmpDetAddressEditBtn.classList.add('btn-text-color-red');
+            jsEmpDetAddressEditBtn.removeEventListener('click', handleClickAddressEditBtn);
+            jsEmpDetAddressEditBtn.addEventListener('click', handleClickAddressSaveBtn);
+
+            //inputs address country
+            const jsCustomSelectInputCountry = document.querySelector('.jsCustomSelectInputCountry');
+            jsCustomSelectInputCountry.addEventListener('input', handleInputAddressCountry)
+
+            //inputs address region
+            const jsCustomSelectInputRegion = document.querySelector('.jsCustomSelectInputRegion');
+            jsCustomSelectInputRegion.addEventListener('input', handleInputAddressRegion)
+
+            //inputs address province
+            const jsCustomSelectInputProvince = document.querySelector('.jsCustomSelectInputProvince');
+            jsCustomSelectInputProvince.addEventListener('input', handleInputAddressProvince)
+
+            //inputs address city
+            const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity');
+            jsCustomSelectInputCity.addEventListener('input', handleInputAddressCity)
+
+            //select arrow country
+            const jsCutomSelectArrowContCountry = document.querySelector('.jsCutomSelectArrowContCountry');
+            jsCutomSelectArrowContCountry.addEventListener('click', handleClickInputArrowCountry)
+
+            //select arrow region
+            const jsCutomSelectArrowContRegion = document.querySelector('.jsCutomSelectArrowContRegion');
+            jsCutomSelectArrowContRegion.addEventListener('click', handleClickInputArrowRegion)
+
+            //select arrow province
+            const jsCutomSelectArrowContProvince = document.querySelector('.jsCutomSelectArrowContProvince');
+            jsCutomSelectArrowContProvince.addEventListener('click', handleClickInputArrowProvince)
+
+            //select arrow city
+            const jsCutomSelectArrowContCity = document.querySelector('.jsCutomSelectArrowContCity');
+            jsCutomSelectArrowContCity.addEventListener('click', handleClickInputArrowCity)
+
+            //enable cancel btn
+            const jsEmpDetAddressCancelBtn = document.querySelector('.jsEmpDetAddressCancelBtn');
+            jsEmpDetAddressCancelBtn.addEventListener('click', handleClickAddressCancelBtn);
+            jsEmpDetAddressCancelBtn.classList.remove('disbale-cancel-btn');
+        }
+
+        function disableAddressEditMode() {
+            const jsAllEmpCustomSelectInputArrowConts = document.querySelectorAll('.jsAllEmpCustomSelectInputArrowCont');
+            jsAllEmpCustomSelectInputArrowConts.forEach(item => {
+                disableCustomSelectInput(item)
+            })
+
+            const jsEmpDetAddressEditBtn = document.querySelector('.jsEmpDetAddressEditBtn');
+            jsEmpDetAddressEditBtn.textContent = 'Edit';
+            jsEmpDetAddressEditBtn.classList.remove('btn-text-color-red');
+            jsEmpDetAddressEditBtn.removeEventListener('click', handleClickAddressSaveBtn);
+            jsEmpDetAddressEditBtn.addEventListener('click', handleClickAddressEditBtn);
+
+            const jsCutomSelectArrowConts = document.querySelectorAll('.jsCutomSelectArrowCont');
+            jsCutomSelectArrowConts.forEach(item => {
+                item.removeEventListener('click', handleClickInputArrowRegion)
+            })
+
+            //hide selection
+            const jsAllEmpAddressUls = document.querySelectorAll('.jsAllEmpAddressUl');
+            jsAllEmpAddressUls.forEach(item => {
+                item.classList.add('display-none')
+            })
+
+            //disable cancel btn
+            const jsEmpDetAddressCancelBtn = document.querySelector('.jsEmpDetAddressCancelBtn');
+            jsEmpDetAddressCancelBtn.removeEventListener('click', handleClickAddressCancelBtn);
+            jsEmpDetAddressCancelBtn.classList.add('disbale-cancel-btn');
+        }
+
+        //click arrow events
+
+        function handleClickInputArrowCountry(e) {
+            //close other open ul
+            document.querySelector('.jsAllEmpAddressUlRegion').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlProvince').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlCity').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlBarangay').classList.add('display-none')
+
+            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            ul.classList.toggle('display-none')
+            ul.innerHTML = '';
+
+            const arr = countryLinkedlist.getAll()
+
+            if (arr.length > 0) {
+                arr.forEach(item => {
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.countryID}">${item.countryName}</li>`
+                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiRegion)
+                    ul.appendChild(jsAllEmpCustomSelectLi);
+                })
+            }
+        }
+
+        function handleClickInputArrowRegion(e) {
+            //close other open ul
+            document.querySelector('.jsAllEmpAddressUlCountry').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlProvince').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlCity').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlBarangay').classList.add('display-none')
+
+            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            ul.classList.toggle('display-none')
+            ul.innerHTML = '';
+
+            const arr = regionLinkedlist.getAll()
+
+            if (arr.length > 0) {
+                arr.forEach(item => {
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.regionID}">${item.regionName}</li>`
+                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiRegion)
+                    ul.appendChild(jsAllEmpCustomSelectLi);
+                })
+            }
+        }
+
+        function handleClickInputArrowProvince(e) {
+
+            //close other open ul
+            document.querySelector('.jsAllEmpAddressUlCountry').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlRegion').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlCity').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlBarangay').classList.add('display-none')
+                
+            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            ul.classList.toggle('display-none')
+            ul.innerHTML = '';
+
+            const arr = provinceLinkedlist.getAll()
+
+            if (arr.length > 0) {
+                arr.forEach(item => {
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.provinceID}">${item.provinceName}</li>`
+                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiProvince)
+                    ul.appendChild(jsAllEmpCustomSelectLi);
+                })
+            }
+        }
+
+        function handleClickInputArrowCity(e) {
+
+            //close other open ul
+            document.querySelector('.jsAllEmpAddressUlCountry').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlRegion').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlProvince').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlBarangay').classList.add('display-none')
+
+            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            ul.classList.toggle('display-none')
+            ul.innerHTML = '';
+
+            const arr = cityLinkedlist.getAll()
+
+            if (arr.length > 0) {
+                arr.forEach(item => {
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.cityID}">${item.cityName}</li>`
+                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiProvince)
+                    ul.appendChild(jsAllEmpCustomSelectLi);
+                })
+            }
+        }
+
+        //input events
+        function handleInputAddressCountry(e) {
+            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            ul.innerHTML = '';
+            const SearchString = e.target.value.trim();
+            const arr = countryLinkedlist.linkedListIndexOf('countryName', SearchString)
+
+            if (arr.length > 0) {
+                arr.forEach(item => {
+                    ul.classList.remove('display-none')
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.countryID}">${item.countryName}</li>`
+                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiCountry)
+                    ul.appendChild(jsAllEmpCustomSelectLi);
+                })
+            }
+
+        }
+
+        function handleInputAddressRegion(e) {
+            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            ul.innerHTML = '';
+            const SearchString = e.target.value.trim();
+            const arr = regionLinkedlist.linkedListIndexOf('regionName', SearchString)
+
+            if (arr.length > 0) {
+                arr.forEach(item => {
+                    ul.classList.remove('display-none')
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.regionID}">${item.regionName}</li>`
+                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiRegion)
+                    ul.appendChild(jsAllEmpCustomSelectLi);
+                })
+            }
+
+        }
+
+        function handleInputAddressProvince(e) {
+            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            ul.innerHTML = '';
+            const SearchString = e.target.value.trim();
+            const arr = provinceLinkedlist.linkedListIndexOf('provinceName', SearchString)
+
+            if (arr.length > 0) {
+                arr.forEach(item => {
+                    ul.classList.remove('display-none')
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.provinceID}">${item.provinceName}</li>`
+                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiProvince)
+                    ul.appendChild(jsAllEmpCustomSelectLi);
+                })
+            }
+
+        }
+
+        function handleInputAddressCity(e) {
+            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            ul.innerHTML = '';
+            const SearchString = e.target.value.trim();
+            const arr = cityLinkedlist.linkedListIndexOf('cityName', SearchString)
+
+            if (arr.length > 0) {
+                arr.forEach(item => {
+                    ul.classList.remove('display-none')
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.cityID}">${item.cityName}</li>`
+                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiCity)
+                    ul.appendChild(jsAllEmpCustomSelectLi);
+                })
+            }
+
+        }
+
+        //click li events
+        function handleClickSelectLiCountry(e) {
+            //hide select ul
+            const ul = e.target.closest('.jsAllEmpAddressUl');
+            ul.classList.add('display-none')
+
+            //input
+            const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
+            jsCustomSelectInput.value = e.currentTarget.textContent;
+            jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+        }
+
+        function handleClickSelectLiRegion(e) {
+            const regionID = e.currentTarget.getAttribute('data-id')
+            //hide select ul
+            const ul = e.target.closest('.jsAllEmpAddressUl');
+            ul.classList.add('display-none')
+
+            //input
+            const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
+            jsCustomSelectInput.value = e.currentTarget.textContent;
+            jsCustomSelectInput.setAttribute('data-id', regionID);
+
+            //update province linkedlist
+            let provinceArr = []
+            data.provinceList.forEach(item => {
+                if (item.regionID == regionID) {
+                    provinceArr.push(item)
+                }
+            })
+
+            provinceLinkedlist = new LinkedList(provinceArr[0])
+            for (let i = 1; i < provinceArr.length; i++) {
+                provinceLinkedlist.push(provinceArr[i])
+            }
+
+            //clear province data
+            const jsCustomSelectInputProvince = document.querySelector('.jsCustomSelectInputProvince');
+            jsCustomSelectInputProvince.value = '';
+            jsCustomSelectInputProvince.setAttribute('data-id', 0)
+        }
+
+        function handleClickSelectLiProvince(e) {
+            //hide select ul
+            const ul = e.target.closest('.jsAllEmpAddressUl');
+            ul.classList.add('display-none')
+
+            //input
+            const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
+            jsCustomSelectInput.value = e.currentTarget.textContent;
+            jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+        }
+
+        function handleClickSelectLiCity(e) {
+            //hide select ul
+            const ul = e.target.closest('.jsAllEmpAddressUl');
+            ul.classList.add('display-none')
+
+            //input
+            const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
+            jsCustomSelectInput.value = e.currentTarget.textContent;
+            jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+        }
+
+        //enable or disable
+        function enableCustomSelectInput(item) {
+            //enable inputs
+            const input = item.querySelector('.jsCustomSelectInput');
+            input.removeAttribute('disabled');
+            item.classList.add('input-enable');
+
+            //enable hover effect
+            const arrowCont = item.querySelector('.jsCutomSelectArrowCont');
+            arrowCont.classList.remove('arrow-cont-disabled')
+
+            //enable arrow color
+            const arrow = item.querySelector('svg');
+            arrow.classList.remove('arrow-disabled')
+        }
+
+        function disableCustomSelectInput(item) {
+            //disable input
+            const input = item.querySelector('.jsCustomSelectInput');
+            input.setAttribute('disabled', true);
+            item.classList.remove('input-enable');
+
+            //disable hover effect
+            const arrowCont = item.querySelector('.jsCutomSelectArrowCont');
+            arrowCont.classList.add('arrow-cont-disabled')
+
+            //disable arrow color
+            const arrow = item.querySelector('svg');
+            arrow.classList.add('arrow-disabled')
+        }
+        
     }
 
 
@@ -415,6 +797,5 @@
 
         }
     }
-
 
 }

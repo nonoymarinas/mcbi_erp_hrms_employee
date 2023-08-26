@@ -19,6 +19,8 @@ namespace DataAccess
             ReturnGetEmployeeDataByIDModel returnData = new();
             List<Country> countryList = new();
             List<Region> RegionList = new();
+            List<Province> ProvinceList = new();
+            List<City> CityList = new();
             List<Gender> genderList = new();
             List<Position> positionList = new();
             List<Department> departmentList = new();
@@ -117,6 +119,46 @@ namespace DataAccess
                             }
 
                             reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                EmployeePhilippineAddress philAddress = new()
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    PostalAddressTypeID = Convert.ToInt32(reader["PostalAddressTypeID"]),
+                                    PostalAddressType = reader["PostalAddressType"].ToString(),
+                                    CountryID = Convert.ToInt32(reader["CountryID"]),
+                                    Country = reader["Country"].ToString(),
+                                    RegionID = Convert.ToInt32(reader["RegionID"]),
+                                    RegionName = reader["RegionName"].ToString(),
+                                    ProvinceID = Convert.ToInt32(reader["ProvinceID"]),
+                                    ProvinceName = reader["ProvinceName"].ToString(),
+                                    CityOrMunicipalityID = Convert.ToInt32(reader["CityOrMunicipalityID"]),
+                                    CityOrMunicipalName = reader["CityOrMunicipalName"].ToString(),
+                                    BarangayID = Convert.ToInt32(reader["BarangayID"]),
+                                    BarangayName = reader["BarangayName"].ToString(),
+                                    StreetEtc = reader["StreetEtc"].ToString(),
+                                };
+
+                                returnData.PhilippineAddress = philAddress;
+                            }
+
+                            reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                EmployeeForeignAddress foreignAddress = new()
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    PostalAddressTypeID = Convert.ToInt32(reader["PostalAddressTypeID"]),
+                                    PostalAddressType = reader["PostalAddressType"].ToString(),
+                                    ForeignCompleteAddress = reader["ForeignCompleteAddress"].ToString(),
+                                };
+                                returnData.ForeignAddress = foreignAddress;
+                            }
+
+
+                            reader.NextResult();
                             while (reader.Read())
                             {
                                 countryList.Add(new Country()
@@ -138,6 +180,30 @@ namespace DataAccess
                                 });
                             }
                             returnData.RegionList = RegionList;
+
+                            reader.NextResult();
+                            while (reader.Read())
+                            {
+                                ProvinceList.Add(new Province()
+                                {
+                                    ProvinceID = Convert.ToInt32(reader["ProvinceID"]),
+                                    RegionID = Convert.ToInt32(reader["RegionID"]),
+                                    ProvinceName = reader["ProvinceName"].ToString(),
+                                });
+                            }
+                            returnData.ProvinceList = ProvinceList;
+
+                            reader.NextResult();
+                            while (reader.Read())
+                            {
+                                CityList.Add(new City()
+                                {
+                                    ProvinceID = Convert.ToInt32(reader["ProvinceID"]),
+                                    CityID = Convert.ToInt32(reader["CityID"]),
+                                    CityName = reader["CityName"].ToString(),
+                                });
+                            }
+                            returnData.CityList = CityList;
 
 
                             reader.NextResult();
