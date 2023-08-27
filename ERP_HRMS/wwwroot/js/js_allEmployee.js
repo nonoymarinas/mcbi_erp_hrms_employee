@@ -29,10 +29,6 @@
 
     }
 
-
-
-
-
     const jsAllEmpSearchBtn = document.querySelector('.jsAllEmpSearchBtn');
     jsAllEmpSearchBtn.addEventListener('click', clickSearchBtn);
     async function clickSearchBtn() {
@@ -52,8 +48,6 @@
     }
 
     async function displayEmployeeDetails(data) {
-
-
 
         let htmlString;
 
@@ -112,8 +106,6 @@
         const pagibigNumber = document.querySelector('.jsBenifitsPagIbigNo')
         pagibigNumber.value = data.benifits.pagIbigNumber
 
-
-
         //tin number
         const tinNumber = document.querySelector('.jsBenifitsTinNo')
         tinNumber.value = data.benifits.tinNumber
@@ -130,65 +122,10 @@
         const emailAddress = document.querySelector('.jsContactsEmailAdd');
         emailAddress.value = data.contacts.emailAddress;
 
-
-        //address country
-        //(function country() {
-        //    const country = document.querySelector('.jsAddressCountry');
-        //    country.innerHTML = '';
-        //    let htmlString = `<option class="emp-det-select-options jsSelectOption" value="0">Select</option>`;
-
-        //    let jsSelectOption = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSelectOption');
-        //    country.appendChild(jsSelectOption);
-
-        //    data.countryList.forEach(item => {
-        //        //determine the selected value
-        //        if (data.philippineAddress.countryID == item.countryID) {
-        //            htmlString = `<option class="emp-det-select-options jsSelectOption" value="${item.countryID}" selected>${item.countryName}</option>`;
-        //        } else {
-        //            htmlString = `<option class="emp-det-select-options jsSelectOption" value="${item.countryID}">${item.countryName}</option>`;
-        //        }
-        //        jsSelectOption = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSelectOption');
-
-        //        jsSelectOption.addEventListener('click',handleClickOptionsCountry)
-
-        //        function handleClickOptionsCountry() {
-        //            alert('options')
-        //        }
-
-        //        country.appendChild(jsSelectOption);
-        //    })
-        //})();
-
-        //address region
-
         await editAndUpdateFunction(data);
     }
 
     async function editAndUpdateFunction(data) {
-
-        //country address linkedlist
-        let countryLinkedlist = new LinkedList(data.countryList[0])
-        for (let i = 1; i < data.countryList.length; i++) {
-            countryLinkedlist.push(data.countryList[i])
-        }
-
-        //region address linkedlist
-        let regionLinkedlist = new LinkedList(data.regionList[0])
-        for (let i = 1; i < data.regionList.length; i++) {
-            regionLinkedlist.push(data.regionList[i])
-        }
-
-        //province address linkedlist
-        let provinceLinkedlist = new LinkedList(data.provinceList[0])
-        for (let i = 1; i < data.provinceList.length; i++) {
-            provinceLinkedlist.push(data.provinceList[i])
-        }
-
-        //city address linkedlist
-        let cityLinkedlist = new LinkedList(data.cityList[0])
-        for (let i = 1; i < data.cityList.length; i++) {
-            cityLinkedlist.push(data.cityList[i])
-        }
 
         const jsEmpDetEditInputBtns = document.querySelectorAll('.jsEmpDetEditInputBtn');
         jsEmpDetEditInputBtns.forEach(item => {
@@ -256,11 +193,23 @@
         }
 
         function enableAddressEditMode() {
+            //enable custom selection
             const jsAllEmpCustomSelectInputArrowConts = document.querySelectorAll('.jsAllEmpCustomSelectInputArrowCont');
             jsAllEmpCustomSelectInputArrowConts.forEach(item => {
                 enableCustomSelectInput(item)
             })
 
+            //enable line1
+            const jsInputAddressLine1 = document.querySelector('.jsInputAddressLine1')
+            jsInputAddressLine1.classList.add('input-enable');
+            jsInputAddressLine1.removeAttribute('disabled');
+
+            //enable line2
+            const jsInputAddressLine2 = document.querySelector('.jsInputAddressLine2')
+            jsInputAddressLine2.classList.add('input-enable');
+            jsInputAddressLine2.removeAttribute('disabled');
+
+            //change button
             const jsEmpDetAddressEditBtn = document.querySelector('.jsEmpDetAddressEditBtn');
             jsEmpDetAddressEditBtn.textContent = 'Save';
             jsEmpDetAddressEditBtn.classList.add('btn-text-color-red');
@@ -299,6 +248,10 @@
             const jsCutomSelectArrowContCity = document.querySelector('.jsCutomSelectArrowContCity');
             jsCutomSelectArrowContCity.addEventListener('click', handleClickInputArrowCity)
 
+            //select arrow barangay
+            const jsCutomSelectArrowContBarangay = document.querySelector('.jsCutomSelectArrowContBarangay');
+            jsCutomSelectArrowContBarangay.addEventListener('click', handleClickInputArrowBarangay)
+
             //enable cancel btn
             const jsEmpDetAddressCancelBtn = document.querySelector('.jsEmpDetAddressCancelBtn');
             jsEmpDetAddressCancelBtn.addEventListener('click', handleClickAddressCancelBtn);
@@ -306,11 +259,60 @@
         }
 
         function disableAddressEditMode() {
+            //disable custom select
             const jsAllEmpCustomSelectInputArrowConts = document.querySelectorAll('.jsAllEmpCustomSelectInputArrowCont');
             jsAllEmpCustomSelectInputArrowConts.forEach(item => {
                 disableCustomSelectInput(item)
             })
 
+            //inputs address country
+            const jsCustomSelectInputCountry = document.querySelector('.jsCustomSelectInputCountry');
+            jsCustomSelectInputCountry.removeEventListener('input', handleInputAddressCountry)
+
+            //inputs address region
+            const jsCustomSelectInputRegion = document.querySelector('.jsCustomSelectInputRegion');
+            jsCustomSelectInputRegion.removeEventListener('input', handleInputAddressRegion)
+
+            //inputs address province
+            const jsCustomSelectInputProvince = document.querySelector('.jsCustomSelectInputProvince');
+            jsCustomSelectInputProvince.removeEventListener('input', handleInputAddressProvince)
+
+            //inputs address city
+            const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity');
+            jsCustomSelectInputCity.removeEventListener('input', handleInputAddressCity)
+            
+            //select arrow country
+            const jsCutomSelectArrowContCountry = document.querySelector('.jsCutomSelectArrowContCountry');
+            jsCutomSelectArrowContCountry.removeEventListener('click', handleClickInputArrowCountry)
+
+            //select arrow region
+            const jsCutomSelectArrowContRegion = document.querySelector('.jsCutomSelectArrowContRegion');
+            jsCutomSelectArrowContRegion.removeEventListener('click', handleClickInputArrowRegion)
+
+            //select arrow province
+            const jsCutomSelectArrowContProvince = document.querySelector('.jsCutomSelectArrowContProvince');
+            jsCutomSelectArrowContProvince.removeEventListener('click', handleClickInputArrowProvince)
+
+            //select arrow city
+            const jsCutomSelectArrowContCity = document.querySelector('.jsCutomSelectArrowContCity');
+            jsCutomSelectArrowContCity.removeEventListener('click', handleClickInputArrowCity)
+
+            //select arrow barangay
+            const jsCutomSelectArrowContBarangay = document.querySelector('.jsCutomSelectArrowContBarangay');
+            jsCutomSelectArrowContBarangay.removeEventListener('click', handleClickInputArrowBarangay)
+
+
+            //disable line1
+            const jsInputAddressLine1 = document.querySelector('.jsInputAddressLine1')
+            jsInputAddressLine1.classList.remove('input-enable');
+            jsInputAddressLine1.setAttribute('disabled',true);
+
+            //disable line2
+            const jsInputAddressLine2 = document.querySelector('.jsInputAddressLine2')
+            jsInputAddressLine2.classList.remove('input-enable');
+            jsInputAddressLine2.setAttribute('disabled', true);
+
+            //change button
             const jsEmpDetAddressEditBtn = document.querySelector('.jsEmpDetAddressEditBtn');
             jsEmpDetAddressEditBtn.textContent = 'Edit';
             jsEmpDetAddressEditBtn.classList.remove('btn-text-color-red');
@@ -332,6 +334,54 @@
             const jsEmpDetAddressCancelBtn = document.querySelector('.jsEmpDetAddressCancelBtn');
             jsEmpDetAddressCancelBtn.removeEventListener('click', handleClickAddressCancelBtn);
             jsEmpDetAddressCancelBtn.classList.add('disbale-cancel-btn');
+        }
+
+        //country address linkedlist
+        let countryLinkedlist = new LinkedList(data.countryList[0])
+        for (let i = 1; i < data.countryList.length; i++) {
+            countryLinkedlist.push(data.countryList[i])
+        }
+
+        //region address linkedlist
+        let allRegionLinkedlist = new LinkedList(data.regionList[0])
+        for (let i = 1; i < data.regionList.length; i++) {
+            allRegionLinkedlist.push(data.regionList[i])
+        }
+
+        //province address linkedlist
+        let selectedProvinceLinkedlist = null;
+        let allProvinceLinkedlist = new LinkedList(data.provinceList[0])
+        for (let i = 1; i < data.provinceList.length; i++) {
+            allProvinceLinkedlist.push(data.provinceList[i])
+        }
+
+        //city address linkedlist
+        let selectedCityLinkedlist = null;
+        let allCityLinkedlist = new LinkedList(data.cityList[0])
+        for (let i = 1; i < data.cityList.length; i++) {
+            allCityLinkedlist.push(data.cityList[i])
+        }
+
+        //city address linkedlist
+        let selectedBarangayLinkedlist = null;
+        async function getSelectedBarangay(cityID) {
+            let linkedlist = null
+            const formData = new FormData()
+            formData.append('cityID', cityID)
+
+            const options = {
+                method: 'POST',
+                body: formData
+            }
+            const data = await fetchData.postData('address-list-barangay-by-city', options)
+            if (data == null) return;
+
+            linkedlist = new LinkedList(data.barangayList[0]);
+            for (let i = 1; i < data.barangayList.length; i++) {
+                linkedlist.push(data.barangayList[i]);
+            }
+
+            return linkedlist;
         }
 
         //click arrow events
@@ -370,7 +420,7 @@
             ul.classList.toggle('display-none')
             ul.innerHTML = '';
 
-            const arr = regionLinkedlist.getAll()
+            const arr = allRegionLinkedlist.getAll()
 
             if (arr.length > 0) {
                 arr.forEach(item => {
@@ -389,16 +439,19 @@
             document.querySelector('.jsAllEmpAddressUlRegion').classList.add('display-none')
             document.querySelector('.jsAllEmpAddressUlCity').classList.add('display-none')
             document.querySelector('.jsAllEmpAddressUlBarangay').classList.add('display-none')
-                
+
             const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
             ul.classList.toggle('display-none')
             ul.innerHTML = '';
 
-            const arr = provinceLinkedlist.getAll()
+            let provinceArr = []
+            if (selectedProvinceLinkedlist != null) {
+                provinceArr = selectedProvinceLinkedlist.getAll()
+            }
 
-            if (arr.length > 0) {
-                arr.forEach(item => {
-                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.provinceID}">${item.provinceName}</li>`
+            if (provinceArr.length > 0) {
+                provinceArr.forEach(item => {
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.provinceID}" data-topid="${item.regionID}" data-trigger="arrow">${item.provinceName}</li>`
                     const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
                     jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiProvince)
                     ul.appendChild(jsAllEmpCustomSelectLi);
@@ -418,13 +471,42 @@
             ul.classList.toggle('display-none')
             ul.innerHTML = '';
 
-            const arr = cityLinkedlist.getAll()
+            let cityArr = [];
+            if (selectedCityLinkedlist != null) {
+                cityArr = selectedCityLinkedlist.getAll()
+            }
 
-            if (arr.length > 0) {
-                arr.forEach(item => {
-                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.cityID}">${item.cityName}</li>`
+            if (cityArr.length > 0) {
+                cityArr.forEach(item => {
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-topid="${item.provinceID}" data-id="${item.cityID}" data-trigger="arrow">${item.cityName}</li>`
                     const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
                     jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiCity)
+                    ul.appendChild(jsAllEmpCustomSelectLi);
+                })
+            }
+        }
+
+        function handleClickInputArrowBarangay(e) {
+
+            //close other open ul
+            document.querySelector('.jsAllEmpAddressUlCountry').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlRegion').classList.add('display-none')
+            document.querySelector('.jsAllEmpAddressUlProvince').classList.add('display-none')
+
+            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            ul.classList.toggle('display-none')
+            ul.innerHTML = '';
+
+            let barangayArr = [];
+            if (selectedBarangayLinkedlist != null) {
+                barangayArr = selectedBarangayLinkedlist.getAll()
+            }
+
+            if (barangayArr.length > 0) {
+                barangayArr.forEach(item => {
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-topid="${item.cityID}" data-id="${item.barangayID}" data-trigger="arrow">${item.barangayName}</li>`
+                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiBarangay)
                     ul.appendChild(jsAllEmpCustomSelectLi);
                 })
             }
@@ -453,7 +535,7 @@
             const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
             ul.innerHTML = '';
             const SearchString = e.target.value.trim();
-            const arr = regionLinkedlist.linkedListIndexOf('regionName', SearchString)
+            const arr = allRegionLinkedlist.linkedListIndexOf('regionName', SearchString)
 
             if (arr.length > 0) {
                 arr.forEach(item => {
@@ -477,12 +559,12 @@
             const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
             ul.innerHTML = '';
             const SearchString = e.target.value.trim();
-            const arr = provinceLinkedlist.linkedListIndexOf('provinceName', SearchString)
+            const arr = allProvinceLinkedlist.linkedListIndexOf('provinceName', SearchString)
 
             if (arr.length > 0) {
                 arr.forEach(item => {
                     ul.classList.remove('display-none')
-                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.provinceID}">${item.provinceName}</li>`
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.provinceID}" data-topid="${item.regionID}" data-trigger="input">${item.provinceName}</li>`
                     const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
                     jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiProvince)
                     ul.appendChild(jsAllEmpCustomSelectLi);
@@ -495,12 +577,12 @@
             const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
             ul.innerHTML = '';
             const SearchString = e.target.value.trim();
-            const arr = cityLinkedlist.linkedListIndexOf('cityName', SearchString)
+            const arr = allCityLinkedlist.linkedListIndexOf('cityName', SearchString)
 
             if (arr.length > 0) {
                 arr.forEach(item => {
                     ul.classList.remove('display-none')
-                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.cityID}">${item.cityName}</li>`
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-topid="${item.provinceID}" data-id="${item.cityID}" data-trigger="input">${item.cityName}</li>`
                     const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
                     jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiCity)
                     ul.appendChild(jsAllEmpCustomSelectLi);
@@ -508,6 +590,8 @@
             }
 
         }
+
+        //input events
 
         //click li events
         function handleClickSelectLiCountry(e) {
@@ -522,74 +606,288 @@
         }
 
         function handleClickSelectLiRegion(e) {
-            const regionID = e.currentTarget.getAttribute('data-id')
-            //hide select ul
-            const ul = e.target.closest('.jsAllEmpAddressUl');
-            ul.classList.add('display-none')
 
-            //input
-            const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
-            jsCustomSelectInput.value = e.currentTarget.textContent;
-            jsCustomSelectInput.setAttribute('data-id', regionID);
+            //get the region ID
+            const regionID = e.currentTarget.getAttribute('data-id');
 
-            //update province linkedlist
-            let provinceArr = []
-            data.provinceList.forEach(item => {
-                if (item.regionID == regionID) {
-                    provinceArr.push(item)
+            (function regionSelfElements() {
+                //hide selection dropdown
+                const ul = e.target.closest('.jsAllEmpAddressUl');
+                ul.classList.add('display-none')
+
+                //populate region input attribute
+                const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
+                jsCustomSelectInput.value = e.currentTarget.textContent;
+                jsCustomSelectInput.setAttribute('data-id', regionID);
+            })();
+
+            (function regionDownElements() {
+                //update province linkedlist
+                let provinceArr = []
+                data.provinceList.forEach(item => {
+                    if (item.regionID == regionID) {
+                        provinceArr.push(item)
+                    }
+                })
+
+                selectedProvinceLinkedlist = new LinkedList(provinceArr[0])
+                for (let i = 1; i < provinceArr.length; i++) {
+                    selectedProvinceLinkedlist.push(provinceArr[i])
                 }
-            })
 
-            provinceLinkedlist = new LinkedList(provinceArr[0])
-            for (let i = 1; i < provinceArr.length; i++) {
-                provinceLinkedlist.push(provinceArr[i])
-            }
+                //clear province input attribute
+                const jsCustomSelectInputProvince = document.querySelector('.jsCustomSelectInputProvince');
+                jsCustomSelectInputProvince.value = '';
+                jsCustomSelectInputProvince.setAttribute('data-id', 0)
 
-            //clear province data
-            const jsCustomSelectInputProvince = document.querySelector('.jsCustomSelectInputProvince');
-            jsCustomSelectInputProvince.value = '';
-            jsCustomSelectInputProvince.setAttribute('data-id', 0)
+                //clear city input attribute
+                const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity');
+                jsCustomSelectInputCity.value = '';
+                jsCustomSelectInputCity.setAttribute('data-id', 0)
+
+                //clear barangay input attribute
+                const jsCustomSelectInputBarangay = document.querySelector('.jsCustomSelectInputBarangay');
+                jsCustomSelectInputBarangay.value = '';
+                jsCustomSelectInputBarangay.setAttribute('data-id', 0)
+
+                //clear line1 input attribute
+                const jsInputAddressLine1 = document.querySelector('.jsInputAddressLine1');
+                jsInputAddressLine1.value = '';
+
+                //clear line2 input attribute
+                const jsInputAddressLine2 = document.querySelector('.jsInputAddressLine2');
+                jsInputAddressLine2.value = '';
+
+            })();
+
+            (function resetOtherData() {
+                selectedCityLinkedlist = null;
+                selectedBarangayLinkedlist = null;
+            })();
+
         }
 
         function handleClickSelectLiProvince(e) {
-            const provinceID = e.currentTarget.getAttribute('data-id')
-            //hide select ul
-            const ul = e.target.closest('.jsAllEmpAddressUl');
-            ul.classList.add('display-none')
+            const provinceID = e.currentTarget.getAttribute('data-id');
+            const regionID = e.currentTarget.getAttribute('data-topid');
+            const dataTrigger = e.currentTarget.getAttribute('data-trigger');
 
-            //input
-            const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
-            jsCustomSelectInput.value = e.currentTarget.textContent;
-            jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+            (function provinceSelfElements() {
+                //hide select ul
+                const ul = e.target.closest('.jsAllEmpAddressUl');
+                ul.classList.add('display-none')
 
-            //update city linkedlist
-            let cityArr = []
-            data.cityList.forEach(item => {
-                if (item.provinceID == provinceID) {
-                    cityArr.push(item)
+                //input
+                const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
+                jsCustomSelectInput.value = e.currentTarget.textContent;
+                jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+            })();
+
+            (function provinceTopElements() {
+                if (dataTrigger == 'input') {
+
+                    //modify region attrr and province arrow linkedlist
+                    let regionName = '';
+                    for (let i = 0; i < data.regionList.length; i++) {
+                        if (data.regionList[i].regionID == regionID) {
+                            regionName = data.regionList[i].regionName;
+                            break;
+                        }
+                    }
+
+                    const proviceArr = [];
+                    for (let i = 0; i < data.provinceList.length; i++) {
+                        if (data.provinceList[i].regionID == regionID) {
+                            proviceArr.push(data.provinceList[i])
+                        }
+                    }
+
+                    selectedProvinceLinkedlist = new LinkedList(proviceArr[0])
+                    for (let i = 1; i < proviceArr.length; i++) {
+                        selectedProvinceLinkedlist.push(proviceArr[i])
+                    }
+
+
+                    //populate region input attribute
+                    const jsCustomSelectInputRegion = document.querySelector('.jsCustomSelectInputRegion');
+                    jsCustomSelectInputRegion.value = regionName;
+                    jsCustomSelectInputRegion.setAttribute('data-id', regionID);
                 }
-            })
+            })();
 
-            cityLinkedlist = new LinkedList(cityArr[0])
-            for (let i = 1; i < cityArr.length; i++) {
-                cityLinkedlist.push(cityArr[i])
-            }
+            (function provinceDowElements() {
+                //update city linkedlist
+                let cityArr = []
+                data.cityList.forEach(item => {
+                    if (item.provinceID == provinceID) {
+                        cityArr.push(item)
+                    }
+                })
 
-            //clear city data
-            const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity');
-            jsCustomSelectInputCity.value = '';
-            jsCustomSelectInputCity.setAttribute('data-id', 0)
+                selectedCityLinkedlist = new LinkedList(cityArr[0])
+                for (let i = 1; i < cityArr.length; i++) {
+                    selectedCityLinkedlist.push(cityArr[i])
+                }
+
+                //clear city input attribute
+                const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity');
+                jsCustomSelectInputCity.value = '';
+                jsCustomSelectInputCity.setAttribute('data-id', 0)
+
+                //clear barangay input attribute
+                const jsCustomSelectInputBarangay = document.querySelector('.jsCustomSelectInputBarangay');
+                jsCustomSelectInputBarangay.value = '';
+                jsCustomSelectInputBarangay.setAttribute('data-id', 0)
+
+                //clear line1 input attribute
+                const jsInputAddressLine1 = document.querySelector('.jsInputAddressLine1');
+                jsInputAddressLine1.value = '';
+
+                //clear line2 input attribute
+                const jsInputAddressLine2 = document.querySelector('.jsInputAddressLine2');
+                jsInputAddressLine2.value = '';
+
+            })();
+
+            (function resetOtherData() {
+                selectedBarangayLinkedlist = null;
+            })();
         }
 
         function handleClickSelectLiCity(e) {
-            //hide select ul
-            const ul = e.target.closest('.jsAllEmpAddressUl');
-            ul.classList.add('display-none')
+            const cityID = e.currentTarget.getAttribute('data-id');
+            const provinceID = e.currentTarget.getAttribute('data-topid');
+            const dataTrigger = e.currentTarget.getAttribute('data-trigger');
+            console.log(provinceID);
+            (function citySelfElements() {
+                //hide select ul
+                const ul = e.target.closest('.jsAllEmpAddressUl');
+                ul.classList.add('display-none')
 
-            //input
-            const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
-            jsCustomSelectInput.value = e.currentTarget.textContent;
-            jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+                //city input
+                const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
+                jsCustomSelectInput.value = e.currentTarget.textContent;
+                jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+            })();
+
+            (function cityTopElements() {
+                //this function is intended only if dropdown selection is triggered by input elements
+                if (dataTrigger == 'arrow') return
+
+                //province
+                let provinceName = '';
+                let regionID = 0
+                for (let i = 0; i < data.provinceList.length; i++) {
+                    if (data.provinceList[i].provinceID == provinceID) {
+                        provinceName = data.provinceList[i].provinceName;
+                        regionID = data.provinceList[i].regionID;
+                        break;
+                    }
+                }
+
+                const jsCustomSelectInputProvince = document.querySelector('.jsCustomSelectInputProvince');
+                jsCustomSelectInputProvince.value = provinceName;
+                jsCustomSelectInputProvince.setAttribute('data-id', provinceID);
+
+                let selectedCityArr = []
+                for (let i = 0; i < data.cityList.length; i++) {
+                    if (data.cityList[i].provinceID == provinceID) {
+                        selectedCityArr.push(data.cityList[i])
+                    }
+                }
+
+                selectedCityLinkedlist = new LinkedList(selectedCityArr[0])
+                for (let i = 1; i < selectedCityArr.length; i++) {
+                    selectedCityLinkedlist.push(selectedCityArr[i])
+                }
+
+                //region
+                let regionName = '';
+                for (let i = 0; i < data.regionList.length; i++) {
+                    if (data.regionList[i].regionID == regionID) {
+                        regionName = data.regionList[i].regionName;
+                        break;
+                    }
+                }
+                console.log(regionID, regionName)
+
+                const jsCustomSelectInputRegion = document.querySelector('.jsCustomSelectInputRegion');
+                jsCustomSelectInputRegion.value = regionName;
+                jsCustomSelectInputRegion.setAttribute('data-id', regionID);
+
+                let selectedProvinceArr = []
+                for (let i = 0; i < data.provinceList.length; i++) {
+                    if (data.provinceList[i].regionID == regionID) {
+                        selectedProvinceArr.push(data.provinceList[i])
+                    }
+                }
+
+                selectedProvinceLinkedlist = new LinkedList(selectedProvinceArr[0])
+                for (let i = 1; i < selectedProvinceArr.length; i++) {
+                    selectedProvinceLinkedlist.push(selectedProvinceArr[i])
+                }
+
+            })();
+
+            (async function cityDownElements() {
+                //update city linkedlist
+                let cityArr = []
+                data.cityList.forEach(item => {
+                    if (item.provinceID == provinceID) {
+                        cityArr.push(item)
+                    }
+                })
+
+                selectedCityLinkedlist = new LinkedList(cityArr[0])
+                for (let i = 1; i < cityArr.length; i++) {
+                    selectedCityLinkedlist.push(cityArr[i])
+                }
+
+                //clear barangay input attribute
+                const jsCustomSelectInputBarangay = document.querySelector('.jsCustomSelectInputBarangay');
+                jsCustomSelectInputBarangay.value = '';
+                jsCustomSelectInputBarangay.setAttribute('data-id', 0)
+
+                //barangay linkedList
+                selectedBarangayLinkedlist = await getSelectedBarangay(cityID)
+
+                //clear line1 input attribute
+                const jsInputAddressLine1 = document.querySelector('.jsInputAddressLine1');
+                jsInputAddressLine1.value = '';
+
+                //clear line2 input attribute
+                const jsInputAddressLine2 = document.querySelector('.jsInputAddressLine2');
+                jsInputAddressLine2.value = '';
+
+            })();
+
+        }
+
+        function handleClickSelectLiBarangay(e) {
+            const barangayID = e.currentTarget.getAttribute('data-id');
+            const cityID = e.currentTarget.getAttribute('data-topid');
+            
+            (function barangaySelfElements() {
+                //hide select ul
+                const ul = e.target.closest('.jsAllEmpAddressUl');
+                ul.classList.add('display-none')
+
+                //barangay input
+                const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
+                jsCustomSelectInput.value = e.currentTarget.textContent;
+                jsCustomSelectInput.setAttribute('data-id', barangayID);
+                jsCustomSelectInput.setAttribute('data-topid', cityID);
+            })();
+
+            (async function barangayDownElements() {
+                //clear line1 input attribute
+                const jsInputAddressLine1 = document.querySelector('.jsInputAddressLine1');
+                jsInputAddressLine1.value = '';
+
+                //clear line2 input attribute
+                const jsInputAddressLine2 = document.querySelector('.jsInputAddressLine2');
+                jsInputAddressLine2.value = '';
+            })();
         }
 
         //enable or disable
@@ -620,9 +918,9 @@
 
             //disable arrow color
             const arrow = item.querySelector('svg');
-            arrow.classList.add('arrow-disabled')
+            arrow.classList.add('arrow-disabled');
+
         }
-        
     }
 
 

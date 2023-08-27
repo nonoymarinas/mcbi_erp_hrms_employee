@@ -9,11 +9,12 @@ using BusinessModel;
 
 namespace BusinessLogic
 {
-    public class AllEmployeeLogic : IGetMasterPersonData, IGetMasterPersonByID
+    public class AllEmployeeLogic : IGetMasterPersonData, IGetMasterPersonByID,IGetBarangayListByCityID
     {
    
         private readonly ParamMasterPersonByIDModel? _masterID;
-       
+        private readonly int _cityID;
+
         public AllEmployeeLogic()
         {
            
@@ -22,7 +23,11 @@ namespace BusinessLogic
         public AllEmployeeLogic(ParamMasterPersonByIDModel masterID)
         {
             _masterID = masterID;
+        }
 
+        public AllEmployeeLogic(int cityID)
+        {
+            _cityID = cityID;
         }
         async public Task<ReturnGetMasterPersonDataModel> GetMasterPersonData()
         {
@@ -47,6 +52,12 @@ namespace BusinessLogic
         {
             GetEmployeeDataByIDDataAccess accessData = new GetEmployeeDataByIDDataAccess(_masterID);
             return await accessData.GetMasterPersonByID();
+        }
+
+        async public Task<ReturnBarangayListByCityIDModel> GetBarangayListByCityID()
+        {
+            GetBarangayListDataAccess dataAccess = new GetBarangayListDataAccess(_cityID);
+            return await dataAccess.GetBarangayListByCityID();
         }
     }
 }

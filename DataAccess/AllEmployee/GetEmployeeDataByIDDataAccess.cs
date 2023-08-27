@@ -137,7 +137,8 @@ namespace DataAccess
                                     CityOrMunicipalName = reader["CityOrMunicipalName"].ToString(),
                                     BarangayID = Convert.ToInt32(reader["BarangayID"]),
                                     BarangayName = reader["BarangayName"].ToString(),
-                                    StreetEtc = reader["StreetEtc"].ToString(),
+                                    AddressLine1 = reader["AddressLine1"].ToString(),
+                                    AddressLine2 = reader["AddressLine2"].ToString()
                                 };
 
                                 returnData.PhilippineAddress = philAddress;

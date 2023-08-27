@@ -45,5 +45,12 @@ namespace ERP_HRMS.Controllers
         {
             return Json(empInfo);
         }
+
+        [Route("address-list-barangay-by-city")]
+        async public Task<IActionResult> GetBarangayListByCityID(int cityId)
+        {
+            AllEmployeeLogic logicData = new(cityId);
+            return Json(await logicData.GetBarangayListByCityID());
+        }
     }
 }

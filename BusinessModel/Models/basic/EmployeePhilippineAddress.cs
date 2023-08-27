@@ -21,6 +21,7 @@ namespace BusinessModel
         public string? CityOrMunicipalName { get; set; }
         public int BarangayID { get; set; }
         public string? BarangayName { get; set; }
-        public string? StreetEtc { get; set; }
+        public string? AddressLine1 { get; set; }
+        public string? AddressLine2 { get; set; }
     }
 }
