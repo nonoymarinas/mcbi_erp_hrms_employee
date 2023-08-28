@@ -41,7 +41,6 @@
         }
 
         const data = await fetchData.postData('single-employee-data', options)
-        console.log(data)
         if (!data) return;
 
         await displayEmployeeDetails(data);
@@ -122,10 +121,10 @@
         const emailAddress = document.querySelector('.jsContactsEmailAdd');
         emailAddress.value = data.contacts.emailAddress;
 
-        await editAndUpdateFunction(data);
+        await EditAndSaveFunction(data);
     }
 
-    async function editAndUpdateFunction(data) {
+    async function EditAndSaveFunction(data) {
 
         const jsEmpDetEditInputBtns = document.querySelectorAll('.jsEmpDetEditInputBtn');
         jsEmpDetEditInputBtns.forEach(item => {
@@ -193,6 +192,43 @@
         }
 
         function enableAddressEditMode() {
+            const countryID = document.querySelector('.jsCustomSelectInputCountry').getAttribute('data-id');
+            const countryInputCont = document.querySelector('.jsAllEmpCustomSelectInputArrowContCountry');
+            enableCustomSelectInput(countryInputCont)
+
+            //inputs address country
+            let jsCustomSelectInputCountry = document.querySelector('.jsCustomSelectInputCountry');
+            jsCustomSelectInputCountry.addEventListener('input', handleInputAddressCountry)
+
+            //inputs blur address country
+            jsCustomSelectInputCountry.addEventListener('change', handleBlurAddressCountry)
+
+            //select arrow country
+            const jsCutomSelectArrowContCountry = document.querySelector('.jsCutomSelectArrowContCountry');
+            jsCutomSelectArrowContCountry.addEventListener('click', handleClickInputArrowCountry)
+
+            //enable cancel btn
+            const jsEmpDetAddressCancelBtn = document.querySelector('.jsEmpDetAddressCancelBtn');
+            jsEmpDetAddressCancelBtn.addEventListener('click', handleClickAddressCancelBtn);
+            jsEmpDetAddressCancelBtn.classList.remove('disbale-cancel-btn');
+
+            //change button
+            const jsEmpDetAddressEditBtn = document.querySelector('.jsEmpDetAddressEditBtn');
+            jsEmpDetAddressEditBtn.textContent = 'Save';
+            jsEmpDetAddressEditBtn.classList.add('btn-text-color-red');
+            jsEmpDetAddressEditBtn.removeEventListener('click', handleClickAddressEditBtn);
+            jsEmpDetAddressEditBtn.addEventListener('click', handleClickAddressSaveBtn);
+
+            if (countryID == null) return
+
+            if (countryID == 1) {
+                philippineEnableAddressEditMode()
+            } else {
+                foreignEnableAddressEditMode()
+            }
+        }
+
+        function philippineEnableAddressEditMode() {
             //enable custom selection
             const jsAllEmpCustomSelectInputArrowConts = document.querySelectorAll('.jsAllEmpCustomSelectInputArrowCont');
             jsAllEmpCustomSelectInputArrowConts.forEach(item => {
@@ -209,16 +245,6 @@
             jsInputAddressLine2.classList.add('input-enable');
             jsInputAddressLine2.removeAttribute('disabled');
 
-            //change button
-            const jsEmpDetAddressEditBtn = document.querySelector('.jsEmpDetAddressEditBtn');
-            jsEmpDetAddressEditBtn.textContent = 'Save';
-            jsEmpDetAddressEditBtn.classList.add('btn-text-color-red');
-            jsEmpDetAddressEditBtn.removeEventListener('click', handleClickAddressEditBtn);
-            jsEmpDetAddressEditBtn.addEventListener('click', handleClickAddressSaveBtn);
-
-            //inputs address country
-            const jsCustomSelectInputCountry = document.querySelector('.jsCustomSelectInputCountry');
-            jsCustomSelectInputCountry.addEventListener('input', handleInputAddressCountry)
 
             //inputs address region
             const jsCustomSelectInputRegion = document.querySelector('.jsCustomSelectInputRegion');
@@ -232,9 +258,6 @@
             const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity');
             jsCustomSelectInputCity.addEventListener('input', handleInputAddressCity)
 
-            //select arrow country
-            const jsCutomSelectArrowContCountry = document.querySelector('.jsCutomSelectArrowContCountry');
-            jsCutomSelectArrowContCountry.addEventListener('click', handleClickInputArrowCountry)
 
             //select arrow region
             const jsCutomSelectArrowContRegion = document.querySelector('.jsCutomSelectArrowContRegion');
@@ -252,17 +275,60 @@
             const jsCutomSelectArrowContBarangay = document.querySelector('.jsCutomSelectArrowContBarangay');
             jsCutomSelectArrowContBarangay.addEventListener('click', handleClickInputArrowBarangay)
 
-            //enable cancel btn
-            const jsEmpDetAddressCancelBtn = document.querySelector('.jsEmpDetAddressCancelBtn');
-            jsEmpDetAddressCancelBtn.addEventListener('click', handleClickAddressCancelBtn);
-            jsEmpDetAddressCancelBtn.classList.remove('disbale-cancel-btn');
+            
+        }
+
+        function foreignEnableAddressEditMode() {
+            const jsInputAddressComplete = document.querySelector('.jsInputAddressComplete')
+            console.log(jsInputAddressComplete)
+            jsInputAddressComplete.classList.add('input-enable');
+            jsInputAddressComplete.removeAttribute('disabled');
         }
 
         function disableAddressEditMode() {
+            const countryID = document.querySelector('.jsCustomSelectInputCountry').getAttribute('data-id');
+            const countryInputCont = document.querySelector('.jsAllEmpCustomSelectInputArrowContCountry');
+            disableCustomSelectInput(countryInputCont)
+
+            //close country open ul
+            document.querySelector('.jsAllEmpAddressUlCountry').classList.add('display-none')
+
+            //select arrow country
+            const jsCutomSelectArrowContCountry = document.querySelector('.jsCutomSelectArrowContCountry');
+            jsCutomSelectArrowContCountry.removeEventListener('click', handleClickInputArrowCountry)
+
+            //change button
+            const jsEmpDetAddressEditBtn = document.querySelector('.jsEmpDetAddressEditBtn');
+            jsEmpDetAddressEditBtn.textContent = 'Edit';
+            jsEmpDetAddressEditBtn.classList.remove('btn-text-color-red');
+            jsEmpDetAddressEditBtn.removeEventListener('click', handleClickAddressSaveBtn);
+            jsEmpDetAddressEditBtn.addEventListener('click', handleClickAddressEditBtn);
+
+            //disable cancel btn
+            const jsEmpDetAddressCancelBtn = document.querySelector('.jsEmpDetAddressCancelBtn');
+            jsEmpDetAddressCancelBtn.removeEventListener('click', handleClickAddressCancelBtn);
+            jsEmpDetAddressCancelBtn.classList.add('disbale-cancel-btn');
+
+            if (countryID == null) return;
+
+            if (countryID == 1) {
+                philippineDisbaleAddressEditMode()
+            } else {
+                foreignDisableAddressEditMode()
+            }
+        }
+
+        function philippineDisbaleAddressEditMode() {
             //disable custom select
             const jsAllEmpCustomSelectInputArrowConts = document.querySelectorAll('.jsAllEmpCustomSelectInputArrowCont');
             jsAllEmpCustomSelectInputArrowConts.forEach(item => {
                 disableCustomSelectInput(item)
+            })
+
+            //hide selection
+            const jsAllEmpAddressUls = document.querySelectorAll('.jsAllEmpAddressUl');
+            jsAllEmpAddressUls.forEach(item => {
+                item.classList.add('display-none')
             })
 
             //inputs address country
@@ -280,10 +346,7 @@
             //inputs address city
             const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity');
             jsCustomSelectInputCity.removeEventListener('input', handleInputAddressCity)
-            
-            //select arrow country
-            const jsCutomSelectArrowContCountry = document.querySelector('.jsCutomSelectArrowContCountry');
-            jsCutomSelectArrowContCountry.removeEventListener('click', handleClickInputArrowCountry)
+
 
             //select arrow region
             const jsCutomSelectArrowContRegion = document.querySelector('.jsCutomSelectArrowContRegion');
@@ -305,36 +368,116 @@
             //disable line1
             const jsInputAddressLine1 = document.querySelector('.jsInputAddressLine1')
             jsInputAddressLine1.classList.remove('input-enable');
-            jsInputAddressLine1.setAttribute('disabled',true);
+            jsInputAddressLine1.setAttribute('disabled', true);
 
             //disable line2
             const jsInputAddressLine2 = document.querySelector('.jsInputAddressLine2')
             jsInputAddressLine2.classList.remove('input-enable');
             jsInputAddressLine2.setAttribute('disabled', true);
 
-            //change button
-            const jsEmpDetAddressEditBtn = document.querySelector('.jsEmpDetAddressEditBtn');
-            jsEmpDetAddressEditBtn.textContent = 'Edit';
-            jsEmpDetAddressEditBtn.classList.remove('btn-text-color-red');
-            jsEmpDetAddressEditBtn.removeEventListener('click', handleClickAddressSaveBtn);
-            jsEmpDetAddressEditBtn.addEventListener('click', handleClickAddressEditBtn);
-
-            const jsCutomSelectArrowConts = document.querySelectorAll('.jsCutomSelectArrowCont');
-            jsCutomSelectArrowConts.forEach(item => {
-                item.removeEventListener('click', handleClickInputArrowRegion)
-            })
-
-            //hide selection
-            const jsAllEmpAddressUls = document.querySelectorAll('.jsAllEmpAddressUl');
-            jsAllEmpAddressUls.forEach(item => {
-                item.classList.add('display-none')
-            })
-
-            //disable cancel btn
-            const jsEmpDetAddressCancelBtn = document.querySelector('.jsEmpDetAddressCancelBtn');
-            jsEmpDetAddressCancelBtn.removeEventListener('click', handleClickAddressCancelBtn);
-            jsEmpDetAddressCancelBtn.classList.add('disbale-cancel-btn');
+            
         }
+
+        function foreignDisableAddressEditMode() {
+            const jsInputAddressComplete = document.querySelector('.jsInputAddressComplete')
+            jsInputAddressComplete.classList.remove('input-enable');
+            jsInputAddressComplete.setAttribute('disabled',true);
+        }
+
+        function handleClickInputArrowCountry(e) {
+            const countryID = document.querySelector('.jsCustomSelectInputCountry').getAttribute('data-id');
+            //close other open ul
+            if (countryID == 1) {
+                document.querySelector('.jsAllEmpAddressUlRegion').classList.add('display-none')
+                document.querySelector('.jsAllEmpAddressUlProvince').classList.add('display-none')
+                document.querySelector('.jsAllEmpAddressUlCity').classList.add('display-none')
+                document.querySelector('.jsAllEmpAddressUlBarangay').classList.add('display-none')
+            }
+            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            ul.classList.toggle('display-none')
+            ul.innerHTML = '';
+
+            const allCountryArr = countryLinkedlist.getAll()
+
+            if (allCountryArr.length > 0) {
+                allCountryArr.forEach(item => {
+                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.countryID}">${item.countryName}</li>`
+                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
+                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiCountry)
+                    ul.appendChild(jsAllEmpCustomSelectLi);
+                })
+            }
+        }
+
+        async function handleClickSelectLiCountry(e) {
+            //hide selection dropdown
+            const ul = document.querySelector('.jsAllEmpAddressUlCountry');
+            ul.classList.add('display-none')
+
+            //input
+            const jsCustomSelectInputCountry = document.querySelector('.jsCustomSelectInputCountry');
+            jsCustomSelectInputCountry.value = e.currentTarget.textContent;
+            jsCustomSelectInputCountry.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+
+            const jsEmpDetSubAddressTypeCont = document.querySelector('.jsEmpDetSubAddressTypeCont');
+            jsEmpDetSubAddressTypeCont.innerHTML = '';
+
+            if (e.currentTarget.getAttribute('data-id') == 1) {
+                const view = await fetchData.viewData('philippine-address-view');
+                const jsEmpDetSubPhilAddressCont = view.querySelector('.jsEmpDetSubPhilAddressCont');
+                jsEmpDetSubAddressTypeCont.appendChild(jsEmpDetSubPhilAddressCont);
+
+                //turn into edit mode
+                philippineEnableAddressEditMode()
+            } else {
+                htmlString = `<div class="emp-det-sub-phil-address-cont jsEmpDetSubPhilAddressCont">
+                                <div class="emp-det-address-sub-ind-cont jsEmpDetIndCont">
+                                    <label class="emp-det-label">Complete Address:</label>
+                                    <textarea name="CompleteAddress" class="emp-det-ind-item-input jsInput jsInputAddressComplete"></textarea>
+                                </div>
+                            </div>`;
+
+                const jsEmpDetSubPhilAddressCont = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsEmpDetSubPhilAddressCont');
+                jsEmpDetSubAddressTypeCont.appendChild(jsEmpDetSubPhilAddressCont);
+
+                //turn into edit mode
+                foreignEnableAddressEditMode()
+            }
+
+        }
+
+        //enable or disable
+        function enableCustomSelectInput(item) {
+            //enable inputs
+            const input = item.querySelector('.jsCustomSelectInput');
+            input.removeAttribute('disabled');
+            item.classList.add('input-enable');
+
+            //enable hover effect
+            const arrowCont = item.querySelector('.jsCutomSelectArrowCont');
+            arrowCont.classList.remove('arrow-cont-disabled')
+
+            //enable arrow color
+            const arrow = item.querySelector('svg');
+            arrow.classList.remove('arrow-disabled')
+        }
+
+        function disableCustomSelectInput(item) {
+            //disable input
+            const input = item.querySelector('.jsCustomSelectInput');
+            input.setAttribute('disabled', true);
+            item.classList.remove('input-enable');
+
+            //disable hover effect
+            const arrowCont = item.querySelector('.jsCutomSelectArrowCont');
+            arrowCont.classList.add('arrow-cont-disabled')
+
+            //disable arrow color
+            const arrow = item.querySelector('svg');
+            arrow.classList.add('arrow-disabled');
+
+        }
+
 
         //country address linkedlist
         let countryLinkedlist = new LinkedList(data.countryList[0])
@@ -347,6 +490,7 @@
         for (let i = 1; i < data.regionList.length; i++) {
             allRegionLinkedlist.push(data.regionList[i])
         }
+        let allRegionArr = allRegionLinkedlist.getAll()
 
         //province address linkedlist
         let selectedProvinceLinkedlist = null;
@@ -385,30 +529,6 @@
         }
 
         //click arrow events
-
-        function handleClickInputArrowCountry(e) {
-            //close other open ul
-            document.querySelector('.jsAllEmpAddressUlRegion').classList.add('display-none')
-            document.querySelector('.jsAllEmpAddressUlProvince').classList.add('display-none')
-            document.querySelector('.jsAllEmpAddressUlCity').classList.add('display-none')
-            document.querySelector('.jsAllEmpAddressUlBarangay').classList.add('display-none')
-
-            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
-            ul.classList.toggle('display-none')
-            ul.innerHTML = '';
-
-            const arr = countryLinkedlist.getAll()
-
-            if (arr.length > 0) {
-                arr.forEach(item => {
-                    htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.countryID}">${item.countryName}</li>`
-                    const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
-                    jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiRegion)
-                    ul.appendChild(jsAllEmpCustomSelectLi);
-                })
-            }
-        }
-
         function handleClickInputArrowRegion(e) {
             //close other open ul
             document.querySelector('.jsAllEmpAddressUlCountry').classList.add('display-none')
@@ -416,14 +536,13 @@
             document.querySelector('.jsAllEmpAddressUlCity').classList.add('display-none')
             document.querySelector('.jsAllEmpAddressUlBarangay').classList.add('display-none')
 
-            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            //empty and populate self ul dropdown
+            const ul = document.querySelector('.jsAllEmpAddressUlRegion');
             ul.classList.toggle('display-none')
             ul.innerHTML = '';
 
-            const arr = allRegionLinkedlist.getAll()
-
-            if (arr.length > 0) {
-                arr.forEach(item => {
+            if (allRegionArr.length > 0) {
+                allRegionArr.forEach(item => {
                     htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.regionID}">${item.regionName}</li>`
                     const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
                     jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiRegion)
@@ -440,17 +559,18 @@
             document.querySelector('.jsAllEmpAddressUlCity').classList.add('display-none')
             document.querySelector('.jsAllEmpAddressUlBarangay').classList.add('display-none')
 
+            //empty and populate ul dropdown
             const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
             ul.classList.toggle('display-none')
             ul.innerHTML = '';
 
-            let provinceArr = []
+            let selectedProvinceArr = []
             if (selectedProvinceLinkedlist != null) {
-                provinceArr = selectedProvinceLinkedlist.getAll()
+                selectedProvinceArr = selectedProvinceLinkedlist.getAll()
             }
 
-            if (provinceArr.length > 0) {
-                provinceArr.forEach(item => {
+            if (selectedProvinceArr.length > 0) {
+                selectedProvinceArr.forEach(item => {
                     htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.provinceID}" data-topid="${item.regionID}" data-trigger="arrow">${item.provinceName}</li>`
                     const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
                     jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiProvince)
@@ -467,17 +587,18 @@
             document.querySelector('.jsAllEmpAddressUlProvince').classList.add('display-none')
             document.querySelector('.jsAllEmpAddressUlBarangay').classList.add('display-none')
 
+            //empty and populate ul dropdown
             const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
             ul.classList.toggle('display-none')
             ul.innerHTML = '';
 
-            let cityArr = [];
+            let selectedCityArr = [];
             if (selectedCityLinkedlist != null) {
-                cityArr = selectedCityLinkedlist.getAll()
+                selectedCityArr = selectedCityLinkedlist.getAll()
             }
 
-            if (cityArr.length > 0) {
-                cityArr.forEach(item => {
+            if (selectedCityArr.length > 0) {
+                selectedCityArr.forEach(item => {
                     htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-topid="${item.provinceID}" data-id="${item.cityID}" data-trigger="arrow">${item.cityName}</li>`
                     const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
                     jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiCity)
@@ -493,6 +614,7 @@
             document.querySelector('.jsAllEmpAddressUlRegion').classList.add('display-none')
             document.querySelector('.jsAllEmpAddressUlProvince').classList.add('display-none')
 
+            //empty and populate ul dropdown
             const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
             ul.classList.toggle('display-none')
             ul.innerHTML = '';
@@ -514,14 +636,15 @@
 
         //input events
         function handleInputAddressCountry(e) {
-            const ul = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsAllEmpAddressUl');
+            const ul = document.querySelector('.jsAllEmpAddressUlCountry');
             ul.innerHTML = '';
+
             const SearchString = e.target.value.trim();
             const arr = countryLinkedlist.linkedListIndexOf('countryName', SearchString)
 
             if (arr.length > 0) {
+                ul.classList.remove('display-none')
                 arr.forEach(item => {
-                    ul.classList.remove('display-none')
                     htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.countryID}">${item.countryName}</li>`
                     const jsAllEmpCustomSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpCustomSelectLi')
                     jsAllEmpCustomSelectLi.addEventListener('click', handleClickSelectLiCountry)
@@ -591,20 +714,13 @@
 
         }
 
-        //input events
-
-        //click li events
-        function handleClickSelectLiCountry(e) {
-            //hide select ul
-            const ul = e.target.closest('.jsAllEmpAddressUl');
-            ul.classList.add('display-none')
-
-            //input
-            const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
-            jsCustomSelectInput.value = e.currentTarget.textContent;
-            jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+        //blur events
+        function handleBlurAddressCountry() {
+            //alert('blur')
+            console.log('change')
         }
 
+        //click li events
         function handleClickSelectLiRegion(e) {
 
             //get the region ID
@@ -612,16 +728,17 @@
 
             (function regionSelfElements() {
                 //hide selection dropdown
-                const ul = e.target.closest('.jsAllEmpAddressUl');
+                const ul = document.querySelector('.jsAllEmpAddressUlRegion');
                 ul.classList.add('display-none')
 
                 //populate region input attribute
-                const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
-                jsCustomSelectInput.value = e.currentTarget.textContent;
-                jsCustomSelectInput.setAttribute('data-id', regionID);
+                const jsCustomSelectInputRegion = document.querySelector('.jsCustomSelectInputRegion');
+                jsCustomSelectInputRegion.value = e.currentTarget.textContent;
+                jsCustomSelectInputRegion.setAttribute('data-id', regionID);
             })();
 
             (function regionDownElements() {
+
                 //update province linkedlist
                 let provinceArr = []
                 data.provinceList.forEach(item => {
@@ -630,10 +747,18 @@
                     }
                 })
 
+                //reset province linkedlist to new data
                 selectedProvinceLinkedlist = new LinkedList(provinceArr[0])
                 for (let i = 1; i < provinceArr.length; i++) {
                     selectedProvinceLinkedlist.push(provinceArr[i])
                 }
+
+                //reset city linkedlist data empty
+                selectedCityLinkedlist = null;
+
+                //reset barangay linkedlist data empty
+                selectedBarangayLinkedlist = null;
+
 
                 //clear province input attribute
                 const jsCustomSelectInputProvince = document.querySelector('.jsCustomSelectInputProvince');
@@ -660,14 +785,10 @@
 
             })();
 
-            (function resetOtherData() {
-                selectedCityLinkedlist = null;
-                selectedBarangayLinkedlist = null;
-            })();
-
         }
 
         function handleClickSelectLiProvince(e) {
+
             const provinceID = e.currentTarget.getAttribute('data-id');
             const regionID = e.currentTarget.getAttribute('data-topid');
             const dataTrigger = e.currentTarget.getAttribute('data-trigger');
@@ -677,16 +798,16 @@
                 const ul = e.target.closest('.jsAllEmpAddressUl');
                 ul.classList.add('display-none')
 
-                //input
-                const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
+                //populate input attribute
+                const jsCustomSelectInput = document.querySelector('.jsCustomSelectInputProvince');
                 jsCustomSelectInput.value = e.currentTarget.textContent;
-                jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+                jsCustomSelectInput.setAttribute('data-id', provinceID);
             })();
 
             (function provinceTopElements() {
                 if (dataTrigger == 'input') {
 
-                    //modify region attrr and province arrow linkedlist
+                    //reset region data
                     let regionName = '';
                     for (let i = 0; i < data.regionList.length; i++) {
                         if (data.regionList[i].regionID == regionID) {
@@ -694,6 +815,10 @@
                             break;
                         }
                     }
+
+                    const jsCustomSelectInputRegion = document.querySelector('.jsCustomSelectInputRegion');
+                    jsCustomSelectInputRegion.value = regionName;
+                    jsCustomSelectInputRegion.setAttribute('data-id', regionID);
 
                     const proviceArr = [];
                     for (let i = 0; i < data.provinceList.length; i++) {
@@ -707,11 +832,20 @@
                         selectedProvinceLinkedlist.push(proviceArr[i])
                     }
 
+                    //reset country data, this needs
+                    //just in case country is empty from the start
+                    let countryID = 1;
+                    let countryName = '';
 
-                    //populate region input attribute
-                    const jsCustomSelectInputRegion = document.querySelector('.jsCustomSelectInputRegion');
-                    jsCustomSelectInputRegion.value = regionName;
-                    jsCustomSelectInputRegion.setAttribute('data-id', regionID);
+                    for (let i = 0; i < data.countryList.length; i++) {
+                        if (data.countryList[i].countryID == countryID) {
+                            countryName = data.countryList[i].countryName.trim()
+                        }
+                    }
+
+                    const jsCustomSelectInputCountry = document.querySelector('.jsCustomSelectInputCountry');
+                    jsCustomSelectInputCountry.value = countryName;
+                    jsCustomSelectInputCountry.setAttribute('data-id', countryID);
                 }
             })();
 
@@ -724,10 +858,14 @@
                     }
                 })
 
+                //reset city linklist data to new set of data
                 selectedCityLinkedlist = new LinkedList(cityArr[0])
                 for (let i = 1; i < cityArr.length; i++) {
                     selectedCityLinkedlist.push(cityArr[i])
                 }
+
+                //reset barangay linklist data empty
+                selectedBarangayLinkedlist = null;
 
                 //clear city input attribute
                 const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity');
@@ -749,16 +887,14 @@
 
             })();
 
-            (function resetOtherData() {
-                selectedBarangayLinkedlist = null;
-            })();
         }
 
         function handleClickSelectLiCity(e) {
+            const countryID = 1;
             const cityID = e.currentTarget.getAttribute('data-id');
             const provinceID = e.currentTarget.getAttribute('data-topid');
             const dataTrigger = e.currentTarget.getAttribute('data-trigger');
-            console.log(provinceID);
+
             (function citySelfElements() {
                 //hide select ul
                 const ul = e.target.closest('.jsAllEmpAddressUl');
@@ -767,7 +903,10 @@
                 //city input
                 const jsCustomSelectInput = e.target.closest('.jsAllEmpCustomSelectMainCont').querySelector('.jsCustomSelectInput');
                 jsCustomSelectInput.value = e.currentTarget.textContent;
-                jsCustomSelectInput.setAttribute('data-id', e.currentTarget.getAttribute('data-id'));
+                jsCustomSelectInput.setAttribute('data-id', cityID);
+
+
+
             })();
 
             (function cityTopElements() {
@@ -827,29 +966,34 @@
                     selectedProvinceLinkedlist.push(selectedProvinceArr[i])
                 }
 
+                //reset country data, this needs
+                //just in case country is empty from the start
+                let countryID = 1;
+                let countryName = '';
+
+                for (let i = 0; i < data.countryList.length; i++) {
+                    if (data.countryList[i].countryID == countryID) {
+                        countryName = data.countryList[i].countryName.trim()
+                    }
+                }
+
+                const jsCustomSelectInputCountry = document.querySelector('.jsCustomSelectInputCountry');
+                jsCustomSelectInputCountry.value = countryName;
+                jsCustomSelectInputCountry.setAttribute('data-id', countryID);
+
             })();
 
             (async function cityDownElements() {
-                //update city linkedlist
-                let cityArr = []
-                data.cityList.forEach(item => {
-                    if (item.provinceID == provinceID) {
-                        cityArr.push(item)
-                    }
-                })
 
-                selectedCityLinkedlist = new LinkedList(cityArr[0])
-                for (let i = 1; i < cityArr.length; i++) {
-                    selectedCityLinkedlist.push(cityArr[i])
-                }
+
+                //get barangay linkedList by fetching to database
+                //this is intentional to make data processing not heavy from start
+                selectedBarangayLinkedlist = await getSelectedBarangay(cityID)
 
                 //clear barangay input attribute
                 const jsCustomSelectInputBarangay = document.querySelector('.jsCustomSelectInputBarangay');
                 jsCustomSelectInputBarangay.value = '';
                 jsCustomSelectInputBarangay.setAttribute('data-id', 0)
-
-                //barangay linkedList
-                selectedBarangayLinkedlist = await getSelectedBarangay(cityID)
 
                 //clear line1 input attribute
                 const jsInputAddressLine1 = document.querySelector('.jsInputAddressLine1');
@@ -866,7 +1010,7 @@
         function handleClickSelectLiBarangay(e) {
             const barangayID = e.currentTarget.getAttribute('data-id');
             const cityID = e.currentTarget.getAttribute('data-topid');
-            
+
             (function barangaySelfElements() {
                 //hide select ul
                 const ul = e.target.closest('.jsAllEmpAddressUl');
@@ -888,236 +1032,6 @@
                 const jsInputAddressLine2 = document.querySelector('.jsInputAddressLine2');
                 jsInputAddressLine2.value = '';
             })();
-        }
-
-        //enable or disable
-        function enableCustomSelectInput(item) {
-            //enable inputs
-            const input = item.querySelector('.jsCustomSelectInput');
-            input.removeAttribute('disabled');
-            item.classList.add('input-enable');
-
-            //enable hover effect
-            const arrowCont = item.querySelector('.jsCutomSelectArrowCont');
-            arrowCont.classList.remove('arrow-cont-disabled')
-
-            //enable arrow color
-            const arrow = item.querySelector('svg');
-            arrow.classList.remove('arrow-disabled')
-        }
-
-        function disableCustomSelectInput(item) {
-            //disable input
-            const input = item.querySelector('.jsCustomSelectInput');
-            input.setAttribute('disabled', true);
-            item.classList.remove('input-enable');
-
-            //disable hover effect
-            const arrowCont = item.querySelector('.jsCutomSelectArrowCont');
-            arrowCont.classList.add('arrow-cont-disabled')
-
-            //disable arrow color
-            const arrow = item.querySelector('svg');
-            arrow.classList.add('arrow-disabled');
-
-        }
-    }
-
-
-
-    async function employeeDetailsView(e) {
-        //fetch view for display
-        const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
-        const view = await fetchData.viewData('employee-detail-page');
-
-        const jsWorkersInfoMainCont = view.querySelector('.jsWorkersInfoMainCont');
-        jsSublayout01ContentSubCont.innerHTML = '';
-        jsSublayout01ContentSubCont.appendChild(jsWorkersInfoMainCont);
-
-        await newEmployee(e);
-
-        persInfoAfterSaved();
-        benifitsAfterSaved();
-        contactsAfterSaved();
-        compensationAfterSaved();
-        modifiyUIDisplay();
-    }
-
-    async function persInfoAfterSaved() {
-        //personal information
-        document.querySelector('.jsEmployeeNumberText').textContent = localData.personalInfo.employeeNumber;
-        document.querySelector('.jsFirstName').value = localData.personalInfo.firstName;
-        document.querySelector('.jsMiddleName').value = localData.personalInfo.middleName;
-        document.querySelector('.jsLastName').value = localData.personalInfo.lastName;
-        document.querySelector('.jsDateOfBirth').value = localData.personalInfo.dateOfBirth;
-
-        //disable save button
-        disablePersInfoSaveAndEnableEditBtn();
-        disablePersInfoInputBtn();
-
-        //this function should run manually because save button is disabled without clicking, so this function is not activated
-        await personalInfoEditAndUpdate()
-    }
-
-    async function benifitsAfterSaved() {
-        //benifits information
-        document.querySelector('.jsUMIDNumber').value = localData.benifits.umidNumber;
-        document.querySelector('.jsSSSNumber').value = localData.benifits.sssNumber;
-        document.querySelector('.jsPagIbigNumber').value = localData.benifits.pagIbigNumber;
-        document.querySelector('.jsPhilHealthNumber').value = localData.benifits.philHealthNumber;
-        document.querySelector('.jsTINNumber').value = localData.benifits.tinNumber;
-
-        //disable save button
-        disableBeniftsSaveAndEnableEditBtn();
-        disableBenifitsInput();
-
-        //this function should run manually because save button is disabled without clicking, so this function is not activated
-        await benifitsEditAndUpdate()
-    }
-
-    async function contactsAfterSaved() {
-        //contacts information
-        document.querySelector('.jsMobileNumber').value = localData.contacts.mobileNumber;
-        document.querySelector('.jsLandLineNumber').value = localData.contacts.landLineNumber;
-        document.querySelector('.jsEmailAddress').value = localData.contacts.emailAddress;
-
-        //disable save button
-        disableContactSaveAndEnableEditBtn();
-        disableContactsInput();
-
-        //this function should run manually because save button is disabled without clicking, so this function is not activated
-        await contactsEditAndUpdate()
-    }
-
-    async function compensationAfterSaved() {
-        //compensation information
-        document.querySelector('.jsBasicSalary').value = localData.compensation.basicSalary;
-        document.querySelector('.jsAllowance').value = localData.compensation.allowance;
-
-        const jsRatePeriod = document.querySelector('.jsRatePeriod');
-        const ratePeriod = localData.compensation.ratePeriodID;
-        if (parseInt(ratePeriod) == 1) {
-            jsRatePeriod.options[0].setAttribute('selected', true)
-        } else {
-            jsRatePeriod.options[1].setAttribute('selected', true)
-        }
-
-        const jsIsSalaryFixed = document.querySelector('.jsIsSalaryFixed');
-        const isSalaryFixed = localData.compensation.isSalaryFixed;
-        if (parseInt(isSalaryFixed) == 0) {
-            jsIsSalaryFixed.options[0].setAttribute('selected', true)
-        } else {
-            jsIsSalaryFixed.options[1].setAttribute('selected', true)
-        }
-
-        //disable save button
-        disableCompensationSaveAndEnableEditBtn();
-        disableCompensationInput();
-
-        //this function should run manually because save button is disabled without clicking, so this function is not activated
-        await compensationEditAndUpdate()
-    }
-
-    function modifiyUIDisplay() {
-        //hide save button
-        const jsWorkersSaveBtns = document.querySelectorAll('.jsWorkersSaveBtn');
-        for (let i = 0; i < jsWorkersSaveBtns.length; i++) {
-            jsWorkersSaveBtns[i].classList.add('display-none');
-        }
-
-        //change grid of header
-        const jsWorkerHeaderTitleConts = document.querySelectorAll('.jsWorkerHeaderTitleCont');
-        for (let i = 0; i < jsWorkerHeaderTitleConts.length; i++) {
-            jsWorkerHeaderTitleConts[i].classList.add('display-grid-col-1fr-80px');
-        }
-
-
-        //insert picture container
-        let htmlString = `<div class="worker-imageid-main-cont jsWorkerImageIDMainCont">
-                            <div class="worker-imageid-sub-cont jsWorkerImageIdSubCont">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="worker-image-svg-cont jsWorkerImageSVG">
-                                    <path  class="worker-image-svg-path" d="M336 128a112 112 0 1 0 -224 0 112 112 0 1 0 224 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM16 482.3c0 7.6 6.1 13.7 13.7 13.7H418.3c7.6 0 13.7-6.1 13.7-13.7C432 392.7 359.3 320 269.7 320H178.3C88.7 320 16 392.7 16 482.3zm-16 0C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
-                                </svg>
-                                 <img class="employee-image jsEmployeeImage"/>
-                            </div>
-                        </div>`
-
-        let jsWorkerImageIDMainCont = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsWorkerImageIDMainCont');
-
-        const jsWorkerInfoSubCont = document.querySelector('.jsWorkerInfoSubCont');
-        const jsPersInfoHeaderTitleCont = document.querySelector('.jsPersInfoHeaderTitleCont');
-
-        //insert
-        jsWorkerInfoSubCont.insertBefore(jsWorkerImageIDMainCont, jsPersInfoHeaderTitleCont);
-
-        ////change bottom border
-        //const jsWorkerInfoTitleCont = document.querySelector('.jsWorkerInfoTitleCont');
-        //jsWorkerInfoTitleCont.classList.add('border-bottom-1px-808080');
-
-        //change title text
-        const jsWorkerInfoTitleText = document.querySelector('.jsWorkerInfoTitleText');
-        jsWorkerInfoTitleText.textContent = 'Employee Information'
-
-        //add event listener to image profile
-        jsWorkerImageIDMainCont.querySelector('.jsWorkerImageIdSubCont').addEventListener('click', clickEmployeeImageProfile)
-
-    }
-
-    async function clickEmployeeImageProfile() {
-
-        const view = await fetchData.viewData('select-image-source');
-        const jsAllEmpImageSourceMainCont = view.querySelector('.jsAllEmpImageSourceMainCont');
-
-        document.body.appendChild(jsAllEmpImageSourceMainCont);
-
-        const jsImageSourceClose = jsAllEmpImageSourceMainCont.querySelector('.jsImageSourceClose');
-        jsImageSourceClose.addEventListener('click', clickImageSourceClose)
-
-        function clickImageSourceClose() {
-            jsAllEmpImageSourceMainCont.remove();
-        }
-
-        const jsEmployeeImageSourceGalleryLabel = jsAllEmpImageSourceMainCont.querySelector('.jsEmployeeImageSourceGalleryLabel');
-        jsEmployeeImageSourceGalleryLabel.addEventListener('click', clickLabelChooseFromGallery)
-        function clickLabelChooseFromGallery() {
-            document.querySelector('.jsEmployeeImageFile').click();
-        }
-
-        const jsEmployeeImageFile = jsAllEmpImageSourceMainCont.querySelector('.jsEmployeeImageFile');
-        jsEmployeeImageFile.addEventListener('change', changeInputFile)
-        function changeInputFile() {
-            jsAllEmpImageSourceMainCont.remove();
-            readInputEmployeeImageFileInput()
-        }
-
-
-        function readInputEmployeeImageFileInput() {
-            document.querySelector('.jsWorkerImageSVG').classList.add('display-none');
-            const image = document.querySelector('.jsEmployeeImage');
-
-            const file = jsEmployeeImageFile.files[0]
-
-            // Check if the file is an image.
-
-            if (file.type && !file.type.startsWith('image/')) {
-
-                console.log('File is not an image.', file.type, file);
-
-                return;
-
-            }
-
-            const reader = new FileReader();
-
-            reader.addEventListener('load', (e) => {
-
-                image.src = e.target.result;
-                console.log(e.target.result)
-
-            });
-
-            reader.readAsDataURL(file);
-
         }
     }
 

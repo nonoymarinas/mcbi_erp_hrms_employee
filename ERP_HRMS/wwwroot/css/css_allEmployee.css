@@ -320,7 +320,9 @@ input:-webkit-autofill:active {
     width: 100%;
     padding: 0 .2em;
 }
-
+.emp-det-sub-address-type-cont {
+    width: 100%;
+}
 .emp-det-sub-ind-cont {
     display: grid;
     grid-template-columns: 160px 1fr 50px;
