@@ -20,4 +20,11 @@
     <Folder Include="wwwroot\logo\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\js\js_employeeDetails.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

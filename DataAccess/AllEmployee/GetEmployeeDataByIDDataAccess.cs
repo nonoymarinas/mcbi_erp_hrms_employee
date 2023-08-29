@@ -122,6 +122,19 @@ namespace DataAccess
                             if (reader.HasRows)
                             {
                                 reader.Read();
+                                Country addressCountry = new Country()
+                                {
+                                    CountryID = Convert.ToInt32(reader["CountryID"]),
+                                    CountryName = reader["CountryName"].ToString(),
+                                };
+
+                                returnData.EmployeeAddressCountry = addressCountry;
+                            }
+
+                            reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
                                 EmployeePhilippineAddress philAddress = new()
                                 {
                                     ID = Convert.ToInt32(reader["ID"]),
@@ -158,6 +171,19 @@ namespace DataAccess
                                 returnData.ForeignAddress = foreignAddress;
                             }
 
+                            reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                JobDescription jobDescription = new()
+                                {
+                                    PositionID = Convert.ToInt32(reader["PositionID"]),
+                                    PositionName = reader["PositionName"].ToString(),
+                                    DepartmentID = Convert.ToInt32(reader["DepartmentID"]),
+                                    DepartmentName = reader["DepartmentName"].ToString(),
+                                };
+                                returnData.JobDescription = jobDescription;
+                            }
 
                             reader.NextResult();
                             while (reader.Read())
