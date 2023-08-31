@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessModel
 {
-    public class EmployeeForeignAddress
+    public class ForeignAddress
     {
         public int ID { get; set; }
         public int PostalAddressTypeID { get; set; }

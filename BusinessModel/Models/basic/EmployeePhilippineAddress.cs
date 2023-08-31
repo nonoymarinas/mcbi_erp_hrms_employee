@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessModel
 {
-    public class EmployeePhilippineAddress
+    public class PhilippineAddress
     {
         public int ID { get; set; }
         public int PostalAddressTypeID { get; set; }

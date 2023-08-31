@@ -41,23 +41,9 @@ function populatePersonalInfo(data) {
     dateOfBirth.value = data.personalInfo.dateOfBirth
 
     //gender
-    const gender = document.querySelector('.jsPerInfoGender');
-    gender.innerHTML = '';
-    htmlString = `<option class="emp-det-select-options jsSelectOption" value="0">Select</option>`;
-
-    let jsSelectOption = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSelectOption');
-    gender.appendChild(jsSelectOption);
-
-    data.genderList.forEach(item => {
-        //determine the selected value
-        if (data.personalInfo.genderID == item.genderID) {
-            htmlString = `<option class="emp-det-select-options jsSelectOption" value="${item.genderID}" selected>${item.genderName}</option>`;
-        } else {
-            htmlString = `<option class="emp-det-select-options jsSelectOption" value="${item.genderID}">${item.genderName}</option>`;
-        }
-        jsSelectOption = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSelectOption');
-        gender.appendChild(jsSelectOption);
-    })
+    const gender = document.querySelector('.jsCustomSelectInputGender');
+    gender.value = data.personalInfo.gender;
+    gender.setAttribute('data-id', data.personalInfo.gender);
 }
 
 function populateBenifits(data) {
@@ -139,27 +125,31 @@ async function populateAddress(data) {
         const jsCustomSelectInputRegion = document.querySelector('.jsCustomSelectInputRegion');
         jsCustomSelectInputRegion.value = data.philippineAddress.regionName;
         jsCustomSelectInputRegion.setAttribute('data-id', data.philippineAddress.regionID)
+        jsCustomSelectInputRegion.setAttribute('data-topid', data.philippineAddress.countryID)
 
         //province
         const jsCustomSelectInputProvince = document.querySelector('.jsCustomSelectInputProvince');
         jsCustomSelectInputProvince.value = data.philippineAddress.provinceName;
         jsCustomSelectInputProvince.setAttribute('data-id', data.philippineAddress.provinceID)
+        jsCustomSelectInputProvince.setAttribute('data-topid', data.philippineAddress.regionID)
 
         //city
         const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity');
         jsCustomSelectInputCity.value = data.philippineAddress.cityOrMunicipalName;
         jsCustomSelectInputCity.setAttribute('data-id', data.philippineAddress.cityOrMunicipalityID)
+        jsCustomSelectInputCity.setAttribute('data-topid', data.philippineAddress.provinceID)
 
         //barangay
         const jsCustomSelectInputBarangay = document.querySelector('.jsCustomSelectInputBarangay');
         jsCustomSelectInputBarangay.value = data.philippineAddress.barangayName;
         jsCustomSelectInputBarangay.setAttribute('data-id', data.philippineAddress.barangayID)
+        jsCustomSelectInputBarangay.setAttribute('data-topid', data.philippineAddress.cityOrMunicipalityID)
 
-        //barangay
+        //line1
         const jsInputAddressLine1 = document.querySelector('.jsInputAddressLine1');
         jsInputAddressLine1.value = data.philippineAddress.addressLine1;
 
-        //barangay
+        //line2
         const jsInputAddressLine2 = document.querySelector('.jsInputAddressLine2');
         jsInputAddressLine2.value = data.philippineAddress.addressLine2;
     }
@@ -176,16 +166,78 @@ async function populateAddress(data) {
     }
 }
 
-function populateJobDescription() {
+function populateJobDescription(data) {
 
+    if (data.jobDescription.positionID == null) {
+        const jsCustomSelectInputPosition = document.querySelector('.jsCustomSelectInputPosition');
+        jsCustomSelectInputPosition.value = '';
+    } else {
+        const jsCustomSelectInputPosition = document.querySelector('.jsCustomSelectInputPosition');
+        jsCustomSelectInputPosition.value = data.jobDescription.positionName;
+        jsCustomSelectInputPosition.setAttribute('data-id', data.jobDescription.positionID);
+    }
+    
+
+    if (data.jobDescription.departmentID == null) {
+        const jsCustomSelectInputDepartment = document.querySelector('.jsCustomSelectInputDepartment');
+        jsCustomSelectInputDepartment.value = '';
+    } else {
+        const jsCustomSelectInputDepartment = document.querySelector('.jsCustomSelectInputDepartment');
+        jsCustomSelectInputDepartment.value = data.jobDescription.departmentName;
+        jsCustomSelectInputDepartment.setAttribute('data-id', data.jobDescription.departmentID);
+    }
+
+    if (data.jobDescription.remarks == null) {
+        const jsInputRemarks = document.querySelector('.jsInputRemarks');
+        jsInputRemarks.value = '';
+    } else {
+        const jsInputRemarks = document.querySelector('.jsInputRemarks');
+        jsInputRemarks.value = data.jobDescription.remarks;
+    }
 }
 
-function populateCompensation() {
+function populateCompensation(data) {
+    const jsCustomSelectInputRatePeriod = document.querySelector('.jsCustomSelectInputRatePeriod');
+    jsCustomSelectInputRatePeriod.value = data.compensation.ratePeriod
+    jsCustomSelectInputRatePeriod.setAttribute('data-id', data.compensation.ratePeriodID)
 
+    const jsInputBasicSalary = document.querySelector('.jsInputBasicSalary');
+    jsInputBasicSalary.value = data.compensation.basicSalary
+
+    const jsInputAllowance = document.querySelector('.jsInputAllowance');
+    jsInputAllowance.value = data.compensation.allowance
+
+    const jsCustomSelectInputSalaryCondition = document.querySelector('.jsCustomSelectInputSalaryCondition');
+    jsCustomSelectInputSalaryCondition.value = data.compensation.salaryCondition;
+    jsCustomSelectInputSalaryCondition.setAttribute('data-id', data.compensation.salaryConditionID)
+}
+
+function cancelAndRestorePersonalInfo(data) {
+    const DateTime = luxon.DateTime;
+    console.log(DateTime)
+
+    //first name
+    const jsPerInfoFirstName = document.querySelector('.jsPerInfoFirstName')
+    jsPerInfoFirstName.value = data.personalInfo.firstName
+
+    //middle name
+    const jsPerInfoMiddleName = document.querySelector('.jsPerInfoMiddleName')
+    jsPerInfoMiddleName.value = data.personalInfo.middleName
+
+    //last name
+    const jsPerInfoLastName = document.querySelector('.jsPerInfoLastName')
+    jsPerInfoLastName.value = data.personalInfo.lastName
+
+    //last name
+    const jsPerInfoDateOfBirth = document.querySelector('.jsPerInfoDateOfBirth')
+    jsPerInfoDateOfBirth.value = data.personalInfo.dateOfBirth
+
+    console.log(DateTime.fromISO(data.personalInfo.dateOfBirth))
 }
 
 async function EditAndSaveFunction(data) {
 
+    //edit buttons for inputs
     const jsEmpDetEditInputBtns = document.querySelectorAll('.jsEmpDetEditInputBtn');
     jsEmpDetEditInputBtns.forEach(item => {
         item.addEventListener('click', handleClickInputEditBtn)
@@ -227,10 +279,61 @@ async function EditAndSaveFunction(data) {
         //change apperance here
         input.setAttribute('disabled', true);
         input.classList.remove('input-enable');
+
         e.target.textContent = 'edit';
         e.target.classList.remove('btn-text-color-red');
         e.target.removeEventListener('click', handleClickInputSaveBtn);
         e.target.addEventListener('click', handleClickInputEditBtn);
+    }
+
+    //edit buttons for input select
+    const jsEmpDetEditSelectInputBtns = document.querySelectorAll('.jsEmpDetEditSelectInputBtn');
+    jsEmpDetEditSelectInputBtns.forEach(item => {
+        item.addEventListener('click', handleClickSelectInputEditBtn)
+    })
+
+    async function handleClickSelectInputSaveBtn(e) {
+        const input = e.target.closest('.jsEmpDetIndCont').querySelector('.jsInput');
+        //perform save operation
+        const formData = new FormData();
+        const value = input.value;
+        const name = input.getAttribute('name');
+        formData.append('MasterPersonID', data.personalInfo.masterPersonID)
+        formData.append('Name', name);
+        formData.append('Value', value);
+
+        for (const pair of formData.entries()) {
+            console.log(`${pair[0]}, ${pair[1]}`);
+        }
+
+        const options = {
+            method: 'POST',
+            body: formData
+        }
+
+        const updateReturnData = await fetchData.postData('update-employee-info', options)
+
+        console.log(updateReturnData);
+
+        //change apperance here
+        const jsEmpDetIndCont = e.target.closest('.jsEmpDetIndCont').querySelector('.jsAllEmpCustomSelectMainCont');
+        disableCustomSelectInput(jsEmpDetIndCont)
+
+        e.target.textContent = 'edit';
+        e.target.classList.remove('btn-text-color-red');
+        e.target.removeEventListener('click', handleClickSelectInputSaveBtn);
+        e.target.addEventListener('click', handleClickSelectInputEditBtn);
+    }
+
+    function handleClickSelectInputEditBtn(e) {
+        const jsEmpDetIndCont = e.target.closest('.jsEmpDetIndCont').querySelector('.jsAllEmpCustomSelectMainCont');
+
+        enableCustomSelectInput(jsEmpDetIndCont)
+
+        e.target.textContent = 'save';
+        e.target.classList.add('btn-text-color-red');
+        e.target.removeEventListener('click', handleClickSelectInputEditBtn);
+        e.target.addEventListener('click', handleClickSelectInputSaveBtn);
     }
 
     const jsEmpDetAddressEditBtn = document.querySelector('.jsEmpDetAddressEditBtn');
@@ -241,6 +344,14 @@ async function EditAndSaveFunction(data) {
 
     function handleClickAddressEditBtn(e) {
         enableAddressEditMode()
+    }
+
+    //cancel buttons
+    const jsEmpDetPersInfoCancelBtn = document.querySelector('.jsEmpDetPersInfoCancelBtn');
+    jsEmpDetPersInfoCancelBtn.addEventListener('click',handleClickPersInfoCancelBtn)
+
+    function handleClickPersInfoCancelBtn() {
+        cancelAndRestorePersonalInfo(data)
     }
 
     function handleClickAddressSaveBtn(e) {
@@ -260,9 +371,6 @@ async function EditAndSaveFunction(data) {
         //inputs address country
         let jsCustomSelectInputCountry = document.querySelector('.jsCustomSelectInputCountry');
         jsCustomSelectInputCountry.addEventListener('input', handleInputAddressCountry)
-
-        //inputs blur address country
-        jsCustomSelectInputCountry.addEventListener('change', handleBlurAddressCountry)
 
         //select arrow country
         const jsCutomSelectArrowContCountry = document.querySelector('.jsCutomSelectArrowContCountry');
@@ -291,7 +399,7 @@ async function EditAndSaveFunction(data) {
 
     function philippineEnableAddressEditMode() {
         //enable custom selection
-        const jsAllEmpCustomSelectInputArrowConts = document.querySelectorAll('.jsAllEmpCustomSelectInputArrowCont');
+        const jsAllEmpCustomSelectInputArrowConts = document.querySelectorAll('.jsAllEmpCustomSelectInputArrowContAddress');
         jsAllEmpCustomSelectInputArrowConts.forEach(item => {
             enableCustomSelectInput(item)
         })
@@ -613,6 +721,22 @@ async function EditAndSaveFunction(data) {
     }
 
     function handleClickInputArrowProvince(e) {
+       
+        //get drowp down data
+        const jsCustomSelectInputRegion = document.querySelector('.jsCustomSelectInputRegion')
+        const regionID = jsCustomSelectInputRegion.getAttribute('data-id');
+        let selectedProvinceArr = []
+        data.provinceList.forEach(item => {
+            if (item.regionID == regionID) {
+                selectedProvinceArr.push(item)
+            }
+        })
+
+        //update LinkedList
+        selectedProvinceLinkedlist = new LinkedList(selectedProvinceArr[0])
+        for (let i = 1; i < selectedProvinceArr.length; i++) {
+            selectedProvinceLinkedlist.push(selectedProvinceArr[i])
+        }
 
         //close other open ul
         document.querySelector('.jsAllEmpAddressUlCountry').classList.add('display-none')
@@ -625,11 +749,6 @@ async function EditAndSaveFunction(data) {
         ul.classList.toggle('display-none')
         ul.innerHTML = '';
 
-        let selectedProvinceArr = []
-        if (selectedProvinceLinkedlist != null) {
-            selectedProvinceArr = selectedProvinceLinkedlist.getAll()
-        }
-
         if (selectedProvinceArr.length > 0) {
             selectedProvinceArr.forEach(item => {
                 htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-id="${item.provinceID}" data-topid="${item.regionID}" data-trigger="arrow">${item.provinceName}</li>`
@@ -641,6 +760,21 @@ async function EditAndSaveFunction(data) {
     }
 
     function handleClickInputArrowCity(e) {
+        //get drowp down data
+        const jsCustomSelectInputProvince = document.querySelector('.jsCustomSelectInputProvince')
+        const provinceID = jsCustomSelectInputProvince.getAttribute('data-id');
+        let selectedCityArr = []
+        data.cityList.forEach(item => {
+            if (item.provinceID == provinceID) {
+                selectedCityArr.push(item)
+            }
+        })
+
+        //update LinkedList
+        selectedCityLinkedlist = new LinkedList(selectedCityArr[0])
+        for (let i = 1; i < selectedCityArr.length; i++) {
+            selectedCityLinkedlist.push(selectedCityArr[i])
+        }
 
         //close other open ul
         document.querySelector('.jsAllEmpAddressUlCountry').classList.add('display-none')
@@ -653,11 +787,6 @@ async function EditAndSaveFunction(data) {
         ul.classList.toggle('display-none')
         ul.innerHTML = '';
 
-        let selectedCityArr = [];
-        if (selectedCityLinkedlist != null) {
-            selectedCityArr = selectedCityLinkedlist.getAll()
-        }
-
         if (selectedCityArr.length > 0) {
             selectedCityArr.forEach(item => {
                 htmlString = `<li class="all-emp-custom-select-search-li jsAllEmpCustomSelectLi" data-topid="${item.provinceID}" data-id="${item.cityID}" data-trigger="arrow">${item.cityName}</li>`
@@ -668,7 +797,12 @@ async function EditAndSaveFunction(data) {
         }
     }
 
-    function handleClickInputArrowBarangay(e) {
+    async function handleClickInputArrowBarangay(e) {
+
+        //get drowp down data
+        const jsCustomSelectInputCity = document.querySelector('.jsCustomSelectInputCity')
+        const cityID = jsCustomSelectInputCity.getAttribute('data-id');
+        
 
         //close other open ul
         document.querySelector('.jsAllEmpAddressUlCountry').classList.add('display-none')
@@ -680,6 +814,12 @@ async function EditAndSaveFunction(data) {
         ul.classList.toggle('display-none')
         ul.innerHTML = '';
 
+        if (selectedBarangayLinkedlist == null) {
+            if (cityID != 'undefined' || cityID != null) {
+                selectedBarangayLinkedlist = await getSelectedBarangay(cityID)
+            }
+        }
+        
         let barangayArr = [];
         if (selectedBarangayLinkedlist != null) {
             barangayArr = selectedBarangayLinkedlist.getAll()
@@ -775,11 +915,6 @@ async function EditAndSaveFunction(data) {
 
     }
 
-    //blur events
-    function handleBlurAddressCountry() {
-        //alert('blur')
-        console.log('change')
-    }
 
     //click li events
     function handleClickSelectLiRegion(e) {
@@ -1095,3 +1230,5 @@ async function EditAndSaveFunction(data) {
         })();
     }
 }
+
+

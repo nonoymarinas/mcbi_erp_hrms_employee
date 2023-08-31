@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessModel
 {
-    public class PersonalInformationModel
+    public class PersonalInformation
     {
         public int MasterPersonID { get; set; }
         public string? EmployeeNumber { get; set; }
@@ -15,6 +15,7 @@ namespace BusinessModel
         public string? LastName { get; set; }
         public string? DateOfBirth { get; set; }
         public int? GenderID { get; set; }
+        public string? Gender { get; set; }
 
     }
 }

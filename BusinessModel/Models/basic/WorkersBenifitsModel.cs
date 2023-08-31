@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessModel
 {
-    public class WorkersBenifitsModel
+    public class Benifits
     {
         public string? UMIDNumber { get; set; }
         public string? SSSNumber { get; set; }

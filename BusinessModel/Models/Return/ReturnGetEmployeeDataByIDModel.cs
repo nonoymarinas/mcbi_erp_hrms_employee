@@ -9,13 +9,13 @@ namespace BusinessModel
 {
 	public class ReturnGetEmployeeDataByIDModel : DBStandardReturn
 	{
-		public PersonalInformationModel? PersonalInfo { get; set; }
-		public WorkersBenifitsModel? Benifits { get; set; }
-		public WorkersContactsModel? Contacts { get; set; }
-		public WorkersCompensationModel? Compensation { get; set; }
+		public PersonalInformation? PersonalInfo { get; set; }
+		public Benifits? Benifits { get; set; }
+		public Contacts? Contacts { get; set; }
+		public Compensations? Compensation { get; set; }
 		public Country? EmployeeAddressCountry { get; set; }
-		public EmployeePhilippineAddress? PhilippineAddress { get; set; }
-		public EmployeeForeignAddress? ForeignAddress { get; set; }
+		public PhilippineAddress? PhilippineAddress { get; set; }
+		public ForeignAddress? ForeignAddress { get; set; }
 		public JobDescription? JobDescription { get; set; }
 		public List<Gender>? GenderList { get; set; }
 		public List<Country>? CountryList { get; set; }

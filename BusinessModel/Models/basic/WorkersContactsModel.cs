@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessModel
 {
-    public class WorkersContactsModel
+    public class Contacts
     {
         public string? MobileNumber { get; set; }
         public string? LandLineNumber { get; set; }

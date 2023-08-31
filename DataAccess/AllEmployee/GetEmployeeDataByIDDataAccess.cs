@@ -58,7 +58,7 @@ namespace DataAccess
                             if (reader.HasRows)
                             {
                                 reader.Read();
-                                PersonalInformationModel personalInfo = new PersonalInformationModel()
+                                PersonalInformation personalInfo = new PersonalInformation()
                                 {
                                     MasterPersonID = Convert.ToInt32(reader["MasterPersonID"]),
                                     EmployeeNumber = reader["EmployeeNumber"].ToString(),
@@ -67,6 +67,7 @@ namespace DataAccess
                                     LastName = reader["LastName"].ToString(),
                                     DateOfBirth = reader["DateOfBirth"].ToString(),
                                     GenderID = Convert.ToInt32(reader["GenderID"]),
+                                    Gender = reader["Gender"].ToString(),
                                 };
 
                                 returnData.PersonalInfo = personalInfo;
@@ -75,7 +76,7 @@ namespace DataAccess
                             if (reader.HasRows)
                             {
                                 reader.Read();
-                                WorkersBenifitsModel workersBenifits = new WorkersBenifitsModel()
+                                Benifits workersBenifits = new Benifits()
                                 {
                                     UMIDNumber = reader["UMIDNumber"].ToString(),
                                     SSSNumber = reader["SSSNumber"].ToString(),
@@ -90,7 +91,7 @@ namespace DataAccess
                             if (reader.HasRows)
                             {
                                 reader.Read();
-                                WorkersContactsModel workersContacts = new WorkersContactsModel()
+                                Contacts workersContacts = new Contacts()
                                 {
                                     MobileNumber = reader["MobileNumber"].ToString(),
                                     LandLineNumber = reader["LandLineNumber"].ToString(),
@@ -104,15 +105,16 @@ namespace DataAccess
                             if (reader.HasRows)
                             {
                                 reader.Read();
-                                WorkersCompensationModel workersCompensation = new WorkersCompensationModel()
+                                Compensations workersCompensation = new Compensations()
                                 {
                                     BasicSalary = Convert.ToDecimal(reader["BasicSalary"]),
                                     Allowance = Convert.ToDecimal(reader["Allowance"]),
                                     CurrencyID = Convert.ToInt32(reader["CurrencyID"]),
+                                    Currency = reader["Currency"].ToString(),
                                     RatePeriodID = Convert.ToInt32(reader["RatePeriodID"]),
-                                    IsSalaryFixed = Convert.ToInt32(reader["IsSalaryFixed"]),
-                                    HourPerDay = Convert.ToInt32(reader["HourPerDay"]),
-                                    DayPerMonth = Convert.ToInt32(reader["DayPerMonth"]),
+                                    RatePeriod = reader["RatePeriod"].ToString(),
+                                    SalaryConditionID = Convert.ToInt32(reader["SalaryConditionID"]),
+                                    SalaryCondition = reader["SalaryCondition"].ToString(),
                                 };
 
                                 returnData.Compensation = workersCompensation;
@@ -135,7 +137,7 @@ namespace DataAccess
                             if (reader.HasRows)
                             {
                                 reader.Read();
-                                EmployeePhilippineAddress philAddress = new()
+                                PhilippineAddress philAddress = new()
                                 {
                                     ID = Convert.ToInt32(reader["ID"]),
                                     PostalAddressTypeID = Convert.ToInt32(reader["PostalAddressTypeID"]),
@@ -161,7 +163,7 @@ namespace DataAccess
                             if (reader.HasRows)
                             {
                                 reader.Read();
-                                EmployeeForeignAddress foreignAddress = new()
+                                ForeignAddress foreignAddress = new()
                                 {
                                     ID = Convert.ToInt32(reader["ID"]),
                                     PostalAddressTypeID = Convert.ToInt32(reader["PostalAddressTypeID"]),
