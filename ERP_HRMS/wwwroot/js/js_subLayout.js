@@ -111,16 +111,26 @@ async function clickMainMenuEmployee(e) {
     }
 }
 
+//async function clickMainMenuNewEmployee() {
+//    const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
+//    const view = await fetchData.viewData('employee-detail-page');
+
+//    const jsWorkersInfoMainCont = view.querySelector('.jsWorkersInfoMainCont');
+//    jsSublayout01ContentSubCont.innerHTML = '';
+//    jsSublayout01ContentSubCont.appendChild(jsWorkersInfoMainCont);
+
+//    //event eventIndicator
+//    eventIndicator.newEmplooyee.isClick = true;
+//    await newWorkersEmployee();
+//}
+
 async function clickMainMenuNewEmployee() {
+    //fetch view for display
     const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
-    const view = await fetchData.viewData('employee-detail-page');
-
-    const jsWorkersInfoMainCont = view.querySelector('.jsWorkersInfoMainCont');
+    const view = await fetchData.viewData('new-employee-main-page');
+    const jsEmployeeDetailsMainCont = view.querySelector('.jsEmployeeDetailsMainCont');
     jsSublayout01ContentSubCont.innerHTML = '';
-    jsSublayout01ContentSubCont.appendChild(jsWorkersInfoMainCont);
-
-    //event eventIndicator
-    eventIndicator.newEmplooyee.isClick = true;
+    jsSublayout01ContentSubCont.appendChild(jsEmployeeDetailsMainCont);
     await newEmployee();
 }
 

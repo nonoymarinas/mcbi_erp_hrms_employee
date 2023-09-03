@@ -202,13 +202,17 @@ input:-webkit-autofill:active {
     justify-self: center;
     align-self: center;
 }
-
+.emp-det-sub-photo-main-cont{
+    display:flex;
+    justify-content:center;
+    margin-bottom:1em;
+}
 .employee-details-photo-cont {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 160px;
-    width: 160px;
+    height: 190px;
+    width: 190px;
     border-radius: 10px;
     border: 1px solid #999;
 }
@@ -235,6 +239,7 @@ input:-webkit-autofill:active {
     display: grid;
     grid-template-columns: 1fr 50px;
     width: 100%;
+    margin:.2em 0;
 }
 
 .persinfo-ind-item-label {
@@ -291,7 +296,10 @@ input:-webkit-autofill:active {
     font-size: .85em;
     color: #555;
 }
-
+.emp-det-sub-cont-persinfo {
+    width: 100%;
+    margin-bottom: 30px;
+}
 .emp-det-sub-cont {
     width: 100%;
     margin-bottom: 30px;
@@ -322,10 +330,15 @@ input:-webkit-autofill:active {
 .emp-det-sub-address-type-cont {
     width: 100%;
 }
+.emp-det-sub-ind-cont-persinfo {
+    display: grid;
+    grid-template-columns: 140px 1fr 50px;
+    margin: .2em 0;
+}
 .emp-det-sub-ind-cont {
     display: grid;
-    grid-template-columns: 160px 1fr 50px;
-    /*grid-gap: 30px;*/
+    grid-template-columns: 140px 1fr 50px;
+    margin:.2em 0;
 }
 
 .emp-det-address-sub-ind-cont {
@@ -339,10 +352,12 @@ input:-webkit-autofill:active {
     border: none;
     color: #111;
     font-weight: 400;
-    font-size: 1em;
-    padding: .1em .3em;
+    font-size: .9em;
+    padding: .3em;
     outline: none;
+    
 }
+
 
 
 .btn-text-color-red {
@@ -393,11 +408,11 @@ input:-webkit-autofill:active {
 
 .all-emp-custom-select-input {
     width: 100%;
-    padding: .1em .3em;
+    padding:.3em;
     background:none;
     border:none;
     outline:none;
-    font-size:1em;
+    font-size:.9em;
     font-weight:500;
 }
 
@@ -417,4 +432,22 @@ input:-webkit-autofill:active {
 .disbale-cancel-btn:hover {
     border: none;
     background:none;
+}
+
+@media only screen and (min-width: 450px){
+    .emp-det-label-persinfo{
+        display:none;
+    }
+    .emp-det-sub-ind-cont-persinfo {
+        display: grid;
+        grid-template-columns: 1fr 50px;
+        margin: .2em 0;
+    }
+    .emp-det-sub-cont-persinfo {
+        display:grid;
+        grid-template-columns:auto 1fr;
+        width: 100%;
+        margin-bottom: 30px;
+        grid-column-gap:1em;
+    }
 }

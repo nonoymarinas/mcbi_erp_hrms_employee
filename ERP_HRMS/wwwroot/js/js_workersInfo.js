@@ -1,4 +1,4 @@
-﻿async function newEmployee(e) {
+﻿async function newWorkersEmployee(e) {
 
     if (eventIndicator.newEmplooyee.isClick == true) {
         //reset global data, meaning this function is used at new employee, and it needs to be reset

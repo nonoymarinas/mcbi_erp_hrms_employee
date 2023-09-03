@@ -17,6 +17,8 @@ input:-webkit-autofill:active {
     -webkit-text-fill-color: none !important;
 }*/
 .workerinfo-main-cont {
+    display:flex;
+    justify-content:center;
     width: 100%;
     height: 100%;
     color: #ffffff;
@@ -28,7 +30,7 @@ input:-webkit-autofill:active {
     width: 100%;
     height: 100%;
     margin-top: var(--headerheigth) ;
-    
+    max-width:800px;
 }
 
 .workerinfo-title-cont {

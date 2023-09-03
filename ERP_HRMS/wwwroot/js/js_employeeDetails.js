@@ -485,7 +485,57 @@ async function employeeDetailsFunctions(data) {
     }
 
     function cancelAndRestoreCompensation(data) {
+        //rate period
+        const jsCustomSelectInputRatePeriod = document.querySelector('.jsCustomSelectInputRatePeriod')
+        jsCustomSelectInputRatePeriod.value = data.compensation.ratePeriod
+        jsCustomSelectInputRatePeriod.setAttribute('data-id', data.compensation.ratePeriodID)
 
+        //basic salary
+        const jsInputBasicSalary = document.querySelector('.jsInputBasicSalary')
+        jsInputBasicSalary.value = data.compensation.basicSalary
+
+        //basic salary
+        const jsInputAllowance = document.querySelector('.jsInputAllowance')
+        jsInputAllowance.value = data.compensation.allowance
+
+        //salary condition
+        const jsCustomSelectInputSalaryCondition = document.querySelector('.jsCustomSelectInputSalaryCondition')
+        jsCustomSelectInputSalaryCondition.value = data.compensation.salaryCondition
+        jsCustomSelectInputSalaryCondition.setAttribute('data-id', data.compensation.salaryConditionID)
+
+        //disable all input
+        const jsInputCompensations = document.querySelectorAll('.jsInputCompensation')
+        jsInputCompensations.forEach(input => {
+            input.setAttribute('disabled', true);
+            input.classList.remove('input-enable');
+        })
+
+        //disable select input
+        const jsAllEmpCustomSelectMainContCompensations = document.querySelectorAll('.jsAllEmpCustomSelectMainContCompensation');
+        jsAllEmpCustomSelectMainContCompensations.forEach(item => {
+            disableCustomSelectInput(item)
+        })
+
+        const jsCompensationInputEditBtns = document.querySelectorAll('.jsCompensationInputEditBtn');
+        jsCompensationInputEditBtns.forEach(button => {
+            button.textContent = 'edit';
+            button.classList.remove('btn-text-color-red');
+            button.removeEventListener('click', handleClickInputSaveBtn);
+            button.addEventListener('click', handleClickInputEditBtn);
+        })
+
+       
+        const jsCompensationSelectInputEditBtns = document.querySelectorAll('.jsCompensationSelectInputEditBtn');
+        jsCompensationSelectInputEditBtns.forEach(button => {
+            button.textContent = 'edit';
+            button.classList.remove('btn-text-color-red');
+            button.removeEventListener('click', handleClickSelectInputSaveBtn);
+            button.addEventListener('click', handleClickSelectInputEditBtn);
+        })
+
+        //disable cancel button
+        const jsJobCompensationCancelBtn = document.querySelector('.jsJobCompensationCancelBtn')
+        disableCancelButton(jsJobCompensationCancelBtn)
     }
 
     function handleClickPersInfoCancelBtn() {
@@ -509,71 +559,7 @@ async function employeeDetailsFunctions(data) {
     }
 
     function handleClickCompensationCancelBtn() {
-        cancelAndRestoreContacts(data)
-    }
-
-    function disableCancelButton(button) {
-        if (button.getAttribute('name') == 'persinfo') {
-            button.classList.add('disable-cancel-button')
-            button.removeEventListener('click', handleClickPersInfoCancelBtn)
-        } else if (button.getAttribute('name') == 'benifit') {
-            button.classList.add('disable-cancel-button')
-            button.removeEventListener('click', handleClickBenifitsCancelBtn)
-        } else if (button.getAttribute('name') == 'contact') {
-            button.classList.add('disable-cancel-button')
-            button.removeEventListener('click', handleClickContactsCancelBtn)
-        } else if (button.getAttribute('name') == 'address') {
-            button.classList.add('disable-cancel-button')
-            button.removeEventListener('click', handleClickAddressCancelBtn)
-        } else if (button.getAttribute('name') == 'jobdescription') {
-            button.classList.add('disable-cancel-button')
-            button.removeEventListener('click', handleClickJobDescriptionCancelBtn)
-        } else if (button.getAttribute('name') == 'compensation') {
-            button.classList.add('disable-cancel-button')
-            button.removeEventListener('click', handleClickCompensationCancelBtn)
-        }
-
-    }
-
-    function enableCancelButton(button) {
-        if (button.getAttribute('name') == 'persinfo') {
-            button.classList.remove('disable-cancel-button')
-            button.addEventListener('click', handleClickPersInfoCancelBtn)
-        } else if (button.getAttribute('name') == 'benifit') {
-            button.classList.remove('disable-cancel-button')
-            button.addEventListener('click', handleClickBenifitsCancelBtn)
-        } else if (button.getAttribute('name') == 'contact') {
-            button.classList.remove('disable-cancel-button')
-            button.addEventListener('click', handleClickContactsCancelBtn)
-        } else if (button.getAttribute('name') == 'address') {
-            button.classList.remove('disable-cancel-button')
-            button.addEventListener('click', handleClickAddressCancelBtn)
-        } else if (button.getAttribute('name') == 'jobdescription') {
-            button.classList.remove('disable-cancel-button')
-            button.addEventListener('click', handleClickJobDescriptionCancelBtn)
-        } else if (button.getAttribute('name') == 'compensation') {
-            button.classList.remove('disable-cancel-button')
-            button.addEventListener('click', handleClickCompensationCancelBtn)
-        }
-
-    }
-
-
-
-    function disableCustomSelectInput(item) {
-        //disable input
-        const input = item.querySelector('.jsCustomSelectInput');
-        input.setAttribute('disabled', true);
-        item.classList.remove('input-enable');
-
-        //disable hover effect
-        const arrowCont = item.querySelector('.jsCutomSelectArrowCont');
-        arrowCont.classList.add('arrow-cont-disabled')
-
-        //disable arrow color
-        const arrow = item.querySelector('svg');
-        arrow.classList.add('arrow-disabled');
-
+        cancelAndRestoreCompensation(data)
     }
 
     async function handleClickSelectInputSaveBtn(e) {
@@ -603,10 +589,13 @@ async function employeeDetailsFunctions(data) {
         const jsEmpDetIndCont = e.target.closest('.jsEmpDetIndCont').querySelector('.jsAllEmpCustomSelectMainCont');
         disableCustomSelectInput(jsEmpDetIndCont)
 
-        e.target.textContent = 'edit';
-        e.target.classList.remove('btn-text-color-red');
-        e.target.removeEventListener('click', handleClickSelectInputSaveBtn);
-        e.target.addEventListener('click', handleClickSelectInputEditBtn);
+        //disable edit button
+        const button = e.target
+        changeBtnToEditBtn(button)
+
+        //disable cancel button if no active edit button
+        const cancelButton = e.target.closest('.jsEmpDetSubMainCont').querySelector('.jsCancelBtn');
+        disableCancelIfNoActiveInput(cancelButton)
     }
 
     function handleClickSelectInputEditBtn(e) {
@@ -614,20 +603,23 @@ async function employeeDetailsFunctions(data) {
 
         enableCustomSelectInput(jsEmpDetIndCont)
 
-        e.target.textContent = 'save';
-        e.target.classList.add('btn-text-color-red');
-        e.target.removeEventListener('click', handleClickSelectInputEditBtn);
-        e.target.addEventListener('click', handleClickSelectInputSaveBtn);
+        //change to save button
+        const button = e.target
+        changeBtnToSaveBtn(button)
+
+        //enable cancel button
+        const jsCancelBtn = e.target.closest('.jsEmpDetSubMainCont').querySelector('.jsCancelBtn')
+        enableCancelButton(jsCancelBtn)
     }
 
     function handleClickInputEditBtn(e) {
         const input = e.target.closest('.jsEmpDetIndCont').querySelector('.jsInput');
         input.removeAttribute('disabled');
         input.classList.add('input-enable');
-        e.target.textContent = 'save';
-        e.target.classList.add('btn-text-color-red');
-        e.target.removeEventListener('click', handleClickInputEditBtn);
-        e.target.addEventListener('click', handleClickInputSaveBtn);
+
+        //change to save button
+        const button = e.target
+        changeBtnToSaveBtn(button)
 
         //enable cancel button
         const jsCancelBtn = e.target.closest('.jsEmpDetSubMainCont').querySelector('.jsCancelBtn')
@@ -661,14 +653,44 @@ async function employeeDetailsFunctions(data) {
         input.setAttribute('disabled', true);
         input.classList.remove('input-enable');
 
-        e.target.textContent = 'edit';
-        e.target.classList.remove('btn-text-color-red');
-        e.target.removeEventListener('click', handleClickInputSaveBtn);
-        e.target.addEventListener('click', handleClickInputEditBtn);
+        //disable button
+        const button = e.target
+        changeBtnToEditBtn(button)
+
+        //disable cancel button if no active edit button
+        const cancelButton = e.target.closest('.jsEmpDetSubMainCont').querySelector('.jsCancelBtn');
+        disableCancelIfNoActiveInput(cancelButton)
     }
 
-   
+    function changeBtnToEditBtn(button) {
+        button.textContent = 'edit';
+        button.setAttribute('data-isactive', 0);
+        button.classList.remove('btn-text-color-red');
+        if (button.getAttribute('data-buttonfor') == 'input') {
+            button.removeEventListener('click', handleClickInputSaveBtn);
+            button.addEventListener('click', handleClickInputEditBtn);
+        } else if (button.getAttribute('data-buttonfor') == 'select') {
+            button.removeEventListener('click', handleClickSelectInputSaveBtn);
+            button.addEventListener('click', handleClickSelectInputEditBtn);
+        }
+        
+    }
 
+    function changeBtnToSaveBtn(button) {
+        
+        button.textContent = 'save';
+        button.setAttribute('data-isactive', 1);
+        button.classList.remove('btn-text-color-red');
+        
+        if (button.getAttribute('data-buttonfor') == 'input') {
+            button.removeEventListener('click', handleClickInputEditBtn);
+            button.addEventListener('click', handleClickInputSaveBtn);
+        } else if (button.getAttribute('data-buttonfor') == 'select') {
+            button.removeEventListener('click', handleClickSelectInputEditBtn);
+            button.addEventListener('click', handleClickSelectInputSaveBtn);
+        }
+
+    }
     
     //address function
     function handleClickAddressEditBtn(e) {
@@ -1467,6 +1489,69 @@ async function employeeDetailsFunctions(data) {
     }
 
     //misc function
+
+    function disableCancelButton(button) {
+        if (button.getAttribute('name') == 'persinfo') {
+            button.classList.add('disable-cancel-button')
+            button.removeEventListener('click', handleClickPersInfoCancelBtn)
+        } else if (button.getAttribute('name') == 'benifit') {
+            button.classList.add('disable-cancel-button')
+            button.removeEventListener('click', handleClickBenifitsCancelBtn)
+        } else if (button.getAttribute('name') == 'contact') {
+            button.classList.add('disable-cancel-button')
+            button.removeEventListener('click', handleClickContactsCancelBtn)
+        } else if (button.getAttribute('name') == 'address') {
+            button.classList.add('disable-cancel-button')
+            button.removeEventListener('click', handleClickAddressCancelBtn)
+        } else if (button.getAttribute('name') == 'jobdescription') {
+            button.classList.add('disable-cancel-button')
+            button.removeEventListener('click', handleClickJobDescriptionCancelBtn)
+        } else if (button.getAttribute('name') == 'compensation') {
+            button.classList.add('disable-cancel-button')
+            button.removeEventListener('click', handleClickCompensationCancelBtn)
+        }
+
+    }
+
+    function enableCancelButton(button) {
+        if (button.getAttribute('name') == 'persinfo') {
+            button.classList.remove('disable-cancel-button')
+            button.addEventListener('click', handleClickPersInfoCancelBtn)
+        } else if (button.getAttribute('name') == 'benifit') {
+            button.classList.remove('disable-cancel-button')
+            button.addEventListener('click', handleClickBenifitsCancelBtn)
+        } else if (button.getAttribute('name') == 'contact') {
+            button.classList.remove('disable-cancel-button')
+            button.addEventListener('click', handleClickContactsCancelBtn)
+        } else if (button.getAttribute('name') == 'address') {
+            button.classList.remove('disable-cancel-button')
+            button.addEventListener('click', handleClickAddressCancelBtn)
+        } else if (button.getAttribute('name') == 'jobdescription') {
+            button.classList.remove('disable-cancel-button')
+            button.addEventListener('click', handleClickJobDescriptionCancelBtn)
+        } else if (button.getAttribute('name') == 'compensation') {
+            button.classList.remove('disable-cancel-button')
+            button.addEventListener('click', handleClickCompensationCancelBtn)
+        }
+
+    }
+
+    function disableCustomSelectInput(item) {
+        //disable input
+        const input = item.querySelector('.jsCustomSelectInput');
+        input.setAttribute('disabled', true);
+        item.classList.remove('input-enable');
+
+        //disable hover effect
+        const arrowCont = item.querySelector('.jsCutomSelectArrowCont');
+        arrowCont.classList.add('arrow-cont-disabled')
+
+        //disable arrow color
+        const arrow = item.querySelector('svg');
+        arrow.classList.add('arrow-disabled');
+
+    }
+
     function enableCustomSelectInput(item) {
         //enable inputs
         const input = item.querySelector('.jsCustomSelectInput');
@@ -1482,5 +1567,18 @@ async function employeeDetailsFunctions(data) {
         arrow.classList.remove('arrow-disabled')
     }
 
-   
+    function disableCancelIfNoActiveInput(cancelButton) {
+        let isThereActiveSaveButton=false
+        const jsInputEditBtns = document.querySelectorAll('.jsInputEditBtn');
+        jsInputEditBtns.forEach(button => {
+            if (button.getAttribute('data-isactive') == 1) {
+                isThereActiveSaveButton = true;
+            }
+        })
+
+        if (!isThereActiveSaveButton) {
+            disableCancelButton(cancelButton)
+        }
+    }
+
 }

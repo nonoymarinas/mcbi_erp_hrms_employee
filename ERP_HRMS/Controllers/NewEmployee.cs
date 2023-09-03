@@ -8,9 +8,14 @@ namespace ERP_HRMS.Controllers
 {
     public class NewEmployee : Controller
     {
-		
-		[Route("employee-detail-page")]
+		[Route("new-employee-main-page")]
 		public IActionResult NewEmployeeMainPage()
+		{
+			return View();
+		}
+
+		[Route("employee-detail-page")]
+		public IActionResult NewEmployeeOldMainPage()
         {
             return View();
         }

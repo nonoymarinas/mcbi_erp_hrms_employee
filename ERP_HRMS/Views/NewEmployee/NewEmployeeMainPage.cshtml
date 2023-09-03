@@ -1,190 +1,259 @@
 ﻿
-<div class="workerinfo-main-cont jsWorkersInfoMainCont">
-    <div class="workerinfo-sub-cont jsWorkerInfoSubCont">
-        <div class="workerinfo-title-cont jsWorkerInfoTitleCont">
-            <h2 class="workerinfo-title-text jsWorkerInfoTitleText">Workers Information Sheet</h2>
-            <h2 class="workerinfo-title-close">&times;</h2>
+<div class="employee-details-main-cont jsEmployeeDetailsMainCont">
+    <div class="employee-details-sub-cont jsEmployeeDetailsSubCont">
+        <div class="employee-details-main-title-cont">
+            <h3 class="employee-details-main-title-text">Employee details</h3>
+            <h3 class="employee-details-main-close">&times;</h3>
         </div>
-        @*photo*@
-        <div class="workerinfo-photo-main-cont ">
-            <div class="workerinfo-image-cont">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="workersinfo-image-svg">
-                    <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
-                </svg>
-            </div>
-        </div>
-
         @*personal information*@
-        <div class="workerinfo-persinfo-title-cont jsWorkerHeaderTitleCont jsPersInfoHeaderTitleCont">
-            <h2 class="workerinfo-sub-title-text">Personal Information</h2>
-            <button class="workers-btn workerinfo-btn jsWorkerInfoSaveBtn jsWorkersSaveBtn">Save</button>
-            <button class="workers-btn workerinfo-btn disable-btn jsWorkerInfoCancelBtn">Cancel</button>
-        </div>
-        <div class="workerinfo-item-main-cont jsWorkerInfoItemPersInfoMainCont">
-            <div class="workerinfo-emp-number-cont">
-                <label class="workerinfo-item-label">Employee No. :</label>
-                <h2 class="employee-number-text jsEmployeeNumberText"></h2>
-            </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">First Name :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="FirstName" class="workerinfo-item-input jsFirstName validate jsPersInfoInput" data-name="firstName" />
-                    <button class="position-relative input-btn jsWorkerInfoEditBtn">EDIT</button>
+        <div class="employee-details-photo-main-cont ">
+            <div class="@*personalinfo-main-cont*@ emp-det-sub-cont jsPersonalInfoMainCont jsEmpDetSubMainCont">
+                <div class="emp-det-sub-cont">
+                    <div class="employee-details-item-header-title-cont">
+                        <h4 class="employee-details-item-header-title-text">Personal info</h4>
+                        <button name="persinfo" class="employee-details-item-header-title-btn jsEmpDetPersInfoCancelBtn jsCancelBtn">Cancel</button>
+                    </div>
                 </div>
-            </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Middle Name :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="MiddleName" class="workerinfo-item-input jsMiddleName validate jsPersInfoInput" data-name="middleName" />
-                    <button class="position-relative input-btn jsWorkerInfoEditBtn">EDIT</button>
-                </div>
-            </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Last Name :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="LastName" class="workerinfo-item-input jsLastName validate jsPersInfoInput" data-name="lastName" />
-                    <button class="position-relative input-btn jsWorkerInfoEditBtn">EDIT</button>
-                </div>
-            </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Birth Date :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="DateOfBirth" type="date" class="workerinfo-item-input jsDateOfBirth validate jsPersInfoInput" data-name="dateOfBirth" />
-                    <button class="position-relative input-btn jsWorkerInfoEditBtn">EDIT</button>
-                </div>
-            </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Gender :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <select name="Gender" class="workerinfo-item-select jsPersInfoInput jsGender">
-                        <option class="workerinfo-item-options" value="0" data-id=0 selected>Select</option>
-                        <option class="workerinfo-item-options" value="1" data-id=1>Male</option>
-                        <option class="workerinfo-item-options" value="2" data-id=2>Female</option>
-                    </select>
-                    <button class="input-btn jsPersInfoInputEditBtn">EDIT</button>
-                </div>
-            </div>
-        </div>
 
-        @*benifits*@
-        <div class="workerinfo-persinfo-title-cont jsWorkerHeaderTitleCont">
-            <h2 class="workerinfo-sub-title-text">Benefits</h2>
-            <button class="workerinfo-btn jsBenifitsSaveBtn jsWorkersSaveBtn">Save</button>
-            <button class="disable-btn jsBenifitsCancelBtn">Cancel</button>
-        </div>
-        <div class="workerinfo-item-main-cont jsWorkerInfoItemBenifitsMainCont">
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">UMID No :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="UMIDNumber" class="workerinfo-item-input jsUMIDNumber jsBenifitsInput" placeholder="*example 0033-1234567-1" data-name="umidNumber" />
-                    <button class="input-btn jsBenifitsEditBtn">EDIT</button>
-                </div>
-            </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">SSS No :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="SSSNumber" class="workerinfo-item-input jsSSSNumber jsBenifitsInput" placeholder="*example 33-1234567-2" data-name="sssNumber" />
-                    <button class="input-btn jsBenifitsEditBtn">EDIT</button>
-                </div>
-            </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Pag-ibig No :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="PagIbigNumber" class="workerinfo-item-input jsPagIbigNumber jsBenifitsInput" placeholder="*example 1234-1234-1234" data-name="pagIbigNumber" />
-                    <button class="input-btn jsBenifitsEditBtn">EDIT</button>
-                </div>
-            </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Philhealth No :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="PhilHealthNumber" class="workerinfo-item-input jsPhilHealthNumber jsBenifitsInput" placeholder="*example 02-123456789-5" data-name="philHealthNumber" />
-                    <button class="input-btn jsBenifitsEditBtn">EDIT</button>
-                </div>
-            </div>
+                <div class="emp-det-sub-cont-persinfo">
+                    <div class="emp-det-sub-photo-main-cont">
+                        <div class="employee-details-photo-cont">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="employee-details-image-svg">
+                                <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="personalinfo-item-sub-cont">
+                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
+                            <label class="emp-det-label emp-det-label-persinfo">First Name:</label>
+                            <input name="FirstName" class="new-emp-pure-input jsPerInfoFirstName jsInput jsInputPersInfo"  />
+                            <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsPersInfoInputEditSaveBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                        </div>
+                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
+                            <label class="emp-det-label emp-det-label-persinfo">Middle Name:</label>
+                            <input name="MiddleName" class="new-emp-pure-input jsPerInfoMiddleName jsInput jsInputPersInfo"  />
+                            <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsPersInfoInputEditSaveBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                        </div>
+                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
+                            <label class="emp-det-label emp-det-label-persinfo">Last Name:</label>
+                            <input name="LastName" class="new-emp-pure-input jsPerInfoLastName jsInput jsInputPersInfo"  />
+                            <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsPersInfoInputEditSaveBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                        </div>
+                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
+                            <label class="emp-det-label emp-det-label-persinfo">Date of Birth:</label>
+                            <input type="date" name="DateOfBirth" class="new-emp-pure-input jsPerInfoDateOfBirth jsInput jsInputPersInfo"  />
+                            <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsPersInfoInputEditSaveBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                        </div>
+                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
+                            <label class="emp-det-label emp-det-label-persinfo">Gender:</label>
+                            <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont jsAllEmpCustomSelectMainContGender">
+                                <div class="new-emp-select-input-arrow-cont  jsAllEmpCustomSelectInputArrowCont jsAllEmpCustomSelectInputArrowContGender">
+                                    <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputGender jsInput"  />
+                                    <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContGender">
+                                        <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
+                                            <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlGender">
+                                </ul>
+                            </div>
+                            <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditSelectInputBtn jsPersInfoSelecInputEditSaveBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                        </div>
+                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
+                            <label class="emp-det-label emp-det-label-persinfo">Employee No.:</label>
+                            <input class="new-emp-pure-input jsInput jsInputPersInfo"  disabled/>
+                        </div>
+                    </div>
 
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">TIN No :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="TINNumber" class="workerinfo-item-input jsTINNumber jsBenifitsInput" placeholder="*example 123-456-789-000" data-name="philHealthNumber" />
-                    <button class="input-btn jsBenifitsEditBtn">EDIT</button>
                 </div>
             </div>
+            @*benifits*@
+            <div class="emp-det-sub-cont jsEmpDetSubMainCont">
+                <div class="emp-det-sub-title-cont">
+                    <h4 class="employee-details-item-header-title-text">Benifits</h4>
+                    <button name="benifit" class="employee-details-item-header-title-btn jsBenifitsCancelBtn jsCancelBtn">Cancel</button>
+                </div>
+                <div class="emp-det-sub-item-cont">
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">SSS No.:</label>
+                        <input name="SssNumber" class="new-emp-pure-input jsBenifitsSssNo jsInput jsBenifitsInput"  />
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsBenifitsBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    </div>
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Philhealth No.:</label>
+                        <input name="PhilHealthNumber" class="new-emp-pure-input jsBenifitsPhilHealthNo jsInput jsBenifitsInput"  />
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsBenifitsBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    </div>
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Pagibig No.:</label>
+                        <input name="PagIbigNumber" class="new-emp-pure-input jsBenifitsPagIbigNo jsInput jsBenifitsInput"  />
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsBenifitsBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    </div>
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">TIN No.:</label>
+                        <input name="TinNumber" class="new-emp-pure-input jsBenifitsTinNo jsInput jsBenifitsInput"  />
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsBenifitsBtn" data-isactive=0 data-buttonfor="input">edit</button>
 
-        </div>
-        @*contacts*@
-        <div class="workerinfo-persinfo-title-cont jsWorkerHeaderTitleCont">
-            <h2 class="workerinfo-sub-title-text">Contact</h2>
-            <button class="workerinfo-btn jsContactSaveBtn jsWorkersSaveBtn">Save</button>
-            <button class="disable-btn jsContactCancelBtn">Cancel</button>
-        </div>
-        <div class="workerinfo-item-main-cont jsWorkerInfoItemContactMainCont">
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Mobile No* :</label>
+                    </div>
+                </div>
+            </div>
+            @*contacts*@
+            <div class="emp-det-sub-cont jsEmpDetSubMainCont">
+                <div class="emp-det-sub-title-cont">
+                    <h4 class="employee-details-item-header-title-text">Contacts</h4>
+                    <button name="contact" class="employee-details-item-header-title-btn jsContactsCancelBtn jsCancelBtn">Cancel</button>
+                </div>
+                <div class="emp-det-sub-item-cont">
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Mobile No.:</label>
+                        <input name="MobileNumber" class="new-emp-pure-input jsContactsInput jsContactsMobileNo jsInput"  />
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsContactsEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    </div>
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Landline No.:</label>
+                        <input name="LandLineNumber" class="new-emp-pure-input jsContactsInput jsContactsLandlineNo jsInput"  />
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsContactsEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    </div>
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Email Add:</label>
+                        <input name="EmailAddress" class="new-emp-pure-input jsContactsInput jsContactsEmailAdd jsInput"  />
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsContactsEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    </div>
 
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="MobileNumber" class="workerinfo-item-input jsMobileNumber jsContactsInput" data-name="mobileNumber" />
-                    <button class="input-btn jsContactsEditBtn">EDIT</button>
                 </div>
             </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Landline No :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="LandLineNumber" class="workerinfo-item-input jsLandLineNumber jsContactsInput" data-name="landLineNumber" />
-                    <button class="input-btn jsContactsEditBtn">EDIT</button>
+            @*address*@
+            <div class="emp-det-sub-cont jsEmpDetSubMainCont">
+                <div class="emp-det-address-sub-title-cont jsEmpDetIndCont">
+                    <h4 class="employee-details-item-header-title-text">Address</h4>
+                    <button class="employee-details-item-header-title-btn jsEmpDetAddressEditBtn">Edit</button>
+                    <button name="address" class="employee-details-item-header-title-btn jsEmpDetAddressCancelBtn jsCancelBtn">Cancel</button>
+                </div>
+                <div class="emp-det-sub-item-cont ">
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Country:</label>
+                        <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont">
+                            <div class="new-emp-select-input-arrow-cont jsAllEmpCustomSelectInputArrowCont jsAllEmpCustomSelectInputArrowContCountry jsAllEmpCustomSelectInputArrowContAddress">
+                                <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputCountry"  />
+                                <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContCountry">
+                                    <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
+                                        <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlCountry">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="emp-det-sub-address-type-cont jsEmpDetSubAddressTypeCont">
+                    </div>
                 </div>
             </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Email Add :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="EmailAddress" class="workerinfo-item-input jsEmailAddress jsContactsInput" data-name="emailAddress" />
-                    <button class="input-btn jsContactsEditBtn">EDIT</button>
+            @*job description*@
+            <div class="emp-det-sub-cont jsEmpDetSubMainCont">
+                <div class="emp-det-sub-title-cont jsEmpDetIndCont">
+                    <h4 class="employee-details-item-header-title-text">Job Description</h4>
+                    <button name="jobdescription" class="employee-details-item-header-title-btn jsCancelBtn jsJobDescriptionCancelBtn">Cancel</button>
                 </div>
-            </div>
-        </div>
+                <div class="emp-det-sub-item-cont ">
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Position:</label>
+                        <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont jsAllEmpCustomSelectMainContPosition jsAllEmpCustomSelectMainContJobDesc">
+                            <div class="new-emp-select-input-arrow-cont  jsAllEmpCustomSelectInputArrowCont">
+                                <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputPosition jsInput"  />
+                                <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContPosition">
+                                    <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
+                                        <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlPosition">
+                            </ul>
+                        </div>
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditSelectInputBtn jsJobDescriptionSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                    </div>
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Department:</label>
 
-        @*compensation*@
-        <div class="workerinfo-persinfo-title-cont jsWorkerHeaderTitleCont">
-            <h2 class="workerinfo-sub-title-text">Compensation</h2>
-            <button class="workerinfo-btn jsCompensationSaveBtn jsWorkersSaveBtn">Save</button>
-            <button class="disable-btn jsCompensationCancelBtn">Cancel</button>
-        </div>
-        <div class="workerinfo-item-main-cont jsWorkerInfoItemCompensationMainCont">
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Basic Salary :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="BasicSalary" class="workerinfo-item-input jsBasicSalary jsCompensation" data-name="basicSalary" />
-                    <button class="input-btn jsCompensationEditBtn">EDIT</button>
-                </div>
-            </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Rate Period:</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <select name="RatePeriod" class="workerinfo-item-select jsCompensation jsRatePeriod">
-                        <option class="workerinfo-item-options" data-id=1>Daily</option>
-                        <option class="workerinfo-item-options" data-id=2>Monthly</option>
-                    </select>
-                    <button class="input-btn jsCompensationEditBtn">EDIT</button>
-                </div>
-            </div>
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Allowance :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <input name="Allowance" class="workerinfo-item-input jsAllowance jsCompensation" data-name="Allowance" value="0.00" />
-                    <button class="input-btn jsCompensationEditBtn">EDIT</button>
-                </div>
-            </div>
+                        <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont jsAllEmpCustomSelectMainContDepartment jsAllEmpCustomSelectMainContJobDesc">
+                            <div class="new-emp-select-input-arrow-cont  jsAllEmpCustomSelectInputArrowCont">
+                                <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputDepartment jsInput"  />
+                                <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContDepartment">
+                                    <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
+                                        <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlDepartment">
+                            </ul>
+                        </div>
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditSelectInputBtn jsJobDescriptionSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                    </div>
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Remarks:</label>
+                        <input name="Remarks" class="new-emp-pure-input jsInput jsInputRemarks jsInputJobDescription" value="None"  />
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsJobDescriptionInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    </div>
 
-            <div class="workerinfo-item-cont">
-                <label class="workerinfo-item-label">Fixed Salary? :</label>
-                <div class="workerinfo-input-icon-cont jsInputBtnCont">
-                    <select name="IsSalaryFixed" class="workerinfo-item-select jsCompensation jsIsSalaryFixed disable-input" disabled>
-                        <option class="workerinfo-item-options" value="0" data-id=0>No</option>
-                        <option class="workerinfo-item-options" value="1" data-id=1>Yes</option>
-                    </select>
-                    <button class="input-btn jsCompensationEditBtn">EDIT</button>
                 </div>
             </div>
+            <div class="emp-det-sub-cont jsEmpDetSubMainCont">
+                <div class="emp-det-sub-title-cont">
+                    <h4 class="employee-details-item-header-title-text">Compensation</h4>
+                    <button name="compensation" class="employee-details-item-header-title-btn jsCancelBtn jsJobCompensationCancelBtn">Cancel</button>
+                </div>
+                <div class="emp-det-sub-item-cont">
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
 
+                        @*compensation*@
+                        <label class="emp-det-label">Rate Period:</label>
+                        <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont jsAllEmpCustomSelectMainContCompensation">
+                            <div class="new-emp-select-input-arrow-cont  jsAllEmpCustomSelectInputArrowCont">
+                                <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputRatePeriod jsInput "  />
+                                <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContRatePeriod">
+                                    <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
+                                        <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlRatePeriod">
+                            </ul>
+                        </div>
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditSelectInputBtn jsCompensationSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
+
+                    </div>
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Basic Salary:</label>
+                        <input name="BasicSalary" class="new-emp-pure-input jsInput jsInputBasicSalary jsInputCompensation"  />
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsCompensationInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    </div>
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Allowance:</label>
+                        <input name="Allowance" class="new-emp-pure-input jsInput jsInputAllowance jsInputCompensation"  />
+                        <button class="emp-det-ind-item-btn jsInputEditBtn  jsEmpDetEditInputBtn jsEmpDetEditInputBtn jsCompensationInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    </div>
+                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
+                        <label class="emp-det-label">Salary Condition:</label>
+                        <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont jsAllEmpCustomSelectMainContCompensation">
+                            <div class="new-emp-select-input-arrow-cont  jsAllEmpCustomSelectInputArrowCont">
+                                <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputSalaryCondition jsInput"  />
+                                <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContSalaryCondition">
+                                    <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
+                                        <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlSalaryCondition">
+                            </ul>
+                        </div>
+                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditSelectInputBtn jsCompensationSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+

@@ -1,11 +1,9 @@
-using DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
-builder.Services.Configure<ConnectionSettings>(builder.Configuration.GetSection("ConnectionStrings"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
