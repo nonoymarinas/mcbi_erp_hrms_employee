@@ -128,9 +128,9 @@ async function clickMainMenuNewEmployee() {
     //fetch view for display
     const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
     const view = await fetchData.viewData('new-employee-main-page');
-    const jsEmployeeDetailsMainCont = view.querySelector('.jsEmployeeDetailsMainCont');
+    const jsNewEmpMainCont = view.querySelector('.jsNewEmpMainCont');
     jsSublayout01ContentSubCont.innerHTML = '';
-    jsSublayout01ContentSubCont.appendChild(jsEmployeeDetailsMainCont);
+    jsSublayout01ContentSubCont.appendChild(jsNewEmpMainCont);
     await newEmployee();
 }
 

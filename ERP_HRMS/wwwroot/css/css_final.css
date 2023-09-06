@@ -46,9 +46,59 @@
 
     .disable-cancel-button:hover {
         color: #777;
-        border:none;
+        border: none;
     }
+
     .disable-cancel-button:active {
         color: #777;
         border: none;
     }
+
+.new-emp-btn-disabled {
+    border: none;
+    background: none;
+    color: #999;
+}
+
+    .new-emp-btn-disabled:hover {
+        border: none;
+    }
+
+    .new-emp-btn-disabled:active {
+        border: none;
+    }
+
+.new-emp-input-disabled {
+    border: none;
+    background: #e2e2e2;
+    color: #555;
+    user-select: none;
+}
+
+.arrow-cont-disabled:hover {
+    background: none;
+}
+
+.input-enable {
+    background: #eeeeee;
+    border: 1px solid rgba(9,9,9,.4);
+}
+
+.arrow-disabled {
+    fill: #999;
+}
+
+.disbale-cancel-btn {
+    color: #969696;
+}
+
+    .disbale-cancel-btn:hover {
+        border: none;
+        background: none;
+    }
+
+.new-emp-save-btn {
+    background: #009000;
+    color: #fff;
+    border:none;
+}

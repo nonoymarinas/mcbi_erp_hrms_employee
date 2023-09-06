@@ -359,7 +359,6 @@ input:-webkit-autofill:active {
 }
 
 
-
 .btn-text-color-red {
     color: red;
 }
@@ -414,24 +413,6 @@ input:-webkit-autofill:active {
     outline:none;
     font-size:.9em;
     font-weight:500;
-}
-
-.input-enable {
-    background: #eeeeee;
-    border: 1px solid rgba(9,9,9,.4);
-}
-.arrow-disabled{
-    fill:#999;
-}
-.arrow-cont-disabled:hover {
-    background: none;
-}
-.disbale-cancel-btn{
-    color:#969696;
-}
-.disbale-cancel-btn:hover {
-    border: none;
-    background:none;
 }
 
 @media only screen and (min-width: 450px){

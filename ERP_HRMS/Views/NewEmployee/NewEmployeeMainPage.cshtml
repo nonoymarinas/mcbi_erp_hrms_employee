@@ -1,142 +1,145 @@
 ﻿
-<div class="employee-details-main-cont jsEmployeeDetailsMainCont">
-    <div class="employee-details-sub-cont jsEmployeeDetailsSubCont">
-        <div class="employee-details-main-title-cont">
-            <h3 class="employee-details-main-title-text">Employee details</h3>
-            <h3 class="employee-details-main-close">&times;</h3>
+<div class="new-emp-main-cont jsNewEmpMainCont">
+    <div class="new-emp-sub-cont jsNewEmpSubCont">
+        <div class="new-emp-main-title-cont">
+            <h3 class="new-emp-main-title-text">Employee details</h3>
+            <h3 class="new-emp-main-close">&times;</h3>
         </div>
         @*personal information*@
-        <div class="employee-details-photo-main-cont ">
-            <div class="@*personalinfo-main-cont*@ emp-det-sub-cont jsPersonalInfoMainCont jsEmpDetSubMainCont">
-                <div class="emp-det-sub-cont">
-                    <div class="employee-details-item-header-title-cont">
+        <div class="new-emp-main-content-cont ">
+            <div class=" new-emp-sub-content-cont jsNewEmpSubContentCont">
+                <div class="new-emp-content-title-cont">
+                    <div class="new-emp-sub-group-title-cont">
                         <h4 class="employee-details-item-header-title-text">Personal info</h4>
-                        <button name="persinfo" class="employee-details-item-header-title-btn jsEmpDetPersInfoCancelBtn jsCancelBtn">Cancel</button>
+                        <button name="persinfo" class="new-emp-sub-group-title-save-btn jsNewEmpGroupTitleSaveEditBtn">Save</button>
+                        <button name="persinfo" class="new-emp-sub-group-title-cancel-btn  ">Cancel</button>
                     </div>
                 </div>
 
-                <div class="emp-det-sub-cont-persinfo">
+                <div class="new-emp-item-persinfo-main-cont">
                     <div class="emp-det-sub-photo-main-cont">
-                        <div class="employee-details-photo-cont">
+                        <div class="new-emp-photo-cont">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="employee-details-image-svg">
                                 <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
                             </svg>
                         </div>
                     </div>
                     <div class="personalinfo-item-sub-cont">
-                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
-                            <label class="emp-det-label emp-det-label-persinfo">First Name:</label>
-                            <input name="FirstName" class="new-emp-pure-input jsPerInfoFirstName jsInput jsInputPersInfo"  />
-                            <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsPersInfoInputEditSaveBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                        <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
+                            <label class="new-emp-label new-emp-label-persinfo">First Name:</label>
+                            <input name="FirstName" class="new-emp-pure-input jsPureInput" placeholder="First Name" />
+                            <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                         </div>
-                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
-                            <label class="emp-det-label emp-det-label-persinfo">Middle Name:</label>
-                            <input name="MiddleName" class="new-emp-pure-input jsPerInfoMiddleName jsInput jsInputPersInfo"  />
-                            <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsPersInfoInputEditSaveBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                        <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
+                            <label class="new-emp-label new-emp-label-persinfo">Middle Name:</label>
+                            <input name="MiddleName" class="new-emp-pure-input jsPureInput" placeholder="Middle Name" />
+                            <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                         </div>
-                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
-                            <label class="emp-det-label emp-det-label-persinfo">Last Name:</label>
-                            <input name="LastName" class="new-emp-pure-input jsPerInfoLastName jsInput jsInputPersInfo"  />
-                            <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsPersInfoInputEditSaveBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                        <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
+                            <label class="new-emp-label new-emp-label-persinfo">Last Name:</label>
+                            <input name="LastName" class="new-emp-pure-input jsPureInput" placeholder="Last Name" />
+                            <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                         </div>
-                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
-                            <label class="emp-det-label emp-det-label-persinfo">Date of Birth:</label>
-                            <input type="date" name="DateOfBirth" class="new-emp-pure-input jsPerInfoDateOfBirth jsInput jsInputPersInfo"  />
-                            <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsPersInfoInputEditSaveBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                        <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
+                            <label class="new-emp-label new-emp-label-persinfo">Date of Birth:</label>
+                            <input type="date" name="DateOfBirth" class="new-emp-pure-input jsPureInput" placeholder="Date of Birth" />
+                            <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                         </div>
-                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
-                            <label class="emp-det-label emp-det-label-persinfo">Gender:</label>
-                            <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont jsAllEmpCustomSelectMainContGender">
-                                <div class="new-emp-select-input-arrow-cont  jsAllEmpCustomSelectInputArrowCont jsAllEmpCustomSelectInputArrowContGender">
-                                    <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputGender jsInput"  />
-                                    <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContGender">
+                        <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
+                            <label class="new-emp-label new-emp-label-persinfo">Gender:</label>
+                            <div class="new-emp-select-main-cont jsNewEmpSelectMainContGender">
+                                <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont jsNewEmpSelectInputArrowContGender">
+                                    <input name="Gender" class="new-emp-select-input jsSelectInput jsSelectInputGender" placeholder="Gender" />
+                                    <div  name="Gender" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContGender">
                                         <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                             <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                         </svg>
                                     </div>
                                 </div>
-                                <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlGender">
+                                <ul class="all-emp-custom-select-search-ul display-none">
                                 </ul>
                             </div>
-                            <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditSelectInputBtn jsPersInfoSelecInputEditSaveBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                            <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
                         </div>
-                        <div class="emp-det-sub-ind-cont-persinfo jsEmpDetIndCont">
-                            <label class="emp-det-label emp-det-label-persinfo">Employee No.:</label>
-                            <input class="new-emp-pure-input jsInput jsInputPersInfo"  disabled/>
+                        <div class="new-emp-ind-item-cont-persinfo">
+                            <label class="new-emp-label new-emp-label-persinfo">Employee No.:</label>
+                            <input class="new-emp-pure-input new-emp-input-disabled" disabled placeholder="Employee Number" />
                         </div>
                     </div>
 
                 </div>
             </div>
             @*benifits*@
-            <div class="emp-det-sub-cont jsEmpDetSubMainCont">
-                <div class="emp-det-sub-title-cont">
+            <div class="new-emp-sub-content-cont jsNewEmpSubContentCont">
+                <div class="new-emp-sub-group-title-cont">
                     <h4 class="employee-details-item-header-title-text">Benifits</h4>
-                    <button name="benifit" class="employee-details-item-header-title-btn jsBenifitsCancelBtn jsCancelBtn">Cancel</button>
+                    <button name="benifit" class="new-emp-sub-group-title-save-btn  jsNewEmpGroupTitleSaveEditBtn">Save</button>
+                    <button name="benifit" class="new-emp-sub-group-title-cancel-btn">Cancel</button>
                 </div>
-                <div class="emp-det-sub-item-cont">
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">SSS No.:</label>
-                        <input name="SssNumber" class="new-emp-pure-input jsBenifitsSssNo jsInput jsBenifitsInput"  />
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsBenifitsBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                <div class="new-emp-item-group-main-cont">
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">SSS No.:</label>
+                        <input name="SssNumber" class="new-emp-pure-input  jsPureInput" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Philhealth No.:</label>
-                        <input name="PhilHealthNumber" class="new-emp-pure-input jsBenifitsPhilHealthNo jsInput jsBenifitsInput"  />
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsBenifitsBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    <div class="new-emp-ind-item-cont jsEmpDetIndCont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Philhealth No.:</label>
+                        <input name="PhilHealthNumber" class="new-emp-pure-input jsPureInput" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Pagibig No.:</label>
-                        <input name="PagIbigNumber" class="new-emp-pure-input jsBenifitsPagIbigNo jsInput jsBenifitsInput"  />
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsBenifitsBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Pagibig No.:</label>
+                        <input name="PagIbigNumber" class="new-emp-pure-input jsPureInput" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">TIN No.:</label>
-                        <input name="TinNumber" class="new-emp-pure-input jsBenifitsTinNo jsInput jsBenifitsInput"  />
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsBenifitsBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">TIN No.:</label>
+                        <input name="TinNumber" class="new-emp-pure-input  jsPureInput" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
 
                     </div>
                 </div>
             </div>
             @*contacts*@
-            <div class="emp-det-sub-cont jsEmpDetSubMainCont">
-                <div class="emp-det-sub-title-cont">
+            <div class="new-emp-sub-content-cont jsNewEmpSubContentCont">
+                <div class="new-emp-sub-group-title-cont">
                     <h4 class="employee-details-item-header-title-text">Contacts</h4>
-                    <button name="contact" class="employee-details-item-header-title-btn jsContactsCancelBtn jsCancelBtn">Cancel</button>
+                    <button name="contact" class="new-emp-sub-group-title-save-btn jsNewEmpGroupTitleSaveEditBtn">Save</button>
+                    <button name="contact" class="new-emp-sub-group-title-cancel-btn ">Cancel</button>
                 </div>
-                <div class="emp-det-sub-item-cont">
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Mobile No.:</label>
-                        <input name="MobileNumber" class="new-emp-pure-input jsContactsInput jsContactsMobileNo jsInput"  />
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsContactsEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                <div class="new-emp-item-group-main-cont">
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Mobile No.:</label>
+                        <input name="MobileNumber" class="new-emp-pure-input jsPureInput" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled  jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Landline No.:</label>
-                        <input name="LandLineNumber" class="new-emp-pure-input jsContactsInput jsContactsLandlineNo jsInput"  />
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsContactsEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Landline No.:</label>
+                        <input name="LandLineNumber" class="new-emp-pure-input jsPureInput" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled  jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Email Add:</label>
-                        <input name="EmailAddress" class="new-emp-pure-input jsContactsInput jsContactsEmailAdd jsInput"  />
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsContactsEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Email Add:</label>
+                        <input name="EmailAddress" class="new-emp-pure-input jsPureInput" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
 
                 </div>
             </div>
             @*address*@
-            <div class="emp-det-sub-cont jsEmpDetSubMainCont">
-                <div class="emp-det-address-sub-title-cont jsEmpDetIndCont">
+            <div class="new-emp-sub-content-cont jsEmpDetSubMainCont">
+                <div class="new-emp-sub-group-title-cont jsEmpDetIndCont">
                     <h4 class="employee-details-item-header-title-text">Address</h4>
-                    <button class="employee-details-item-header-title-btn jsEmpDetAddressEditBtn">Edit</button>
-                    <button name="address" class="employee-details-item-header-title-btn jsEmpDetAddressCancelBtn jsCancelBtn">Cancel</button>
+                    <button name="address" class="new-emp-sub-group-title-save-btn jsNewEmpAddressEditBtn">Save</button>
+                    <button name="address" class="new-emp-sub-group-title-cancel-btn jsEmpDetAddressCancelBtn jsCancelBtn">Cancel</button>
                 </div>
-                <div class="emp-det-sub-item-cont ">
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Country:</label>
-                        <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont">
+                <div class="new-emp-item-group-main-cont">
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Country:</label>
+                        <div class="new-emp-select-main-cont jsNewEmpSelectMainCont">
                             <div class="new-emp-select-input-arrow-cont jsAllEmpCustomSelectInputArrowCont jsAllEmpCustomSelectInputArrowContCountry jsAllEmpCustomSelectInputArrowContAddress">
-                                <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputCountry"  />
-                                <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContCountry">
+                                <input class="new-emp-select-input jsCustomSelectInput jsCustomSelectInputCountry" />
+                                <div class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsCutomSelectArrowContCountry">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                     </svg>
@@ -151,103 +154,103 @@
                 </div>
             </div>
             @*job description*@
-            <div class="emp-det-sub-cont jsEmpDetSubMainCont">
-                <div class="emp-det-sub-title-cont jsEmpDetIndCont">
+            <div class="new-emp-sub-content-cont jsNewEmpSubContentCont">
+                <div class="new-emp-sub-group-title-cont ">
                     <h4 class="employee-details-item-header-title-text">Job Description</h4>
-                    <button name="jobdescription" class="employee-details-item-header-title-btn jsCancelBtn jsJobDescriptionCancelBtn">Cancel</button>
+                    <button name="jobdescription" class="new-emp-sub-group-title-save-btn jsNewEmpGroupTitleSaveEditBtn">Save</button>
+                    <button name="jobdescription" class="new-emp-sub-group-title-cancel-btn  ">Cancel</button>
                 </div>
-                <div class="emp-det-sub-item-cont ">
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Position:</label>
-                        <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont jsAllEmpCustomSelectMainContPosition jsAllEmpCustomSelectMainContJobDesc">
-                            <div class="new-emp-select-input-arrow-cont  jsAllEmpCustomSelectInputArrowCont">
-                                <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputPosition jsInput"  />
-                                <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContPosition">
+                <div class="new-emp-item-group-main-cont">
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Position:</label>
+                        <div class="new-emp-select-main-cont jsNewEmpSelectMainContPosition ">
+                            <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont ">
+                                <input name="Position" class="new-emp-select-input jsSelectInput" />
+                                <div name="Position" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContPosition">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                     </svg>
                                 </div>
                             </div>
-                            <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlPosition">
+                            <ul class="all-emp-custom-select-search-ul display-none ">
                             </ul>
                         </div>
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditSelectInputBtn jsJobDescriptionSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn " data-isactive=0 data-buttonfor="select">edit</button>
                     </div>
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Department:</label>
-
-                        <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont jsAllEmpCustomSelectMainContDepartment jsAllEmpCustomSelectMainContJobDesc">
-                            <div class="new-emp-select-input-arrow-cont  jsAllEmpCustomSelectInputArrowCont">
-                                <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputDepartment jsInput"  />
-                                <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContDepartment">
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Department:</label>
+                        <div class="new-emp-select-main-cont jsNewEmpSelectMainContDepartment">
+                            <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
+                                <input name="Department" class="new-emp-select-input jsSelectInput" />
+                                <div name="Department" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContDepartment">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                     </svg>
                                 </div>
                             </div>
-                            <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlDepartment">
+                            <ul class="all-emp-custom-select-search-ul display-none">
                             </ul>
                         </div>
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditSelectInputBtn jsJobDescriptionSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
                     </div>
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Remarks:</label>
-                        <input name="Remarks" class="new-emp-pure-input jsInput jsInputRemarks jsInputJobDescription" value="None"  />
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsJobDescriptionInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Remarks:</label>
+                        <input name="Remarks" class="new-emp-pure-input jsPureInput" value="None" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
 
                 </div>
             </div>
-            <div class="emp-det-sub-cont jsEmpDetSubMainCont">
-                <div class="emp-det-sub-title-cont">
+            @*compensation*@
+            <div class="new-emp-sub-content-cont jsNewEmpSubContentCont">
+                <div class="new-emp-sub-group-title-cont">
                     <h4 class="employee-details-item-header-title-text">Compensation</h4>
-                    <button name="compensation" class="employee-details-item-header-title-btn jsCancelBtn jsJobCompensationCancelBtn">Cancel</button>
+                    <button name="compensation" class="new-emp-sub-group-title-save-btn jsNewEmpGroupTitleSaveEditBtn">Save</button>
+                    <button name="compensation" class="new-emp-sub-group-title-cancel-btn">Cancel</button>
                 </div>
-                <div class="emp-det-sub-item-cont">
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-
-                        @*compensation*@
-                        <label class="emp-det-label">Rate Period:</label>
-                        <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont jsAllEmpCustomSelectMainContCompensation">
-                            <div class="new-emp-select-input-arrow-cont  jsAllEmpCustomSelectInputArrowCont">
-                                <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputRatePeriod jsInput "  />
-                                <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContRatePeriod">
+                <div class="new-emp-item-group-main-cont">
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Rate Period:</label>
+                        <div class="new-emp-select-main-cont jsNewEmpSelectMainContRatePeriod">
+                            <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
+                                <input name="RatePeriod" class="new-emp-select-input jsSelectInput" />
+                                <div name="RatePeriod"  class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContRatePeriod">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                     </svg>
                                 </div>
                             </div>
-                            <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlRatePeriod">
+                            <ul class="all-emp-custom-select-search-ul display-none">
                             </ul>
                         </div>
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditSelectInputBtn jsCompensationSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
 
                     </div>
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Basic Salary:</label>
-                        <input name="BasicSalary" class="new-emp-pure-input jsInput jsInputBasicSalary jsInputCompensation"  />
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditInputBtn jsCompensationInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Basic Salary:</label>
+                        <input name="BasicSalary" class="new-emp-pure-input jsPureInput" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Allowance:</label>
-                        <input name="Allowance" class="new-emp-pure-input jsInput jsInputAllowance jsInputCompensation"  />
-                        <button class="emp-det-ind-item-btn jsInputEditBtn  jsEmpDetEditInputBtn jsEmpDetEditInputBtn jsCompensationInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Allowance:</label>
+                        <input name="Allowance" class="new-emp-pure-input jsPureInput" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
-                    <div class="emp-det-sub-ind-cont jsEmpDetIndCont">
-                        <label class="emp-det-label">Salary Condition:</label>
-                        <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont jsAllEmpCustomSelectMainContCompensation">
-                            <div class="new-emp-select-input-arrow-cont  jsAllEmpCustomSelectInputArrowCont">
-                                <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputSalaryCondition jsInput"  />
-                                <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContSalaryCondition">
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Salary Cond:</label>
+                        <div class="new-emp-select-main-cont jsNewEmpSelectMainContSalaryCondition">
+                            <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
+                                <input name="SalaryCondition" class="new-emp-select-input jsSelectInput" />
+                                <div name="SalaryCondition" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContSalaryCondition">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                     </svg>
                                 </div>
                             </div>
-                            <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlSalaryCondition">
+                            <ul class="all-emp-custom-select-search-ul display-none ">
                             </ul>
                         </div>
-                        <button class="emp-det-ind-item-btn jsInputEditBtn jsEmpDetEditSelectInputBtn jsCompensationSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
                     </div>
 
                 </div>
