@@ -11,6 +11,13 @@
     background: #505050;
     padding: .3em;
 }
+/*this is to display input type text 100%*/
+input[type="date"] {
+    display: block;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    min-height: 1.2em;
+}
 
 .new-emp-pure-input {
     background: #f5f5f5;
