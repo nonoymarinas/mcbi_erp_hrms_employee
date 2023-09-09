@@ -44,7 +44,7 @@ async function handleClickSavePersonalInfo(e) {
     jsInputEditBtns.forEach(button => {
         button.addEventListener('click', handleClickEditInputBtn);
         button.classList.remove('new-emp-btn-disabled');
-        button.setAttribute('data-issavedmode',false)
+        button.setAttribute('data-issavedmode', false)
     })
 
     //disable pure inputs - all
@@ -69,6 +69,9 @@ async function handleClickSavePersonalInfo(e) {
         jsSelectInput.setAttribute('disabled', true);
     })();
 
+    //enable and attached event listener to cancel button
+    const jsNewEmpCancelBtnPersInfo = document.querySelector('.jsNewEmpCancelBtnPersInfo');
+    jsNewEmpCancelBtnPersInfo.addEventListener('click', handleClickCancelBtn)
 }
 
 async function handleClickSaveBenifits(e) {
@@ -91,7 +94,9 @@ async function handleClickSaveBenifits(e) {
         input.classList.add('new-emp-input-disabled');
     })
 
-
+    //enable and attached event listener to cancel button
+    const jsNewEmpCancelBtnBenifits = document.querySelector('.jsNewEmpCancelBtnBenifits');
+    jsNewEmpCancelBtnBenifits.addEventListener('click', handleClickCancelBtn)
 }
 
 async function handleClickSaveContacts(e) {
@@ -113,6 +118,10 @@ async function handleClickSaveContacts(e) {
         input.setAttribute('disabled', true);
         input.classList.add('new-emp-input-disabled');
     })
+
+    //enable and attached event listener to cancel button
+    const jsNewEmpCancelBtnContacts = document.querySelector('.jsNewEmpCancelBtnContacts');
+    jsNewEmpCancelBtnContacts.addEventListener('click', handleClickCancelBtn)
 }
 
 async function handleClickSaveJobDescriptions(e) {
@@ -164,6 +173,10 @@ async function handleClickSaveJobDescriptions(e) {
         const jsSelectInput = jsNewEmpSelectMainContDepartment.querySelector('.jsSelectInput');
         jsSelectInput.setAttribute('disabled', true);
     })();
+
+    //enable and attached event listener to cancel button
+    const jsNewEmpCancelBtnJobDesc = document.querySelector('.jsNewEmpCancelBtnJobDesc');
+    jsNewEmpCancelBtnJobDesc.addEventListener('click', handleClickCancelBtn)
 }
 
 async function handleClickSaveCompensations(e) {
@@ -214,6 +227,10 @@ async function handleClickSaveCompensations(e) {
         const jsSelectInput = jsNewEmpSelectMainContSalaryCondition.querySelector('.jsSelectInput');
         jsSelectInput.setAttribute('disabled', true);
     })();
+
+    //enable and attached event listener to cancel button
+    const jsNewEmpCancelBtnCompensation = document.querySelector('.jsNewEmpCancelBtnCompensation');
+    jsNewEmpCancelBtnCompensation.addEventListener('click', handleClickCancelBtn)
 }
 
 function handleClickEditInputBtn(e) {
@@ -262,43 +279,8 @@ function handleClickEditInputBtn(e) {
 }
 
 async function handleClickSaveInputBtn(e) {
-    //enable edit button
-    e.target.removeEventListener('click', handleClickSaveInputBtn);
-    e.target.addEventListener('click', handleClickEditInputBtn);
-    e.target.classList.remove('new-emp-save-btn')
-    e.target.textContent = 'edit';
-    e.target.setAttribute('data-issavedmode', false)
-
-    //disable input
-    if (e.target.classList.contains('jsSelectInputEditBtn')) {
-        const jsNewEmpIndItemCont = e.target.closest('.jsNewEmpIndItemCont');
-
-        const jsNewEmpSelectInputArrowCont = jsNewEmpIndItemCont.querySelector('.jsNewEmpSelectInputArrowCont');
-        jsNewEmpSelectInputArrowCont.classList.add('new-emp-input-disabled');
-
-        const jsNewEmpSelectArrowCont = jsNewEmpIndItemCont.querySelector('.jsNewEmpSelectArrowCont');
-        jsNewEmpSelectArrowCont.classList.add('arrow-cont-disabled');
-        if (jsNewEmpSelectArrowCont.getAttribute('name') == 'Gender') {
-            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowGenderSelect)
-        } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'Position') {
-            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowPositionSelect)
-        } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'Department') {
-            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowDepartmentSelect)
-        } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'RatePeriod') {
-            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowRatePeriodSelect)
-        } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'SalaryCondition') {
-            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowSalaryConditionSelect)
-        }
-
-        const jsSelectInput = jsNewEmpIndItemCont.querySelector('.jsSelectInput');
-        jsSelectInput.setAttribute('disabled', true);
-
-    } else {
-        const input = e.target.closest('.jsNewEmpIndItemCont').querySelector('input')
-        input.setAttribute('disabled', true);
-        input.classList.add('new-emp-input-disabled');
-    }
-
+    const button = e.target;
+    disableInputAndTurnButtonToEdit(button)
 }
 
 function handleClickArrowGenderSelect() {
@@ -322,20 +304,66 @@ function handleClickArrowSalaryConditionSelect() {
     alert('SalaryCondition')
 }
 
+function handleClickCancelBtn(e) {
+    const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
+    jsInputEditBtns.forEach(button => {
+        disableInputAndTurnButtonToEdit(button);
+    })
+}
+
 
 function checkIfThereAreAcitveInputAndSaveBtn() {
     let isThereActiveSaveButton = false;
     const buttons = Array.from(document.querySelectorAll('.jsInputEditBtn'));
-    
+
     for (let i = 0; i < buttons.length; i++) {
         const isSavedMode = buttons[i].getAttribute('data-issavedmode');
         if (isSavedMode == 'true') {
             isThereActiveSaveButton = true;
-            const input =buttons[i].closest('.jsNewEmpIndItemCont').querySelector('input');
+            const input = buttons[i].closest('.jsNewEmpIndItemCont').querySelector('input');
             input.focus();
             break;
         }
     }
 
     return isThereActiveSaveButton;
+}
+
+function disableInputAndTurnButtonToEdit(button) {
+    //enable edit button
+    button.removeEventListener('click', handleClickSaveInputBtn);
+    button.addEventListener('click', handleClickEditInputBtn);
+    button.classList.remove('new-emp-save-btn')
+    button.textContent = 'edit';
+    button.setAttribute('data-issavedmode', false)
+
+    //disable input
+    if (button.classList.contains('jsSelectInputEditBtn')) {
+        const jsNewEmpIndItemCont = button.closest('.jsNewEmpIndItemCont');
+
+        const jsNewEmpSelectInputArrowCont = jsNewEmpIndItemCont.querySelector('.jsNewEmpSelectInputArrowCont');
+        jsNewEmpSelectInputArrowCont.classList.add('new-emp-input-disabled');
+
+        const jsNewEmpSelectArrowCont = jsNewEmpIndItemCont.querySelector('.jsNewEmpSelectArrowCont');
+        jsNewEmpSelectArrowCont.classList.add('arrow-cont-disabled');
+        if (jsNewEmpSelectArrowCont.getAttribute('name') == 'Gender') {
+            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowGenderSelect)
+        } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'Position') {
+            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowPositionSelect)
+        } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'Department') {
+            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowDepartmentSelect)
+        } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'RatePeriod') {
+            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowRatePeriodSelect)
+        } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'SalaryCondition') {
+            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowSalaryConditionSelect)
+        }
+
+        const jsSelectInput = jsNewEmpIndItemCont.querySelector('.jsSelectInput');
+        jsSelectInput.setAttribute('disabled', true);
+
+    } else {
+        const input = button.closest('.jsNewEmpIndItemCont').querySelector('input')
+        input.setAttribute('disabled', true);
+        input.classList.add('new-emp-input-disabled');
+    }
 }
