@@ -14,6 +14,13 @@ namespace ERP_HRMS.Controllers
 			return View();
 		}
 
+		[Route("new-employee-ref-data")]
+		async public Task<IActionResult> NewEmployeeReferenceData()
+		{
+			NewEmpReferenceDataLogic dataLogic = new();
+			return Json(await dataLogic.GetReferenceData());
+		}
+
 		[Route("employee-detail-page")]
 		public IActionResult NewEmployeeOldMainPage()
         {

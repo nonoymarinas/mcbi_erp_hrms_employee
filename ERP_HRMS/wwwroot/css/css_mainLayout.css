@@ -1,9 +1,32 @@
-﻿* {
+﻿
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins,SansSerif,Verdana, Geneva, Tahoma;
+}
+
+html {
+    --headerheigth: 60px;
+    --footerheigth: 50px;
+    --minimumContentWidth: 375px;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin-top: var(--headerHeight);
+    margin-bottom: var(--headerFooter);
     --headerHeight: 60px;
     --subHeaderHeight: 40px;
     --headerFooter: 60px;
     --mainHeaderBackgroundColor: #999;
     font-family: Poppins,SansSerif,Verdana, Geneva, Tahoma;
+    min-height: 100vh;
+    width: 100%;
+    background: #1a1a1a;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -18,7 +41,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         opacity: 1
     }
 
-body {
-    margin-top: var(--headerHeight);
-    margin-bottom: var(--headerFooter);
-}
+

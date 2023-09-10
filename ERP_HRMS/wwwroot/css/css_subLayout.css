@@ -1,25 +1,4 @@
-﻿* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Poppins,SansSerif,Verdana, Geneva, Tahoma;
-}
-
-html {
-    --headerheigth: 60px;
-    --footerheigth: 50px;
-    --minimumContentWidth: 375px;
-}
-
-html {
-    height: 100%;
-}
-
-body {
-    min-height: 100vh;
-    width: 100%;
-    background: #1a1a1a;
-}
+﻿
 
 .mainlayout-main-cont {
     min-height: 100vh;

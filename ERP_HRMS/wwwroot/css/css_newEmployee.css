@@ -154,6 +154,7 @@ input[type="date"] {
 .new-emp-label {
     font-size: .85em;
     color: #555;
+    align-self:center;
 }
 
 .new-emp-item-group-main-cont {
@@ -239,7 +240,7 @@ input[type="date"] {
 
     .new-emp-ind-item-cont-persinfo {
         display: grid;
-        grid-template-columns: 1fr 50px;
+        grid-template-columns: 1fr 40px;
         margin: .2em 0;
     }
 

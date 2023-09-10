@@ -1,4 +1,113 @@
-﻿async function newEmployee() {
+﻿async function newEmployee(newEmpData) {
+    //gender linkedlist
+    let genderLinkedList = new LinkedList(newEmpData.genderList[0])
+    for (let i = 1; i < newEmpData.genderList.length; i++) {
+        genderLinkedList.push(newEmpData.genderList[i])
+    }
+
+    //country linkedlist
+    let countryLinkedList = new LinkedList(newEmpData.countryList[0])
+    for (let i = 1; i < newEmpData.countryList.length; i++) {
+        countryLinkedList.push(newEmpData.countryList[i])
+    }
+
+    //region linkedlist
+    let regionLinkedList = new LinkedList(newEmpData.regionList[0])
+    for (let i = 1; i < newEmpData.regionList.length; i++) {
+        regionLinkedList.push(newEmpData.regionList[i])
+    }
+
+    //province linkedlist
+    let provinceLinkedList = new LinkedList(newEmpData.provinceList[0])
+    for (let i = 1; i < newEmpData.provinceList.length; i++) {
+        provinceLinkedList.push(newEmpData.provinceList[i])
+    }
+
+    //city linkedlist
+    let cityLinkedList = new LinkedList(newEmpData.cityList[0])
+    for (let i = 1; i < newEmpData.cityList.length; i++) {
+        cityLinkedList.push(newEmpData.cityList[i])
+    }
+
+    //position linkedlist
+    let positionLinkedList = new LinkedList(newEmpData.positionList[0])
+    for (let i = 1; i < newEmpData.positionList.length; i++) {
+        positionLinkedList.push(newEmpData.positionList[i])
+    }
+    
+    //department linkedlist
+    let departmentLinkedList = new LinkedList(newEmpData.departmentList[0])
+    for (let i = 1; i < newEmpData.departmentList.length; i++) {
+        departmentLinkedList.push(newEmpData.departmentList[i])
+    }
+    
+    //rate period linkedlist
+    let ratePeriodLinkedList = new LinkedList(newEmpData.ratePeriodList[0])
+    for (let i = 1; i < newEmpData.ratePeriodList.length; i++) {
+        ratePeriodLinkedList.push(newEmpData.ratePeriodList[i])
+    }
+    
+    //salary condition linkedlist
+    let salarConditionLinkedList = new LinkedList(newEmpData.salaryConditionList[0])
+    for (let i = 1; i < newEmpData.salaryConditionList.length; i++) {
+        salarConditionLinkedList.push(newEmpData.salaryConditionList[i])
+    }
+    
+    let persInfoDataObj = {
+        firsName: '',
+        middleName: '',
+        lastName: '',
+        dateOfBirth: '',
+        gender: '',
+        genderID: '',
+    }
+
+    let benifitsDataObj = {
+        sssNo: '',
+        philHealthNo: '',
+        pagibigNo: '',
+        tinNo: '',
+    }
+
+    let contactsDataObj = {
+        mobileNo: '',
+        landlineNo: '',
+        emailAdd: '',
+    }
+
+    let addressDataObj = {
+        countryID: '',
+        countryName: '',
+        regionID: '',
+        regionName: '',
+        provinceID: '',
+        provinceName: '',
+        cityID: '',
+        cityName: '',
+        barangayID: '',
+        barangayName: '',
+        addressLine1: '',
+        addressLine2: '',
+    }
+
+    let jobDescriptionDataObj = {
+        position: '',
+        positionID: '',
+        department: '',
+        departmentID: '',
+        remarks:'',
+    }
+
+    let compensationDataObj = {
+        ratePeriod: '',
+        ratePeriodID: '',
+        basicSalary: '',
+        allowance: '',
+        salaryCondition: '',
+    }
+
+
+
     const jsNewEmpGroupTitleSaveEditBtns = document.querySelectorAll('.jsNewEmpGroupTitleSaveEditBtn');
     jsNewEmpGroupTitleSaveEditBtns.forEach(button => {
         if (button.getAttribute('name') == 'persinfo') {
@@ -29,7 +138,6 @@
             arrow.addEventListener('click', handleClickArrowSalaryConditionSelect)
         }
     })
-
 }
 
 

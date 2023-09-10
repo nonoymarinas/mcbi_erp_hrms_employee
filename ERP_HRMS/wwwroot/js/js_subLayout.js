@@ -125,13 +125,16 @@ async function clickMainMenuEmployee(e) {
 //}
 
 async function clickMainMenuNewEmployee() {
+    //fetch data needed for new employee
+    let newEmpData = await fetchData.getData('new-employee-ref-data')
+    console.log(newEmpData)
     //fetch view for display
     const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
     const view = await fetchData.viewData('new-employee-main-page');
     const jsNewEmpMainCont = view.querySelector('.jsNewEmpMainCont');
     jsSublayout01ContentSubCont.innerHTML = '';
     jsSublayout01ContentSubCont.appendChild(jsNewEmpMainCont);
-    await newEmployee();
+    await newEmployee(newEmpData);
 }
 
 async function clickMainMenuAllEmployee() {

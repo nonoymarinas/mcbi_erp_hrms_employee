@@ -252,9 +252,9 @@ input:-webkit-autofill:active {
 .emp-det-ind-item-btn {
     padding: .3em;
     font-size: .75em;
-    color: #999;
+    color: #444;
     background: none;
-    border: none;
+    border: 1px solid rgba(5,5,5,.5);
     width: 100%;
 }
 
@@ -317,6 +317,8 @@ input:-webkit-autofill:active {
 .emp-det-address-sub-title-cont {
     display: grid;
     grid-template-columns: 1fr 60px 60px;
+
+
     border-bottom: 1px solid #222;
     margin-bottom: 10px;
     padding: 0.3em;
@@ -327,17 +329,22 @@ input:-webkit-autofill:active {
     width: 100%;
     padding: 0 .2em;
 }
+
 .emp-det-sub-address-type-cont {
     width: 100%;
 }
+
 .emp-det-sub-ind-cont-persinfo {
     display: grid;
-    grid-template-columns: 140px 1fr 50px;
+    grid-template-columns: 110px 1fr 50px;
     margin: .2em 0;
+    width:100%;
+    grid-gap:5px;
 }
+
 .emp-det-sub-ind-cont {
     display: grid;
-    grid-template-columns: 140px 1fr 50px;
+    grid-template-columns: 110px 1fr 50px;
     margin:.2em 0;
 }
 
@@ -355,7 +362,7 @@ input:-webkit-autofill:active {
     font-size: .9em;
     padding: .3em;
     outline: none;
-    
+    width:100%;
 }
 
 
@@ -430,5 +437,8 @@ input:-webkit-autofill:active {
         width: 100%;
         margin-bottom: 30px;
         grid-column-gap:1em;
+    }
+    .emp-det-label{
+        font-size:.75rem;
     }
 }
