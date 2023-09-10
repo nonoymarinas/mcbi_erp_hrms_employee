@@ -98,7 +98,8 @@
     }
 
 .new-emp-save-btn {
-    background: #009000;
+    /*background: #009000;*/
+    background:#222;
     color: #fff;
     border:none;
 }
