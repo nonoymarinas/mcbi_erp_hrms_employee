@@ -9,6 +9,7 @@ namespace BusinessModel
 {
 	public class ReturnNewEmpReferenceDataModel : DBStandardReturn
 	{
+		public List<CivilStatus>? CivilStatusList { get; set; }
 		public List<Gender>? GenderList { get; set; }
 		public List<Country>? CountryList { get; set; }
 		public List<Region>? RegionList { get; set; }

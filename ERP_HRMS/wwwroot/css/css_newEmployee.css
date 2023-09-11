@@ -154,7 +154,7 @@ input[type="date"] {
 .new-emp-label {
     font-size: .85em;
     color: #555;
-    align-self:center;
+    align-self: center;
 }
 
 .new-emp-item-group-main-cont {
@@ -184,21 +184,22 @@ input[type="date"] {
     max-width: 800px;
     background: #d5d5d5;
     width: 100%;
+    padding-bottom:120px;
 }
 
 .new-emp-ind-item-cont-persinfo {
     display: grid;
     grid-template-columns: 110px 1fr 40px;
-    margin: .2em 0;
-    grid-gap: 5px;
-    height:30px;
+    margin: .3em 0;
+    grid-gap: 10px;
+    height: 30px;
 }
 
 .new-emp-ind-item-cont {
     display: grid;
     grid-template-columns: 110px 1fr 40px;
-    margin: .2em 0;
-    grid-gap: 5px;
+    margin: .4em 0;
+    grid-gap: 10px;
 }
 
 .new-emp-select-main-cont {
@@ -231,6 +232,26 @@ input[type="date"] {
 
     .new-emp-select-arrow-cont:hover {
         background: #e5e5e5;
+    }
+
+.new-emp-select-ul {
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 300px;
+    background: #fff;
+    position:absolute;
+    top:105%;
+    z-index:1;
+}
+
+.new-emp-select-li {
+    padding: .3rem;
+    font-size:.85rem;
+}
+
+    .new-emp-select-li:hover {
+        background: #d2d2d2;
     }
 
 @media only screen and (min-width: 450px) {

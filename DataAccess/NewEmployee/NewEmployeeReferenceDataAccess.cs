@@ -11,6 +11,7 @@ namespace DataAccess
         async public Task<ReturnNewEmpReferenceDataModel> GetReferenceData()
         {
             ReturnNewEmpReferenceDataModel returnData = new();
+            List<CivilStatus> CivilStatusList = new();
             List<Gender> GenderList = new();
             List<Country> CountryList = new();
             List<Region> RegionList = new();
@@ -45,7 +46,19 @@ namespace DataAccess
                         }
                         else
                         {
+                            //civil status
+                            while (reader.Read())
+                            {
+                                CivilStatusList.Add(new CivilStatus()
+                                {
+                                    CivilStatusID = Convert.ToInt32(reader["CivilStatusID"]),
+                                    CivilStatusName = reader["CivilStatusName"].ToString(),
+                                });
+                            }
+                            returnData.CivilStatusList = CivilStatusList;
+
                             //gender
+                            reader.NextResult();
                             while (reader.Read())
                             {
                                 GenderList.Add(new Gender()

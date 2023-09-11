@@ -1,6 +1,4 @@
-﻿.invalid {
-    border: 1px solid red;
-}
+﻿
 
 .disable-btn {
     display: flex;
@@ -102,4 +100,8 @@
     background:#222;
     color: #fff;
     border:none;
+}
+
+.invalid {
+    border: 2px solid red;
 }

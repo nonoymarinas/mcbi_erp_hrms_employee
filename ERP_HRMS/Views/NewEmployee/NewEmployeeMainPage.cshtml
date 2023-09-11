@@ -27,36 +27,54 @@
                     <div class="personalinfo-item-sub-cont">
                         <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
                             <label class="new-emp-label new-emp-label-persinfo">First Name:</label>
-                            <input name="FirstName" class="new-emp-pure-input jsPureInput" placeholder="First Name" />
+                            <input name="FirstName" class="new-emp-pure-input jsPureInput" placeholder="First Name" required />
                             <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                         </div>
                         <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
                             <label class="new-emp-label new-emp-label-persinfo">Middle Name:</label>
-                            <input name="MiddleName" class="new-emp-pure-input jsPureInput" placeholder="Middle Name" />
+                            <input name="MiddleName" class="new-emp-pure-input jsPureInput" placeholder="Middle Name" required />
                             <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                         </div>
                         <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
                             <label class="new-emp-label new-emp-label-persinfo">Last Name:</label>
-                            <input name="LastName" class="new-emp-pure-input jsPureInput" placeholder="Last Name" />
+                            <input name="LastName" class="new-emp-pure-input jsPureInput" placeholder="Last Name" required />
                             <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                         </div>
                         <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
                             <label class="new-emp-label new-emp-label-persinfo">Date of Birth:</label>
-                            <input type="date" name="DateOfBirth" class="new-emp-pure-input jsPureInput" placeholder="Date of Birth" />
+                            <input type="date" name="DateOfBirth" class="new-emp-pure-input jsPureInput" placeholder="Date of Birth" required />
                             <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                         </div>
+
+                        <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
+                            <label class="new-emp-label new-emp-label-persinfo">Civil Status:</label>
+                            <div class="new-emp-select-main-cont jsNewEmpSelectMainContCivilStatus">
+                                <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont jsNewEmpSelectInputArrowContCivilStatus">
+                                    <input name="CivilStatus" class="new-emp-select-input jsSelectInput jsSelectInputCivilStatus" placeholder="CivilStatus" required/>
+                                    <div name="CivilStatus" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContCivilStatus">
+                                        <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
+                                            <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
+                                </ul>
+                            </div>
+                            <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                        </div>
+
                         <div class="new-emp-ind-item-cont-persinfo jsNewEmpIndItemCont">
                             <label class="new-emp-label new-emp-label-persinfo">Gender:</label>
                             <div class="new-emp-select-main-cont jsNewEmpSelectMainContGender">
                                 <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont jsNewEmpSelectInputArrowContGender">
-                                    <input name="Gender" class="new-emp-select-input jsSelectInput jsSelectInputGender" placeholder="Gender" />
+                                    <input name="Gender" class="new-emp-select-input jsSelectInput jsSelectInputGender" placeholder="Gender" required/>
                                     <div name="Gender" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContGender">
                                         <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                             <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                         </svg>
                                     </div>
                                 </div>
-                                <ul class="all-emp-custom-select-search-ul display-none">
+                                <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                                 </ul>
                             </div>
                             <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
@@ -79,7 +97,7 @@
                 <div class="new-emp-item-group-main-cont">
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">SSS No.:</label>
-                        <input name="SssNumber" class="new-emp-pure-input  jsPureInput" />
+                        <input name="SssNumber" class="new-emp-pure-input  jsPureInput" required/>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
                     <div class="new-emp-ind-item-cont jsEmpDetIndCont jsNewEmpIndItemCont">
@@ -110,7 +128,7 @@
                 <div class="new-emp-item-group-main-cont">
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Mobile No.:</label>
-                        <input name="MobileNumber" class="new-emp-pure-input jsPureInput" />
+                        <input name="MobileNumber" class="new-emp-pure-input jsPureInput" required/>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled  jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
@@ -145,7 +163,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlCountry">
+                            <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                             </ul>
                         </div>
                     </div>
@@ -164,7 +182,7 @@
                                             </svg>
                                         </div>
                                     </div>
-                                    <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlRegion">
+                                    <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                                     </ul>
                                 </div>
                             </div>
@@ -180,7 +198,7 @@
                                             </svg>
                                         </div>
                                     </div>
-                                    <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlProvince">
+                                    <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                                     </ul>
                                 </div>
                             </div>
@@ -196,7 +214,7 @@
                                             </svg>
                                         </div>
                                     </div>
-                                    <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlCity">
+                                    <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                                     </ul>
                                 </div>
                             </div>
@@ -212,13 +230,13 @@
                                             </svg>
                                         </div>
                                     </div>
-                                    <ul class="all-emp-custom-select-search-ul display-none jsAllEmpAddressUl jsAllEmpAddressUlBarangay">
+                                    <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                                     </ul>
                                 </div>
                             </div>
                             <div class="new-emp-ind-item-cont ">
                                 <label class="new-emp-label">Address 1:</label>
-                                <input name="AddressLine1" class="new-emp-pure-input"  />
+                                <input name="AddressLine1" class="new-emp-pure-input" />
                             </div>
                             <div class="new-emp-ind-item-cont ">
                                 <label class="new-emp-label">Address 2:</label>
@@ -242,14 +260,14 @@
                         <label class="new-emp-label">Position:</label>
                         <div class="new-emp-select-main-cont jsNewEmpSelectMainContPosition ">
                             <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont ">
-                                <input name="Position" class="new-emp-select-input jsSelectInput" />
+                                <input name="Position" class="new-emp-select-input jsSelectInput" required/>
                                 <div name="Position" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContPosition">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                     </svg>
                                 </div>
                             </div>
-                            <ul class="all-emp-custom-select-search-ul display-none ">
+                            <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                             </ul>
                         </div>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn " data-isactive=0 data-buttonfor="select">edit</button>
@@ -258,14 +276,14 @@
                         <label class="new-emp-label">Department:</label>
                         <div class="new-emp-select-main-cont jsNewEmpSelectMainContDepartment">
                             <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
-                                <input name="Department" class="new-emp-select-input jsSelectInput" />
+                                <input name="Department" class="new-emp-select-input jsSelectInput" required/>
                                 <div name="Department" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContDepartment">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                     </svg>
                                 </div>
                             </div>
-                            <ul class="all-emp-custom-select-search-ul display-none">
+                            <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                             </ul>
                         </div>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
@@ -290,14 +308,14 @@
                         <label class="new-emp-label">Rate Period:</label>
                         <div class="new-emp-select-main-cont jsNewEmpSelectMainContRatePeriod">
                             <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
-                                <input name="RatePeriod" class="new-emp-select-input jsSelectInput" />
+                                <input name="RatePeriod" class="new-emp-select-input jsSelectInput" required/>
                                 <div name="RatePeriod" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContRatePeriod">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                     </svg>
                                 </div>
                             </div>
-                            <ul class="all-emp-custom-select-search-ul display-none">
+                            <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                             </ul>
                         </div>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
@@ -305,7 +323,7 @@
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Basic Salary:</label>
-                        <input name="BasicSalary" class="new-emp-pure-input jsPureInput" />
+                        <input name="BasicSalary" class="new-emp-pure-input jsPureInput" required/>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
@@ -317,14 +335,14 @@
                         <label class="new-emp-label">Salary Cond:</label>
                         <div class="new-emp-select-main-cont jsNewEmpSelectMainContSalaryCondition">
                             <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
-                                <input name="SalaryCondition" class="new-emp-select-input jsSelectInput" />
+                                <input name="SalaryCondition" class="new-emp-select-input jsSelectInput" required/>
                                 <div name="SalaryCondition" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContSalaryCondition">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                     </svg>
                                 </div>
                             </div>
-                            <ul class="all-emp-custom-select-search-ul display-none ">
+                            <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                             </ul>
                         </div>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
