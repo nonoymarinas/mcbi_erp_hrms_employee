@@ -61,15 +61,17 @@
     }
 
     let persInfoDataObj = {
-        firsName: '',
+        masterPersonID: '',
+        firstName: '',
         middleName: '',
         lastName: '',
         dateOfBirth: '',
-        civilStatus:'',
-        gender: '',
+        civilStatusID: '',
+        civilStatus: '',
         genderID: '',
-        employeeNo: '',
-        isPersonalInfoSaved:false,
+        gender: '',
+        employeeNumber: '',
+        isPersonalInfoSaved: false,
     }
 
     let benifitsDataObj = {
@@ -151,18 +153,55 @@
     })
 
 
-
     async function handleClickSavePersonalInfo(e) {
-
         //validate inputs
-        if (!validateInputPersonalInfo(e)) return
+        if (!validateInputPersonalInfo(e)) return;
 
-        //mark true for personal information saved
-        persInfoDataObj.isPersonalInfoSaved = true;
+        //save actual data
+        const formData = new FormData();
+        formData.append('UserMasterPersonID', 1);
+
+        const inputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('input');
+        inputs.forEach(input => {
+            if (input.getAttribute('name') != 'EmployeeNumber') { //employee number is not included
+                if (input.classList.contains('jsSelectInput')) {
+                    formData.append(input.getAttribute('name'), input.getAttribute('data-id'));
+                } else {
+                    formData.append(input.getAttribute('name'), input.value.trim());
+                }
+            }
+        })
+
+        const opitons = {
+            method: 'POST',
+            body: formData
+        }
+
+        //actual fetch to database
+        const persInfoReturnData = await fetchData.postData('save-new-employee-personalinfo', opitons);
+        if (persInfoReturnData == null) return;
+
+        //update local data if save is successfull
+        persInfoDataObj.masterPersonID = persInfoReturnData.masterPersonID
+        persInfoDataObj.firstName = persInfoReturnData.firstName
+        persInfoDataObj.middleName = persInfoReturnData.middleName
+        persInfoDataObj.lastName = persInfoReturnData.lastName
+        persInfoDataObj.dateOfBirth = persInfoReturnData.dateOfBirth
+        persInfoDataObj.civilStatus = persInfoReturnData.civilStatusName
+        persInfoDataObj.civilStatusID = persInfoReturnData.civilStatusID
+        persInfoDataObj.gender = persInfoReturnData.genderName
+        persInfoDataObj.genderID = persInfoReturnData.genderID
+        persInfoDataObj.employeeNumber = persInfoReturnData.employeeNumber
+        persInfoDataObj.isPersonalInfoSaved = true
+
+
+        //populate employee number
+        const jsPureInputEmployeeNumber = e.target.closest('.jsNewEmpSubContentCont').querySelector('.jsPureInputEmployeeNumber');
+        jsPureInputEmployeeNumber.value = persInfoDataObj.employeeNumber
 
         //disable button
-        e.currentTarget.removeEventListener('click', handleClickSavePersonalInfo);
-        e.currentTarget.classList.add('new-emp-btn-disabled');
+        e.target.removeEventListener('click', handleClickSavePersonalInfo);
+        e.target.classList.add('new-emp-btn-disabled');
 
         const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
         jsInputEditBtns.forEach(button => {
@@ -363,25 +402,48 @@
         }
 
         //validate inputs
-        if (!validateInputPersonalInfo(e)) return
+        if (!validateInputPersonalInfo(e)) return;
 
+        //save actual data
+        (function () {
+
+            const formData = new FormData();
+            const inputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('input');
+            inputs.forEach(input => {
+                if (input.classList.contains('jsSelectInput')) {
+                    formData.append(input.getAttribute('name'), input.getAttribute('data-id'));
+                } else {
+                    formData.append(input.getAttribute('name'), input.value.trim());
+                }
+            })
+
+            for (const pair of formData.entries()) {
+                console.log(`${pair[0]}, ${pair[1]}`);
+            }
+
+        })();
 
         //disable button
-        e.currentTarget.removeEventListener('click', handleClickSaveCompensations);
-        e.currentTarget.classList.add('new-emp-btn-disabled');
+        (function () {
+            e.currentTarget.removeEventListener('click', handleClickSaveCompensations);
+            e.currentTarget.classList.add('new-emp-btn-disabled');
 
-        const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
-        jsInputEditBtns.forEach(button => {
-            button.addEventListener('click', handleClickEditInputBtn);
-            button.classList.remove('new-emp-btn-disabled');
-        })
+            const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
+            jsInputEditBtns.forEach(button => {
+                button.addEventListener('click', handleClickEditInputBtn);
+                button.classList.remove('new-emp-btn-disabled');
+            })
+        })();
 
         //disable inputs
-        const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
-        jsPureInputs.forEach(input => {
-            input.setAttribute('disabled', true);
-            input.classList.add('new-emp-input-disabled');
-        });
+        (function () {
+            const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
+            jsPureInputs.forEach(input => {
+                input.setAttribute('disabled', true);
+                input.classList.add('new-emp-input-disabled');
+            });
+        })();
+
 
         //disable select input - rate period
         (function () {
@@ -472,8 +534,52 @@
     }
 
     async function handleClickSaveInputBtn(e) {
-        const button = e.target;
-        disableInputAndTurnButtonToEdit(button)
+
+        const formData = new FormData();
+        formData.append('MasterPersonID', persInfoDataObj.masterPersonID);
+        formData.append('UserMasterPersonID',1)
+        if (e.target.classList.contains('jsSelectInputEditBtn')) {
+            const input = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsSelectInput');
+            if (input.hasAttribute('required')) {
+                if (input.getAttribute('data-id') == 'undefined' || input.getAttribute('data-id') == 0 || input.getAttribute('data-id') == null) {
+                    input.closest('.jsNewEmpSelectInputArrowCont').classList.add('invalid');
+                    return;
+                } else {
+                    input.closest('.jsNewEmpSelectInputArrowCont').classList.remove('invalid');
+                    formData.append('Name', input.getAttribute('name'))
+                    formData.append('Value', input.getAttribute('data-id'))
+                }
+
+            } else {
+                formData.append('Name', input.getAttribute('name'))
+                formData.append('Value', input.getAttribute('data-id'))
+            }
+        } else {
+            const input = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsPureInput');
+            if (input.hasAttribute('required')) {
+                if (isNullOrWhiteSpace(input.value.trim())) {
+                    input.classList.add('invalid');
+                    return;
+                } else {
+                    input.classList.remove('invalid');
+                    formData.append('Name', input.getAttribute('name'))
+                    formData.append('Value', input.value)
+                }
+            } else {
+                formData.append('Name', input.getAttribute('name'))
+                formData.append('Value', input.value)
+            }
+        }
+
+        const options = {
+            method: 'POST',
+            body: formData
+        }
+
+        const indUpdateReturnData = await fetchData.postData('update-new-employee-ind-info', options)
+        console.log(indUpdateReturnData)
+
+        disableInputAndTurnButtonToEdit(e.target)
     }
 
     function handleClickArrowCivilStatusSelect(e) {
@@ -594,6 +700,51 @@
         jsInputEditBtns.forEach(button => {
             disableInputAndTurnButtonToEdit(button);
         })
+
+        //restore data
+        if (e.target.getAttribute('name') == 'persinfo') {
+            restoreDataPersonalInfo()
+        }
+    }
+
+    function restoreDataPersonalInfo() {
+
+        const jsPureInputFirstName = document.querySelector('.jsPureInputFirstName');
+        jsPureInputFirstName.value = persInfoDataObj.firstName;
+
+        const jsPureInputMiddleName = document.querySelector('.jsPureInputMiddleName');
+        jsPureInputMiddleName.value = persInfoDataObj.middleName;
+
+        const jsPureInputLastName = document.querySelector('.jsPureInputLastName');
+        jsPureInputLastName.value = persInfoDataObj.lastName;
+
+        const jsPureInputDateOfBirth = document.querySelector('.jsPureInputDateOfBirth');
+        jsPureInputDateOfBirth.value = persInfoDataObj.dateOfBirth;
+
+        const jsSelectInputCivilStatus = document.querySelector('.jsSelectInputCivilStatus');
+        jsSelectInputCivilStatus.value = persInfoDataObj.civilStatus;
+        jsSelectInputCivilStatus.setAttribute('data-id', persInfoDataObj.civilStatusID)
+
+        const jsSelectInputGender = document.querySelector('.jsSelectInputGender');
+        jsSelectInputGender.value = persInfoDataObj.gender;
+        jsSelectInputGender.setAttribute('data-id', persInfoDataObj.genderID)
+
+    }
+
+    function restoreDataBenifits() {
+
+    }
+
+    function restoreDataContacts() {
+
+    }
+
+    function restoreDataJobDescription() {
+
+    }
+
+    function restoreDataCompensation() {
+
     }
 
 
@@ -622,12 +773,14 @@
         button.textContent = 'edit';
         button.setAttribute('data-issavedmode', false)
 
+
         //disable input
         if (button.classList.contains('jsSelectInputEditBtn')) {
             const jsNewEmpIndItemCont = button.closest('.jsNewEmpIndItemCont');
 
             const jsNewEmpSelectInputArrowCont = jsNewEmpIndItemCont.querySelector('.jsNewEmpSelectInputArrowCont');
             jsNewEmpSelectInputArrowCont.classList.add('new-emp-input-disabled');
+            jsNewEmpSelectInputArrowCont.classList.remove('invalid');
 
             const jsNewEmpSelectUl = button.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
             jsNewEmpSelectUl.classList.add('display-none');
@@ -656,6 +809,7 @@
             const input = button.closest('.jsNewEmpIndItemCont').querySelector('input')
             input.setAttribute('disabled', true);
             input.classList.add('new-emp-input-disabled');
+            input.classList.remove('invalid');
         }
     }
 
@@ -666,12 +820,23 @@
         inputs.forEach(input => {
             if (input.hasAttribute('required')) {
                 if (isNullOrWhiteSpace(input.value.trim()) == true) {
-                    input.classList.add('invalid')
-                    isValid = false;
+                    if (input.classList.contains('jsSelectInput')) {
+                        input.closest('.jsNewEmpSelectInputArrowCont').classList.add('invalid')
+                        isValid = false;
+                    } else {
+                        input.classList.add('invalid')
+                        isValid = false;
+                    }
+
                 } else {
-                    input.classList.remove('invalid')
+                    if (input.classList.contains('jsSelectInput')) {
+                        input.closest('.jsNewEmpSelectInputArrowCont').classList.remove('invalid')
+                    } else {
+                        input.classList.remove('invalid')
+                    }
                 }
             }
+
         })
 
         return isValid;

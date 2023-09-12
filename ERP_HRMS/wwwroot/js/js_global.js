@@ -30,17 +30,19 @@ const alertMessages = {
     deleteSuccessfull: 'Successfully Deleted!',
     inputFormat: `Invalid input character!`,
     databaseError: `Database Error!`,
-    duplicateError: `File already exist in database!\n Modify file name!`,
+    duplicateError: `File already exist in database!<br>Modify file name!`,
     serverError: `Server Error!`,
-    delDatabaseItem: `Are you sure? \n This will be permanently deleted!`,
+    delDatabaseItem: `Are you sure?<br>This will be permanently deleted!`,
     createProjectFirst: `Create and save Project Name first!`,
-    itemHidden: `Items are hidden! \n Click arrow to show items!`,
+    itemHidden: `Items are hidden!<br>Click arrow to show items!`,
     nothingToHide: `Nothing to hide!`,
-    failedToLoadHeader: 'Save successfully \n But failed to load header!',
-    passwordDonotMatch: 'Confirm password did not match!\nPlease check..',
+    failedToLoadHeader: 'Save successfully!<br>But failed to load header!',
+    passwordDonotMatch: 'Confirm password did not match!<br>Please check..',
     usernamePasswordNotFound: 'Username or Password do not match or don\'t exist!',
     areYouSureYouWantToClose: 'Are you sure you want to close?',
-    nameExistInDatabase: 'This name exist on records! \n You need admin approval to insert!'
+    nameExistInDatabaseAndActive: 'This name exist on records and employee is active!<br>Please check!',
+    nameExistInDatabaseAndNotActive: 'This name exist on records and employee is not active!<br>Please check!',
+    nameExistInDatabaseAndBlockListed: 'BEWARE!<br>This name is confirmed Blocklisted!<br>You need higher authority for this!'
 }
 
 const alertContainer = {
@@ -158,7 +160,22 @@ const fetchData = {
         }).then((data) => {
             if (data.statusCodeNumber == 1) {
                 dataResult = data
+            } else if (data.statusCodeNumber == 2) {
+                dataResult = data
+                alertCustom.isConfirmedOk(alertContainer.successAlert, alertMessages.updateSuccessfull)
+            } else if (data.statusCodeNumber == 3) {
+                dataResult = null;
+                throw alertMessages.nameExistInDatabaseAndActive
+            } else if (data.statusCodeNumber == 10) {
+                dataResult = null;
+                throw alertMessages.nameExistInDatabaseAndNotActive
+            } else if (data.statusCodeNumber == 6) {
+                dataResult = null;
+                throw alertMessages.nameExistInDatabaseAndBlockListed
+            } else if (data.statusCodeNumber == 4) {
+                dataResult = null;
             } else {
+                dataResult = null;
                 throw alertMessages.databaseError
             }
         }).catch((error) => {
@@ -184,7 +201,13 @@ const fetchData = {
                 alertCustom.isConfirmedOk(alertContainer.successAlert, alertMessages.updateSuccessfull)
             } else if (data.statusCodeNumber == 3) {
                 dataResult = null;
-                throw alertMessages.nameExistInDatabase
+                throw alertMessages.nameExistInDatabaseAndActive
+            } else if (data.statusCodeNumber == 10) {
+                dataResult = null;
+                throw alertMessages.nameExistInDatabaseAndNotActive
+            } else if (data.statusCodeNumber == 6) {
+                dataResult = null;
+                throw alertMessages.nameExistInDatabaseAndBlockListed
             } else if (data.statusCodeNumber == 4) {
                 dataResult = null;
             } else {
@@ -611,7 +634,7 @@ const localData = {
         this.contacts.emailAddress = ''
         this.contacts.isDataSaved = false
 
-        this.compensation.ratePeriodID= ''
+        this.compensation.ratePeriodID = ''
         this.compensation.isSalaryFixed = ''
         this.compensation.currencyID = ''
         this.compensation.hourPerDay = ''
@@ -671,7 +694,7 @@ const allEmployeeRefData = {
         //for now 1 is for ViewSalesByDate, 2 is ViewSalesByAgent
         let linkedList = null;
 
-        
+
         const data = await fetchData.getData('all-employee-data')
         if (data != null) {
             linkedList = new LinkedList(data.masterPersonList[0])
@@ -680,7 +703,7 @@ const allEmployeeRefData = {
             }
         }
 
-        
+
 
         return linkedList;
     },

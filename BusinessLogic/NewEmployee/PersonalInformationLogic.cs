@@ -9,7 +9,7 @@ using DataAccess;
 
 namespace BusinessLogic
 {
-	public class PersonalInformationLogic:ISavePersonalInfo, IUpdatePersonalInfo
+    public class PersonalInformationLogic:ISavePersonalInfo, IUpdatePersonalInfo
 	{
 		
 		private readonly ParamPersonalInfoModel? _personalInfo;
