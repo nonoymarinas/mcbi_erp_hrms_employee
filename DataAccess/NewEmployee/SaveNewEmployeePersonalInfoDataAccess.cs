@@ -27,7 +27,7 @@ namespace DataAccess
                     cmd.CommandText = "[speedx.hrms.master].[spSaveNewEmployeePersonalInfo]";
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new SqlParameter("@userID", SqlDbType.NVarChar));
+                    cmd.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
                     cmd.Parameters["@userID"].Value = _personalInfo.UserMasterPersonID;
 
                     cmd.Parameters.Add(new SqlParameter("@firstName", SqlDbType.NVarChar));
@@ -46,7 +46,7 @@ namespace DataAccess
                     cmd.Parameters["@genderID"].Value = _personalInfo.Gender;
 
                     cmd.Parameters.Add(new SqlParameter("@civilStatusID", SqlDbType.Int));
-                    cmd.Parameters["@civilStatusID"].Value = _personalInfo.Gender;
+                    cmd.Parameters["@civilStatusID"].Value = _personalInfo.CivilStatus;
 
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {

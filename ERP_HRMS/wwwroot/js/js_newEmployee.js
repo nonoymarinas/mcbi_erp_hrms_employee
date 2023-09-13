@@ -1,6 +1,6 @@
 ﻿async function newEmployee(newEmpData) {
 
-    //gender linkedlist
+    //civil status linkedlist
     let civilStatusLinkedList = new LinkedList(newEmpData.civilStatusList[0])
     for (let i = 1; i < newEmpData.civilStatusList.length; i++) {
         civilStatusLinkedList.push(newEmpData.civilStatusList[i])
@@ -110,11 +110,13 @@
         remarks: '',
     }
 
+
     let compensationDataObj = {
         ratePeriod: '',
         ratePeriodID: '',
         basicSalary: '',
         allowance: '',
+        salaryConditionID: '',
         salaryCondition: '',
     };
 
@@ -268,9 +270,36 @@
         //validate inputs
         if (!validateInputPersonalInfo(e)) return
 
+        //save actual data
+        const formData = new FormData();
+        formData.append('UserMasterPersonID', 1);
+        formData.append('MasterPersonID', persInfoDataObj.masterPersonID);
+
+        const inputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('input');
+        inputs.forEach(input => {
+            formData.append(input.getAttribute('name'), input.value.trim());
+        })
+
+        const opitons = {
+            method: 'POST',
+            body: formData
+        }
+
+        //actual fetch to database
+        const benifitsReturnData = await fetchData.postData('save-new-employee-benifits', opitons);
+        if (benifitsReturnData == null) return;
+
+
+        //update local data if save is successfull
+        benifitsDataObj.sssNo = benifitsReturnData.sssNumber
+        benifitsDataObj.philHealthNo = benifitsReturnData.philHealthNumber
+        benifitsDataObj.pagibigNo = benifitsReturnData.pagIbigNumber
+        benifitsDataObj.tinNo = benifitsReturnData.tinNumber
+
+        
         //disable button
-        e.currentTarget.removeEventListener('click', handleClickSaveBenifits);
-        e.currentTarget.classList.add('new-emp-btn-disabled');
+        e.target.removeEventListener('click', handleClickSaveBenifits);
+        e.target.classList.add('new-emp-btn-disabled');
 
         const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
         jsInputEditBtns.forEach(button => {
@@ -302,8 +331,8 @@
         if (!validateInputPersonalInfo(e)) return
 
         //disable button
-        e.currentTarget.removeEventListener('click', handleClickSaveContacts);
-        e.currentTarget.classList.add('new-emp-btn-disabled');
+        e.target.removeEventListener('click', handleClickSaveContacts);
+        e.target.classList.add('new-emp-btn-disabled');
 
         const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
         jsInputEditBtns.forEach(button => {
@@ -335,8 +364,8 @@
         if (!validateInputPersonalInfo(e)) return
 
         //disable button
-        e.currentTarget.removeEventListener('click', handleClickSaveJobDescriptions);
-        e.currentTarget.classList.add('new-emp-btn-disabled');
+        e.target.removeEventListener('click', handleClickSaveJobDescriptions);
+        e.target.classList.add('new-emp-btn-disabled');
 
         const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
         jsInputEditBtns.forEach(button => {
@@ -425,8 +454,8 @@
 
         //disable button
         (function () {
-            e.currentTarget.removeEventListener('click', handleClickSaveCompensations);
-            e.currentTarget.classList.add('new-emp-btn-disabled');
+            e.target.removeEventListener('click', handleClickSaveCompensations);
+            e.target.classList.add('new-emp-btn-disabled');
 
             const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
             jsInputEditBtns.forEach(button => {
@@ -576,9 +605,15 @@
             body: formData
         }
 
-        const indUpdateReturnData = await fetchData.postData('update-new-employee-ind-info', options)
-        console.log(indUpdateReturnData)
+        const updateData = await fetchData.postData('update-new-employee-ind-info', options)
+        if (updateData == null) return;
 
+        //update local data
+        saveIndInfoToLocalDataObjectAfterUpdate(updateData)
+
+        console.log(persInfoDataObj);
+
+        //change button and disable input
         disableInputAndTurnButtonToEdit(e.target)
     }
 
@@ -840,5 +875,91 @@
         })
 
         return isValid;
+    }
+
+    function saveIndInfoToLocalDataObjectAfterUpdate(returnData) {
+        if (returnData.name == 'FirstName') {
+            persInfoDataObj.firstName = returnData.value
+        } else if (returnData.name == 'MiddleName') {
+            persInfoDataObj.middleName = returnData.value
+        } else if (returnData.name == 'LastName') {
+            persInfoDataObj.lastName = returnData.value
+        } else if (returnData.name == 'DateOfBirth') {
+            persInfoDataObj.dateOfBirth = returnData.value
+        } else if (returnData.name == 'Gender') {
+            persInfoDataObj.genderID = returnData.value
+            const arr = genderLinkedList.getAll();
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].genderID == returnData.value) {
+                    persInfoDataObj.gender = arr[i].genderName;
+                    break;
+                }
+            }
+        } else if (returnData.name == 'CivilStatus') {
+            persInfoDataObj.civilStatusID = returnData.value
+            const arr = civilStatusLinkedList.getAll();
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].civilStatusID == returnData.value) {
+                    persInfoDataObj.civilStatus = arr[i].civilStatusName;
+                    break;
+                }
+            }
+        } else if (returnData.name == 'SssNumber') {
+            benifitsDataObj.sssNo = returnData.value
+        } else if (returnData.name == 'PhilHealthNumber') {
+            benifitsDataObj.philHealthNo = returnData.value
+        } else if (returnData.name == 'PagIbigNumber') {
+            benifitsDataObj.pagibigNo = returnData.value
+        } else if (returnData.name == 'TinNumber') {
+            benifitsDataObj.tinNo = returnData.value
+        } else if (returnData.name == 'MobileNumber') {
+            contactsDataObj.mobileNo = returnData.value
+        } else if (returnData.name == 'LandLineNumber') {
+            contactsDataObj.landlineNo = returnData.value
+        } else if (returnData.name == 'EmailAddress') {
+            contactsDataObj.emailAdd = returnData.value
+        } else if (returnData.name == 'Position') {
+            jobDescriptionDataObj.positionID = returnData.value
+            const arr = positionLinkedList.getAll();
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].positionID == returnData.value) {
+                    jobDescriptionDataObj.position = arr[i].positionName;
+                    break;
+                }
+            }
+        } else if (returnData.name == 'Department') {
+            jobDescriptionDataObj.departmentID = returnData.value
+            const arr = departmentLinkedList.getAll();
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].departmentID == returnData.value) {
+                    jobDescriptionDataObj.department = arr[i].departmentName;
+                    break;
+                }
+            }
+        } else if (returnData.name == 'Remarks') {
+            jobDescriptionDataObj.remarks = returnData.value
+        } else if (returnData.name == 'RatePeriod') {
+            compensationDataObj.ratePeriodID = returnData.value
+            const arr = ratePeriodLinkedList.getAll();
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].ratePeriodID == returnData.value) {
+                    compensationDataObj.ratePeriod = arr[i].ratePeriodName;
+                    break;
+                }
+            }
+        } else if (returnData.name == 'BasicSalary') {
+            compensationDataObj.basicSalary = returnData.value
+        } else if (returnData.name == 'Allowance') {
+            compensationDataObj.allowance = returnData.value
+        } else if (returnData.name == 'SalaryCondition') {
+            compensationDataObj.salaryConditionID = returnData.value
+            const arr = salaryConditionLinkedList.getAll();
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].salaryConditionID == returnData.value) {
+                    compensationDataObj.salaryCondition = arr[i].salaryConditionName;
+                    break;
+                }
+            }
+        }
     }
 }
