@@ -280,13 +280,13 @@
             formData.append(input.getAttribute('name'), input.value.trim());
         })
 
-        const opitons = {
+        const options = {
             method: 'POST',
             body: formData
         }
 
         //actual fetch to database
-        const benifitsReturnData = await fetchData.postData('save-new-employee-benifits', opitons);
+        const benifitsReturnData = await fetchData.postData('save-new-employee-benifits', options);
         if (benifitsReturnData == null) return;
 
 
@@ -296,7 +296,7 @@
         benifitsDataObj.pagibigNo = benifitsReturnData.pagIbigNumber
         benifitsDataObj.tinNo = benifitsReturnData.tinNumber
 
-        
+
         //disable button
         e.target.removeEventListener('click', handleClickSaveBenifits);
         e.target.classList.add('new-emp-btn-disabled');
@@ -330,6 +330,32 @@
         //validate inputs
         if (!validateInputPersonalInfo(e)) return
 
+        const formData = new FormData();
+        formData.append('UserMasterPersonID', 1);
+        formData.append('MasterPersonID', persInfoDataObj.masterPersonID);
+
+        const inputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('input');
+        inputs.forEach(input => {
+            formData.append(input.getAttribute('name'), input.value.trim());
+        })
+
+        const options = {
+            method: 'POST',
+            body: formData
+        }
+
+        //actual fetch to database
+        const contactsReturnData = await fetchData.postData('save-new-employee-contacts', options);
+        if (contactsReturnData == null) return;
+        console.log(contactsReturnData)
+
+        //update local data if save is successfull
+        contactsDataObj.mobileNo = contactsReturnData.mobileNumber
+        contactsDataObj.landlineNo = contactsReturnData.landLineNumber
+        contactsDataObj.emailAdd = contactsReturnData.emailAddress
+
+        console.log(contactsDataObj)
+
         //disable button
         e.target.removeEventListener('click', handleClickSaveContacts);
         e.target.classList.add('new-emp-btn-disabled');
@@ -362,6 +388,35 @@
 
         //validate inputs
         if (!validateInputPersonalInfo(e)) return
+
+        const formData = new FormData();
+        formData.append('UserMasterPersonID', 1);
+        formData.append('MasterPersonID', persInfoDataObj.masterPersonID);
+
+        const inputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('input');
+        inputs.forEach(input => {
+            if (input.classList.contains('jsSelectInput')) {
+                formData.append(input.getAttribute('name'), input.getAttribute('data-id'));
+            } else {
+                formData.append(input.getAttribute('name'), input.value.trim());
+            }
+        })
+
+        const options = {
+            method: 'POST',
+            body: formData
+        }
+
+        //actual fetch to database
+        const jobdescReturnData = await fetchData.postData('save-new-employee-jobdescriptions', options);
+        if (jobdescReturnData == null) return;
+        console.log(jobdescReturnData)
+
+        jobDescriptionDataObj.position = jobdescReturnData.positionName
+        jobDescriptionDataObj.positionID = jobdescReturnData.positionID
+        jobDescriptionDataObj.department = jobdescReturnData.departmentName
+        jobDescriptionDataObj.departmentID = jobdescReturnData.departmentID
+        jobDescriptionDataObj.remarks = jobdescReturnData.remarks
 
         //disable button
         e.target.removeEventListener('click', handleClickSaveJobDescriptions);
@@ -566,7 +621,7 @@
 
         const formData = new FormData();
         formData.append('MasterPersonID', persInfoDataObj.masterPersonID);
-        formData.append('UserMasterPersonID',1)
+        formData.append('UserMasterPersonID', 1)
         if (e.target.classList.contains('jsSelectInputEditBtn')) {
             const input = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsSelectInput');
             if (input.hasAttribute('required')) {
@@ -611,7 +666,6 @@
         //update local data
         saveIndInfoToLocalDataObjectAfterUpdate(updateData)
 
-        console.log(persInfoDataObj);
 
         //change button and disable input
         disableInputAndTurnButtonToEdit(e.target)
@@ -739,6 +793,10 @@
         //restore data
         if (e.target.getAttribute('name') == 'persinfo') {
             restoreDataPersonalInfo()
+        } else if (e.target.getAttribute('name') == 'benifit') {
+            restoreDataBenifits()
+        } else if (e.target.getAttribute('name') == 'contact') {
+            restoreDataContacts()
         }
     }
 
@@ -767,10 +825,28 @@
     }
 
     function restoreDataBenifits() {
+        const jsPureInputSssNumber = document.querySelector('.jsPureInputSssNumber');
+        jsPureInputSssNumber.value = benifitsDataObj.sssNo;
 
+        const jsPureInputPhilhealthNumber = document.querySelector('.jsPureInputPhilhealthNumber');
+        jsPureInputPhilhealthNumber.value = benifitsDataObj.philHealthNo;
+
+        const jsPureInputPagibigNumber = document.querySelector('.jsPureInputPagibigNumber');
+        jsPureInputPagibigNumber.value = benifitsDataObj.pagibigNo;
+
+        const jsPureInputTinNumber = document.querySelector('.jsPureInputTinNumber');
+        jsPureInputTinNumber.value = benifitsDataObj.tinNo;
     }
 
     function restoreDataContacts() {
+        const jsPureInputMobileNumber = document.querySelector('.jsPureInputMobileNumber');
+        jsPureInputMobileNumber.value = contactsDataObj.mobileNo;
+
+        const jsPureInputLandlineNumber = document.querySelector('.jsPureInputLandlineNumber');
+        jsPureInputLandlineNumber.value = contactsDataObj.landlineNo;
+
+        const jsPureInputEmailAddress = document.querySelector('.jsPureInputEmailAddress');
+        jsPureInputEmailAddress.value = contactsDataObj.emailAdd;
 
     }
 

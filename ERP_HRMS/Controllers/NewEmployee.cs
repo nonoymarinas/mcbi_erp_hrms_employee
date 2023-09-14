@@ -98,6 +98,20 @@ namespace ERP_HRMS.Controllers
             return Json(await dataLogic.SaveBenifits());
         }
 
+        [Route("save-new-employee-contacts")]
+        async public Task<IActionResult> SaveNewEmployeeContacts(ParamSaveNewEmployeeContactsModel contacts)
+        {
+            NewEmployeeAllInformationLogic dataLogic = new(contacts);
+            return Json(await dataLogic.SaveContacts());
+        }
+
+        [Route("save-new-employee-jobdescriptions")]
+        async public Task<IActionResult> SaveNewEmployeeJobDescriptions(ParamSaveNewEmployeeJobDescriptionsModel jobDesc)
+        {
+            NewEmployeeAllInformationLogic dataLogic = new(jobDesc);
+            return Json(await dataLogic.SaveJobDescriptions());
+        }
+
         [Route("update-new-employee-ind-info")]
         async public Task<IActionResult> UpdateNewEmployeeSingleInfo(ParamUpdateNewEmployeeSingleInfoModel singleInfo)
         {
