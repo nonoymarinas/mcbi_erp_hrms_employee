@@ -10,14 +10,17 @@ using DataAccess;
 
 namespace BusinessLogic
 {
-    public class NewEmployeeAllInformationLogic : ISaveNewEmployeePersonalInfo, IUpdateNewEmployeeSingleInfo,ISaveNewEmployeeBenifits, ISaveNewEmployeeContacts,ISaveNewEmployeeJobDescriptions
+    public class NewEmployeeAllInformationLogic : ISaveNewEmployeePersonalInfo, IUpdateNewEmployeeSingleInfo,ISaveNewEmployeeBenifits, ISaveNewEmployeeContacts,ISaveNewEmployeeJobDescriptions,ISaveNewEmployeeCompensation, IGetBarangayListByCityID, ISaveNewEmployeeAddress
 	{
 		
 		private readonly ParamSaveNewEmployeePersonalInfoModel? _personalInfo;
 		private readonly ParamUpdateNewEmployeeSingleInfoModel? _singleInfo;
 		private readonly ParamSaveNewEmployeeBenifitsModel? _benifits;
 		private readonly ParamSaveNewEmployeeContactsModel? _contacts;
+		private readonly ParamSaveNewEmployeeAddressModel? _address;
 		private readonly ParamSaveNewEmployeeJobDescriptionsModel? _jobDescriptions;
+		private readonly ParamSaveNewEmployeeCompensationsModel? _compensations;
+		private readonly int _cityID;
 
 		public NewEmployeeAllInformationLogic(ParamSaveNewEmployeePersonalInfoModel? personalInfo)
 		{
@@ -38,10 +41,23 @@ namespace BusinessLogic
 		{
 			_contacts = contacts;
 		}
-
+		public NewEmployeeAllInformationLogic(ParamSaveNewEmployeeAddressModel? address)
+		{
+			_address = address;
+		}
 		public NewEmployeeAllInformationLogic(ParamSaveNewEmployeeJobDescriptionsModel? jobDescriptions)
 		{
 			_jobDescriptions = jobDescriptions;
+		}
+
+		public NewEmployeeAllInformationLogic(ParamSaveNewEmployeeCompensationsModel? compensations)
+		{
+			_compensations = compensations;
+		}
+
+		public NewEmployeeAllInformationLogic(int cityID)
+		{
+			_cityID = cityID;
 		}
 
 		async public Task<ReturnSaveNewEmployeePersonalInfoModel> SavePersonalInfo()
@@ -70,10 +86,28 @@ namespace BusinessLogic
 			return await dataAccessData.SaveContacts();
 		}
 
+		async public Task<ReturnSaveNewEmployeeAddressModel> SaveAddress()
+		{
+			SaveNewEmployeeAddressDataAccess dataAccessData = new(_address);
+			return await dataAccessData.SaveAddress();
+		}
+
 		async public Task<ReturnSaveNewEmployeeJobDescriptionsModel> SaveJobDescriptions()
         {
 			SaveNewEmployeeJobeDescriptionsDataAccess dataAccessData = new(_jobDescriptions);
 			return await dataAccessData.SaveJobDescriptions();
 		}
-    }
+
+		async public Task<ReturnSaveNewEmployeeCompensationsModel> SaveCompensations()
+		{
+			SaveNewEmployeeCompensationsDataAccess dataAccessData = new(_compensations);
+			return await dataAccessData.SaveCompensations();
+		}
+
+		async public Task<ReturnBarangayListByCityIDModel> GetBarangayListByCityID()
+		{
+			GetNewEmployeeBarangayListDataAccess dataAccess = new (_cityID);
+			return await dataAccess.GetBarangayListByCityID();
+		}
+	}
 }

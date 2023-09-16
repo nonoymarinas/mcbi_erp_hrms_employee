@@ -105,6 +105,13 @@ namespace ERP_HRMS.Controllers
             return Json(await dataLogic.SaveContacts());
         }
 
+        [Route("save-new-employee-address")]
+        async public Task<IActionResult> SaveNewEmployeeAddress(ParamSaveNewEmployeeAddressModel address)
+        {
+            NewEmployeeAllInformationLogic dataLogic = new(address);
+            return Json(await dataLogic.SaveAddress());
+        }
+
         [Route("save-new-employee-jobdescriptions")]
         async public Task<IActionResult> SaveNewEmployeeJobDescriptions(ParamSaveNewEmployeeJobDescriptionsModel jobDesc)
         {
@@ -112,11 +119,25 @@ namespace ERP_HRMS.Controllers
             return Json(await dataLogic.SaveJobDescriptions());
         }
 
+        [Route("save-new-employee-compensation")]
+        async public Task<IActionResult> SaveNewEmployeeCompensations(ParamSaveNewEmployeeCompensationsModel compensation)
+        {
+            NewEmployeeAllInformationLogic dataLogic = new(compensation);
+            return Json(await dataLogic.SaveCompensations());
+        }
+
         [Route("update-new-employee-ind-info")]
         async public Task<IActionResult> UpdateNewEmployeeSingleInfo(ParamUpdateNewEmployeeSingleInfoModel singleInfo)
         {
             NewEmployeeAllInformationLogic dataLogic = new(singleInfo);
             return Json(await dataLogic.UpdateSingleInfo());
+        }
+
+        [Route("get-new-employee-barangay-list")]
+        async public Task<IActionResult> GetNewEmployeeBarangayList(int cityID)
+        {
+            NewEmployeeAllInformationLogic dataLogic = new(cityID);
+            return Json(await dataLogic.GetBarangayListByCityID());
         }
     }
 

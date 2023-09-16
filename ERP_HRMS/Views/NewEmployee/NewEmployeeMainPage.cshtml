@@ -58,6 +58,7 @@
                                     </div>
                                 </div>
                                 <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
+                                   <li></li>
                                 </ul>
                             </div>
                             <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
@@ -145,19 +146,20 @@
                 </div>
             </div>
             @*address*@
-            <div class="new-emp-sub-content-cont jsEmpDetSubMainCont">
+            <div class="new-emp-sub-content-cont jsNewEmpSubContentCont">
                 <div class="new-emp-sub-group-title-cont jsEmpDetIndCont">
                     <h4 class="employee-details-item-header-title-text">Address</h4>
-                    <button name="address" class="new-emp-sub-group-title-save-btn jsNewEmpAddressEditBtn">Save</button>
-                    <button name="address" class="new-emp-sub-group-title-cancel-btn jsNewEmpCancelBtn">Cancel</button>
+                    <button name="address" class="new-emp-sub-group-title-save-btn jsNewEmpAddressEditBtn jsNewEmpGroupTitleSaveEditBtn">Save</button>
+                    <button name="address" class="new-emp-sub-group-title-cancel-btn jsNewEmpCancelBtn jsNewEmpCancelBtnAddress">Cancel</button>
                 </div>
                 <div class="new-emp-item-group-main-cont">
+                    @*country*@
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Country:</label>
-                        <div class="new-emp-select-main-cont jsNewEmpSelectMainCont">
-                            <div class="new-emp-select-input-arrow-cont ">
-                                <input class="new-emp-select-input jsCustomSelectInput jsCustomSelectInputCountry" />
-                                <div class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsCutomSelectArrowContCountry">
+                        <div class="new-emp-select-main-cont jsNewEmpSelectMainCont jsNewEmpSelectMainContCountry">
+                            <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
+                                <input name="Country" class="new-emp-select-input jsSelectInput jsSelectInputCountry jsSelectInputAddress" />
+                                <div name="country" class="new-emp-select-arrow-cont  jsNewEmpSelectArrowContAdress">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                     </svg>
@@ -169,14 +171,14 @@
                     </div>
                     <div class="new-emp-address-type-main-cont jsNewEmpAddressTypeMainCont">
 
-                        <div class="emp-det-sub-phil-address-cont jsEmpDetSubPhilAddressCont">
+                        <div class="emp-det-sub-phil-address-cont ">
                             @*region*@
-                            <div class="new-emp-ind-item-cont">
+                            <div name="region" class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                                 <label class="new-emp-label">Region:</label>
-                                <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont">
-                                    <div class="new-emp-select-input-arrow-cont">
-                                        <input class="all-emp-custom-select-input jsCustomSelectInput jsCutomSelectArrowCont jsCustomSelectInputRegion" disabled />
-                                        <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowContRegion">
+                                <div class="all-emp-custom-select-main-cont jsNewEmpSelectMainCont jsNewEmpSelectMainContRegion">
+                                    <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
+                                        <input name="Region" class="all-emp-custom-select-input jsSelectInput jsSelectInputAddress jsSelectInputRegion" disabled />
+                                        <div name="region" class="all-emp-custom-select-arrow-cont arrow-cont-disabled  jsNewEmpSelectArrowContAdress">
                                             <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                                 <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                             </svg>
@@ -187,12 +189,12 @@
                                 </div>
                             </div>
                             @*province*@
-                            <div class="new-emp-ind-item-cont ">
+                            <div name="province" class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                                 <label class="new-emp-label">Province:</label>
-                                <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont">
-                                    <div class="new-emp-select-input-arrow-cont">
-                                        <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputProvince" disabled />
-                                        <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContProvince">
+                                <div class="all-emp-custom-select-main-cont jsNewEmpSelectMainCont jsNewEmpSelectMainContProvince">
+                                    <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
+                                        <input name="Province" class="all-emp-custom-select-input jsSelectInput jsSelectInputAddress jsSelectInputProvince " disabled />
+                                        <div name="province" class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsNewEmpSelectArrowContAdress ">
                                             <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                                 <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                             </svg>
@@ -203,12 +205,12 @@
                                 </div>
                             </div>
                             @*city*@
-                            <div class="new-emp-ind-item-cont ">
+                            <div name="city" class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                                 <label class="new-emp-label">City:</label>
-                                <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont">
-                                    <div class="new-emp-select-input-arrow-cont">
-                                        <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputCity" disabled />
-                                        <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContCity">
+                                <div class="all-emp-custom-select-main-cont jsNewEmpSelectMainCont jsNewEmpSelectMainContCity">
+                                    <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
+                                        <input name="City" class="all-emp-custom-select-input jsSelectInput jsSelectInputAddress jsSelectInputCity"/>
+                                        <div name="city" class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsNewEmpSelectArrowContAdress ">
                                             <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                                 <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                             </svg>
@@ -218,13 +220,13 @@
                                     </ul>
                                 </div>
                             </div>
-                            @*city*@
-                            <div class="new-emp-ind-item-cont ">
+                            @*barangay*@
+                            <div name="barangay" class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                                 <label class="new-emp-label">Barangay:</label>
-                                <div class="all-emp-custom-select-main-cont jsAllEmpCustomSelectMainCont">
-                                    <div class="new-emp-select-input-arrow-cont">
-                                        <input class="all-emp-custom-select-input jsCustomSelectInput jsCustomSelectInputBarangay" disabled />
-                                        <div class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsCutomSelectArrowCont jsCutomSelectArrowContBarangay">
+                                <div class="all-emp-custom-select-main-cont jsNewEmpSelectMainCont jsNewEmpSelectMainContBarangay">
+                                    <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
+                                        <input name="Barangay" class="all-emp-custom-select-input jsSelectInput jsSelectInputAddress jsSelectInputBarangay" disabled />
+                                        <div name="barangay" class="all-emp-custom-select-arrow-cont arrow-cont-disabled jsNewEmpSelectArrowContAdress ">
                                             <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                                 <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
                                             </svg>
@@ -236,11 +238,11 @@
                             </div>
                             <div class="new-emp-ind-item-cont ">
                                 <label class="new-emp-label">Address 1:</label>
-                                <input name="AddressLine1" class="new-emp-pure-input" />
+                                <input name="AddressLine1" class="new-emp-pure-input jsPureInput jsPureInputAddressLine1" />
                             </div>
                             <div class="new-emp-ind-item-cont ">
                                 <label class="new-emp-label">Address 2:</label>
-                                <input name="AddressLine2" class="new-emp-pure-input" placeholder="optional" />
+                                <input name="AddressLine2" class="new-emp-pure-input jsPureInput jsPureInputAddressLine2" placeholder="optional" />
                             </div>
                         </div>
 
@@ -260,7 +262,7 @@
                         <label class="new-emp-label">Position:</label>
                         <div class="new-emp-select-main-cont jsNewEmpSelectMainContPosition ">
                             <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont ">
-                                <input name="Position" class="new-emp-select-input jsSelectInput" required/>
+                                <input name="Position" class="new-emp-select-input jsSelectInput jsSelectInputPosition" required/>
                                 <div name="Position" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContPosition">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
@@ -276,7 +278,7 @@
                         <label class="new-emp-label">Department:</label>
                         <div class="new-emp-select-main-cont jsNewEmpSelectMainContDepartment">
                             <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
-                                <input name="Department" class="new-emp-select-input jsSelectInput" required/>
+                                <input name="Department" class="new-emp-select-input jsSelectInput jsSelectInputDepartment" required/>
                                 <div name="Department" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContDepartment">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
@@ -290,7 +292,7 @@
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Remarks:</label>
-                        <input name="Remarks" class="new-emp-pure-input jsPureInput" value="None" />
+                        <input name="Remarks" class="new-emp-pure-input jsPureInput jsPureInputRemarks" value="None" />
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
 
@@ -308,7 +310,7 @@
                         <label class="new-emp-label">Rate Period:</label>
                         <div class="new-emp-select-main-cont jsNewEmpSelectMainContRatePeriod">
                             <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
-                                <input name="RatePeriod" class="new-emp-select-input jsSelectInput" required/>
+                                <input name="RatePeriod" class="new-emp-select-input jsSelectInput jsSelectInputRatePeriod" required/>
                                 <div name="RatePeriod" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContRatePeriod">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
@@ -323,19 +325,19 @@
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Basic Salary:</label>
-                        <input name="BasicSalary" class="new-emp-pure-input jsPureInput" required/>
+                        <input name="BasicSalary" class="new-emp-pure-input jsPureInput jsPureInputBasicSalary" required/>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Allowance:</label>
-                        <input name="Allowance" class="new-emp-pure-input jsPureInput" />
+                        <input name="Allowance" class="new-emp-pure-input jsPureInput jsPureInputAllowance" />
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Salary Cond:</label>
                         <div class="new-emp-select-main-cont jsNewEmpSelectMainContSalaryCondition">
                             <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
-                                <input name="SalaryCondition" class="new-emp-select-input jsSelectInput" required/>
+                                <input name="SalaryCondition" class="new-emp-select-input jsSelectInput jsSelectInputSalaryCondition" required/>
                                 <div name="SalaryCondition" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContSalaryCondition">
                                     <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
                                         <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />

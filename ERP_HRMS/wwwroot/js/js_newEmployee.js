@@ -29,12 +29,17 @@
     for (let i = 1; i < newEmpData.provinceList.length; i++) {
         provinceLinkedList.push(newEmpData.provinceList[i])
     }
+    let provinceSelectedLinkedList = null;
 
     //city linkedlist
     let cityLinkedList = new LinkedList(newEmpData.cityList[0])
     for (let i = 1; i < newEmpData.cityList.length; i++) {
         cityLinkedList.push(newEmpData.cityList[i])
     }
+    let citySelectedLinkedList = null;
+
+    //barangay linkedlist
+    let barangaySelectedLinkedList = null;
 
     //position linkedlist
     let positionLinkedList = new LinkedList(newEmpData.positionList[0])
@@ -59,6 +64,9 @@
     for (let i = 1; i < newEmpData.salaryConditionList.length; i++) {
         salaryConditionLinkedList.push(newEmpData.salaryConditionList[i])
     }
+
+
+
 
     let persInfoDataObj = {
         masterPersonID: '',
@@ -110,7 +118,6 @@
         remarks: '',
     }
 
-
     let compensationDataObj = {
         ratePeriod: '',
         ratePeriodID: '',
@@ -119,6 +126,43 @@
         salaryConditionID: '',
         salaryCondition: '',
     };
+
+    let defaultValueSelectLi = {
+        value: '-Select-',
+        dataID: 0,
+    };
+
+    (function defaultSelection() {
+        //civil status default
+        const jsSelectInputCivilStatus = document.querySelector('.jsSelectInputCivilStatus');
+        jsSelectInputCivilStatus.value = defaultValueSelectLi.value;
+        jsSelectInputCivilStatus.setAttribute('data-id', defaultValueSelectLi.dataID)
+
+        //gender default
+        const jsSelectInputGender = document.querySelector('.jsSelectInputGender');
+        jsSelectInputGender.value = defaultValueSelectLi.value;
+        jsSelectInputGender.setAttribute('data-id', defaultValueSelectLi.dataID)
+
+        //position default
+        const jsSelectInputPosition = document.querySelector('.jsSelectInputPosition');
+        jsSelectInputPosition.value = defaultValueSelectLi.value;
+        jsSelectInputPosition.setAttribute('data-id', defaultValueSelectLi.dataID)
+
+        //department default
+        const jsSelectInputDepartment = document.querySelector('.jsSelectInputDepartment');
+        jsSelectInputDepartment.value = defaultValueSelectLi.value;
+        jsSelectInputDepartment.setAttribute('data-id', defaultValueSelectLi.dataID)
+
+        //rate period default
+        const jsSelectInputRatePeriod = document.querySelector('.jsSelectInputRatePeriod');
+        jsSelectInputRatePeriod.value = defaultValueSelectLi.value;
+        jsSelectInputRatePeriod.setAttribute('data-id', defaultValueSelectLi.dataID)
+
+        //salary default
+        const jsSelectInputSalaryCondition = document.querySelector('.jsSelectInputSalaryCondition');
+        jsSelectInputSalaryCondition.value = defaultValueSelectLi.value;
+        jsSelectInputSalaryCondition.setAttribute('data-id', defaultValueSelectLi.dataID)
+    })();
 
 
     const jsNewEmpGroupTitleSaveEditBtns = document.querySelectorAll('.jsNewEmpGroupTitleSaveEditBtn');
@@ -133,6 +177,8 @@
             button.addEventListener('click', handleClickSaveJobDescriptions)
         } else if (button.getAttribute('name') == 'compensation') {
             button.addEventListener('click', handleClickSaveCompensations)
+        } else if (button.getAttribute('name') == 'address') {
+            button.addEventListener('click', handleClickSaveAddress)
         }
     })
 
@@ -154,10 +200,159 @@
         }
     })
 
+    const jsNewEmpSelectArrowContAdresses = document.querySelectorAll('.jsNewEmpSelectArrowContAdress');
+    jsNewEmpSelectArrowContAdresses.forEach(arrow => {
+        if (arrow.getAttribute('name') == 'country') {
+            arrow.addEventListener('click', handleClickArrowAddressCountry)
+        } else if (arrow.getAttribute('name') == 'region') {
+            arrow.addEventListener('click', handleClickArrowAddressRegion)
+        } else if (arrow.getAttribute('name') == 'province') {
+            arrow.addEventListener('click', handleClickArrowAddressProvince)
+        } else if (arrow.getAttribute('name') == 'city') {
+            arrow.addEventListener('click', handleClickArrowAddressCity)
+        } else if (arrow.getAttribute('name') == 'barangay') {
+            arrow.addEventListener('click', handleClickArrowAddressBarangay)
+        }
+    })
+
+    const jsSelectInputAddresses = document.querySelectorAll('.jsSelectInputAddress');
+    jsSelectInputAddresses.forEach(arrow => {
+        if (arrow.getAttribute('name') == 'Country') {
+            arrow.addEventListener('input', handleInputAddressCountry)
+        } else if (arrow.getAttribute('name') == 'City') {
+            arrow.addEventListener('input', handleInputAddressCity)
+        }
+    })
+
+    function handleClickArrowAddressCountry(e) {
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
+
+        jsNewEmpSelectUl.innerHTML = '';
+
+        jsNewEmpSelectUl.classList.toggle('display-none');
+
+        let arr = countryLinkedList.getAll();
+        let htmlString;
+
+        arr.forEach(item => {
+            htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.countryID}">${item.countryName}<li/>`
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
+            jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+        })
+    }
+
+    function handleClickArrowAddressRegion(e) {
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
+
+        jsNewEmpSelectUl.innerHTML = '';
+
+        jsNewEmpSelectUl.classList.toggle('display-none');
+
+        let arr = regionLinkedList.getAll();
+        let htmlString;
+
+        arr.forEach(item => {
+            htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.regionID}" data-topid="${item.countryID}" data-lisource="arrow">${item.regionName}<li/>`
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLiRegion)
+            jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+        })
+
+
+    }
+
+    function handleClickArrowAddressProvince(e) {
+        if (provinceSelectedLinkedList == null) return
+
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
+        jsNewEmpSelectUl.innerHTML = '';
+        jsNewEmpSelectUl.classList.toggle('display-none');
+        let arr = provinceSelectedLinkedList.getAll();
+        let htmlString;
+        arr.forEach(item => {
+            htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.provinceID}" data-topid="${item.regionID}" data-lisource="arrow">${item.provinceName}<li/>`
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLiProvince)
+            jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+        })
+
+    }
+
+    function handleClickArrowAddressCity(e) {
+        if (citySelectedLinkedList == null) return
+
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
+        jsNewEmpSelectUl.innerHTML = '';
+        jsNewEmpSelectUl.classList.toggle('display-none');
+        let arr = citySelectedLinkedList.getAll();
+        let htmlString;
+        arr.forEach(item => {
+            htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.cityID}" data-topid="${item.provinceID}" data-lisource="arrow">${item.cityName}<li/>`
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLiCity)
+            jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+        })
+    }
+
+    function handleClickArrowAddressBarangay(e) {
+        if (barangaySelectedLinkedList == null) return
+
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
+        jsNewEmpSelectUl.innerHTML = '';
+        jsNewEmpSelectUl.classList.toggle('display-none');
+        let arr = barangaySelectedLinkedList.getAll();
+        let htmlString;
+        arr.forEach(item => {
+            htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.barangayID}" data-topid="${item.cityID}" data-lisource="arrow">${item.barangayName}<li/>`
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLiBarangay)
+            jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+        })
+    }
+
+    function handleInputAddressCountry(e) {
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
+
+        jsNewEmpSelectUl.innerHTML = '';
+
+        jsNewEmpSelectUl.classList.remove('display-none');
+        console.log(countryLinkedList)
+        const SearchString = e.target.value.trim()
+        const arr = countryLinkedList.linkedListIndexOf('countryName', SearchString);
+        let htmlString;
+
+        arr.forEach(item => {
+            htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.countryID}" data-lisource="input">${item.countryName}<li/>`
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
+            jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+        })
+    }
+
+    function handleInputAddressCity(e) {
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
+
+        jsNewEmpSelectUl.innerHTML = '';
+
+        jsNewEmpSelectUl.classList.remove('display-none');
+
+        const SearchString = e.target.value.trim()
+        const arr = cityLinkedList.linkedListIndexOf('cityName', SearchString);
+
+        let htmlString;
+
+        arr.forEach(item => {
+            htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.cityID}" data-topid="${item.provinceID}" data-lisource="input">${item.cityName}<li/>`
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLiCity)
+            jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+        })
+    }
 
     async function handleClickSavePersonalInfo(e) {
         //validate inputs
-        if (!validateInputPersonalInfo(e)) return;
+        if (!validateInputInformation(e)) return;
 
         //save actual data
         const formData = new FormData();
@@ -268,7 +463,7 @@
         }
 
         //validate inputs
-        if (!validateInputPersonalInfo(e)) return
+        if (!validateInputInformation(e)) return
 
         //save actual data
         const formData = new FormData();
@@ -328,7 +523,7 @@
         }
 
         //validate inputs
-        if (!validateInputPersonalInfo(e)) return
+        if (!validateInputInformation(e)) return
 
         const formData = new FormData();
         formData.append('UserMasterPersonID', 1);
@@ -379,6 +574,170 @@
         jsNewEmpCancelBtnContacts.addEventListener('click', handleClickCancelBtn)
     }
 
+    async function handleClickSaveAddress(e) {
+        //check if personal info is already saved
+        if (persInfoDataObj.isPersonalInfoSaved == false) {
+            alertCustom.isConfirmedOk(alertContainer.warningAlert, 'Save personal information first!')
+            return;
+        }
+
+        //validate inputs
+        if (!validateInputInformation(e)) return
+
+        const formData = new FormData();
+        formData.append('UserMasterPersonID', 1);
+        formData.append('MasterPersonID', persInfoDataObj.masterPersonID);
+        formData.append('AddressTypeID', 1)
+
+        const jsSelectInputCity = document.querySelector('.jsSelectInputCity');
+        formData.append('CityID', jsSelectInputCity.getAttribute('data-id'))
+
+        const jsSelectInputBarangay = document.querySelector('.jsSelectInputBarangay');
+        formData.append('BarangayID', jsSelectInputBarangay.getAttribute('data-id'))
+
+        const jsPureInputAddressLine1 = document.querySelector('.jsPureInputAddressLine1');
+        formData.append('AddressLine1', jsPureInputAddressLine1.value)
+
+        const jsPureInputAddressLine2 = document.querySelector('.jsPureInputAddressLine1');
+        formData.append('AddressLine2', jsPureInputAddressLine2.value)
+
+        const options = {
+            method: 'POST',
+            body: formData
+        }
+
+        //actual fetch to database
+        const addressReturnData = await fetchData.postData('save-new-employee-address', options);
+        if (addressReturnData == null) return;
+        console.log(addressReturnData)
+
+        //update local data if save is successfull
+        addressDataObj.countryID = addressReturnData.countryID
+        addressDataObj.countryName = addressReturnData.countryName
+        addressDataObj.regionID = addressReturnData.regionID
+        addressDataObj.regionName = addressReturnData.regionName
+        addressDataObj.provinceID = addressReturnData.provinceID
+        addressDataObj.provinceName = addressReturnData.provinceName
+        addressDataObj.cityID = addressReturnData.cityID
+        addressDataObj.cityName = addressReturnData.cityName
+        addressDataObj.barangayID = addressReturnData.barangayID
+        addressDataObj.barangayName = addressReturnData.barangayName
+        addressDataObj.addressLine1 = addressReturnData.addressLine1
+        addressDataObj.addressLine2 = addressReturnData.addressLine2
+
+        console.log(addressDataObj)
+
+        //disable button
+        e.target.removeEventListener('click', handleClickSaveAddress);
+        e.target.addEventListener('click', handleClickEditAddress);
+        e.target.textContent = 'Edit'
+
+
+        //disable inputs
+        const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
+        jsPureInputs.forEach(input => {
+            input.setAttribute('disabled', true);
+            input.classList.add('new-emp-input-disabled');
+        });
+
+        //disable select input - country
+        (function () {
+            const jsNewEmpSelectMainContCountry = document.querySelector('.jsNewEmpSelectMainContCountry');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContCountry.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.add('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContCountry.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.removeEventListener('click', handleClickArrowAddressCountry)
+            jsNewEmpSelectArrowContAdress.classList.add('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContCountry.querySelector('.jsSelectInput');
+            jsSelectInput.setAttribute('disabled', true);
+
+            const jsNewEmpSelectUl = jsNewEmpSelectMainContCountry.querySelector('.jsNewEmpSelectUl');
+            jsNewEmpSelectUl.classList.add('display-none')
+        })();
+
+        //disable select input - region
+        (function () {
+            const jsNewEmpSelectMainContRegion = document.querySelector('.jsNewEmpSelectMainContRegion');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContRegion.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.add('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContRegion.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.removeEventListener('click', handleClickArrowAddressRegion)
+            jsNewEmpSelectArrowContAdress.classList.add('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContRegion.querySelector('.jsSelectInput');
+            jsSelectInput.setAttribute('disabled', true);
+
+            const jsNewEmpSelectUl = jsNewEmpSelectMainContRegion.querySelector('.jsNewEmpSelectUl');
+            jsNewEmpSelectUl.classList.add('display-none')
+        })();
+
+        //disable select input - province
+        (function () {
+            const jsNewEmpSelectMainContProvince = document.querySelector('.jsNewEmpSelectMainContProvince');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContProvince.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.add('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContProvince.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.removeEventListener('click', handleClickArrowAddressProvince)
+            jsNewEmpSelectArrowContAdress.classList.add('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContProvince.querySelector('.jsSelectInput');
+            jsSelectInput.setAttribute('disabled', true);
+
+            const jsNewEmpSelectUl = jsNewEmpSelectMainContProvince.querySelector('.jsNewEmpSelectUl');
+            jsNewEmpSelectUl.classList.add('display-none')
+        })();
+
+        //disable select input - city
+        (function () {
+            const jsNewEmpSelectMainContCity = document.querySelector('.jsNewEmpSelectMainContCity');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContCity.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.add('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContCity.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.removeEventListener('click', handleClickArrowAddressCity)
+            jsNewEmpSelectArrowContAdress.classList.add('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContCity.querySelector('.jsSelectInput');
+            jsSelectInput.setAttribute('disabled', true);
+
+            const jsNewEmpSelectUl = jsNewEmpSelectMainContCity.querySelector('.jsNewEmpSelectUl');
+            jsNewEmpSelectUl.classList.add('display-none')
+        })();
+
+        //disable select input - barangay
+        (function () {
+            const jsNewEmpSelectMainContBarangay = document.querySelector('.jsNewEmpSelectMainContBarangay');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContBarangay.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.add('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContBarangay.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.removeEventListener('click', handleClickArrowAddressBarangay)
+            jsNewEmpSelectArrowContAdress.classList.add('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContBarangay.querySelector('.jsSelectInput');
+            jsSelectInput.setAttribute('disabled', true);
+
+            const jsNewEmpSelectUl = jsNewEmpSelectMainContBarangay.querySelector('.jsNewEmpSelectUl');
+            jsNewEmpSelectUl.classList.add('display-none')
+        })();
+ 
+    }
+
+    function handleClickEditAddress() {
+        //enable and attached event listener to cancel button
+        const jsNewEmpCancelBtnAddress = document.querySelector('.jsNewEmpCancelBtnAddress');
+        jsNewEmpCancelBtnAddress.addEventListener('click', handleClickCancelBtn)
+    }
+
     async function handleClickSaveJobDescriptions(e) {
         //check if personal info is already saved
         if (persInfoDataObj.isPersonalInfoSaved == false) {
@@ -387,7 +746,7 @@
         }
 
         //validate inputs
-        if (!validateInputPersonalInfo(e)) return
+        if (!validateInputInformation(e)) return
 
         const formData = new FormData();
         formData.append('UserMasterPersonID', 1);
@@ -486,26 +845,44 @@
         }
 
         //validate inputs
-        if (!validateInputPersonalInfo(e)) return;
+        if (!validateInputInformation(e)) return;
 
         //save actual data
-        (function () {
 
-            const formData = new FormData();
-            const inputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('input');
-            inputs.forEach(input => {
-                if (input.classList.contains('jsSelectInput')) {
-                    formData.append(input.getAttribute('name'), input.getAttribute('data-id'));
-                } else {
-                    formData.append(input.getAttribute('name'), input.value.trim());
-                }
-            })
 
-            for (const pair of formData.entries()) {
-                console.log(`${pair[0]}, ${pair[1]}`);
+        const formData = new FormData();
+        formData.append('UserMasterPersonID', 1);
+        formData.append('MasterPersonID', persInfoDataObj.masterPersonID);
+        const inputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('input');
+        inputs.forEach(input => {
+            if (input.classList.contains('jsSelectInput')) {
+                formData.append(input.getAttribute('name'), input.getAttribute('data-id'));
+            } else {
+                formData.append(input.getAttribute('name'), input.value.trim());
             }
+        })
 
-        })();
+        const options = {
+            method: 'POST',
+            body: formData
+        }
+
+        //actual fetch to database
+        const compensationReturnData = await fetchData.postData('save-new-employee-compensation', options);
+        if (compensationReturnData == null) return;
+
+        console.log(compensationReturnData)
+
+        compensationDataObj.ratePeriod = compensationReturnData.ratePeriodName
+        compensationDataObj.ratePeriodID = compensationReturnData.ratePeriodID
+        compensationDataObj.basicSalary = compensationReturnData.basicSalary
+        compensationDataObj.allowance = compensationReturnData.allowance
+        compensationDataObj.salaryCondition = compensationReturnData.salaryConditionName
+        compensationDataObj.salaryConditionID = compensationReturnData.salaryConditionID
+
+        console.log(compensationDataObj);
+
+
 
         //disable button
         (function () {
@@ -680,14 +1057,19 @@
 
         let arr = civilStatusLinkedList.getAll();
         let htmlString;
+
+        htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id=${defaultValueSelectLi.dataID}>${defaultValueSelectLi.value}<li/>`
+        let jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+        jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
+        jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+
         arr.forEach(item => {
             htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.civilStatusID}">${item.civilStatusName}<li/>`
-            const jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
             jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
             jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
         })
     }
-
 
     function handleClickArrowGenderSelect(e) {
         const jsNewEmpSelectUl = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
@@ -698,9 +1080,15 @@
 
         let arr = genderLinkedList.getAll();
         let htmlString;
+
+        htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id=${defaultValueSelectLi.dataID}>${defaultValueSelectLi.value}<li/>`
+        let jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+        jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
+        jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+
         arr.forEach(item => {
             htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.genderID}">${item.genderName}<li/>`
-            const jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
             jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
             jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
         })
@@ -715,9 +1103,15 @@
 
         let arr = positionLinkedList.getAll();
         let htmlString;
+
+        htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id=${defaultValueSelectLi.dataID}>${defaultValueSelectLi.value}<li/>`
+        let jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+        jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
+        jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+
         arr.forEach(item => {
             htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.positionID}">${item.positionName}<li/>`
-            const jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
             jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
             jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
         })
@@ -732,9 +1126,15 @@
 
         let arr = departmentLinkedList.getAll();
         let htmlString;
+
+        htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id=${defaultValueSelectLi.dataID}>${defaultValueSelectLi.value}<li/>`
+        let jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+        jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
+        jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+
         arr.forEach(item => {
             htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.departmentID}">${item.departmentName}<li/>`
-            const jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
             jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
             jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
         })
@@ -749,6 +1149,12 @@
 
         let arr = ratePeriodLinkedList.getAll();
         let htmlString;
+
+        htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id=${defaultValueSelectLi.dataID}>${defaultValueSelectLi.value}<li/>`
+        const jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+        jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
+        jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+
         arr.forEach(item => {
             htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.ratePeriodID}">${item.ratePeriodName}<li/>`
             const jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
@@ -766,14 +1172,20 @@
 
         let arr = salaryConditionLinkedList.getAll();
         let htmlString;
+
+        htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id=${defaultValueSelectLi.dataID}>${defaultValueSelectLi.value}<li/>`
+        let jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+        jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
+        jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+
         arr.forEach(item => {
             htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.salaryConditionID}">${item.salaryConditionName}<li/>`
-            const jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
             jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
             jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
         })
-    }
 
+    }
 
     function handleClickNewEmpSelectLi(e) {
         const jsNewEmpSelectUl = e.target.closest('.jsNewEmpSelectUl');
@@ -782,6 +1194,168 @@
         const jsSelectInput = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsSelectInput');
         jsSelectInput.value = e.target.textContent;
         jsSelectInput.setAttribute('data-id', e.target.getAttribute('data-id'));
+
+        //for addresses
+        if (e.target.hasAttribute('data-topid')) {
+            jsSelectInput.setAttribute('data-topid', e.target.getAttribute('data-topid'));
+        }
+    }
+
+    function handleClickNewEmpSelectLiRegion(e) {
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpSelectUl');
+        jsNewEmpSelectUl.classList.toggle('display-none');
+
+        const jsSelectInput = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsSelectInput');
+        jsSelectInput.value = e.target.textContent;
+        jsSelectInput.setAttribute('data-id', e.target.getAttribute('data-id'));
+
+        if (e.target.hasAttribute('data-topid')) {
+            jsSelectInput.setAttribute('data-topid', e.target.getAttribute('data-topid'));
+        }
+
+        //update provinceSelectedLinkedList
+        const regionID = e.target.getAttribute('data-id')
+        const arr = provinceLinkedList.getSelectedValueArr('regionID', regionID)
+        provinceSelectedLinkedList = new LinkedList(arr[0]);
+        for (let i = 1; i < arr.length; i++) {
+            provinceSelectedLinkedList.push(arr[i])
+        }
+
+        //clear down elements
+        const jsSelectInputProvince = document.querySelector('.jsSelectInputProvince');
+        jsSelectInputProvince.value = '';
+        jsSelectInputProvince.removeAttribute('data-id');
+
+        const jsSelectInputCity = document.querySelector('.jsSelectInputCity');
+        jsSelectInputCity.value = '';
+        jsSelectInputCity.removeAttribute('data-id');
+
+        const jsSelectInputBarangay = document.querySelector('.jsSelectInputBarangay');
+        jsSelectInputBarangay.value = '';
+        jsSelectInputBarangay.removeAttribute('data-id');
+    }
+
+    function handleClickNewEmpSelectLiProvince(e) {
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpSelectUl');
+        jsNewEmpSelectUl.classList.toggle('display-none');
+
+        const jsSelectInput = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsSelectInput');
+        jsSelectInput.value = e.target.textContent;
+        jsSelectInput.setAttribute('data-id', e.target.getAttribute('data-id'));
+
+        if (e.target.hasAttribute('data-topid')) {
+            jsSelectInput.setAttribute('data-topid', e.target.getAttribute('data-topid'));
+        }
+
+        //update citySelectedLinkedList
+        const provinceID = e.target.getAttribute('data-id')
+        const arr = cityLinkedList.getSelectedValueArr('provinceID', provinceID)
+        citySelectedLinkedList = new LinkedList(arr[0]);
+        for (let i = 1; i < arr.length; i++) {
+            citySelectedLinkedList.push(arr[i])
+        }
+
+        //clear down elements
+        const jsSelectInputCity = document.querySelector('.jsSelectInputCity');
+        jsSelectInputCity.value = '';
+        jsSelectInputCity.removeAttribute('data-id');
+
+        const jsSelectInputBarangay = document.querySelector('.jsSelectInputBarangay');
+        jsSelectInputBarangay.value = '';
+        jsSelectInputBarangay.removeAttribute('data-id');
+    }
+
+    async function handleClickNewEmpSelectLiCity(e) {
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpSelectUl');
+        jsNewEmpSelectUl.classList.toggle('display-none');
+
+        const jsSelectInput = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsSelectInput');
+        jsSelectInput.value = e.target.textContent;
+        jsSelectInput.setAttribute('data-id', e.target.getAttribute('data-id'));
+
+        if (e.target.hasAttribute('data-topid')) {
+            jsSelectInput.setAttribute('data-topid', e.target.getAttribute('data-topid'));
+        }
+
+        //update barangaySelectedLinkedList
+        const cityID = e.target.getAttribute('data-id')
+        const formData = new FormData();
+        formData.append('cityID', cityID)
+
+        const options = {
+            method: 'POST',
+            body: formData
+        }
+
+        const barangayData = await fetchData.postData('get-new-employee-barangay-list', options)
+        console.log(barangayData)
+
+        let arr = Array.from(barangayData.barangayList)
+
+        barangaySelectedLinkedList = new LinkedList(arr[0]);
+        for (let i = 1; i < arr.length; i++) {
+            barangaySelectedLinkedList.push(arr[i])
+        }
+
+        //clear down elements
+        const jsSelectInputBarangay = document.querySelector('.jsSelectInputBarangay');
+        jsSelectInputBarangay.value = '';
+        jsSelectInputBarangay.removeAttribute('data-id');
+
+        //change province value
+        const provinceID = e.target.getAttribute('data-topid');
+        const province = provinceLinkedList.getByPropertyNameAndValue('provinceID', provinceID);
+        const provinceName = province.provinceName;
+        const jsSelectInputProvince = document.querySelector('.jsSelectInputProvince');
+        jsSelectInputProvince.value = provinceName;
+        jsSelectInputProvince.setAttribute('data-id', provinceID);
+        jsSelectInputProvince.setAttribute('data-topid', province.regionID);
+
+        //update citySelectedLinkedList value
+        arr = cityLinkedList.getSelectedValueArr('provinceID', provinceID)
+        citySelectedLinkedList = new LinkedList(arr[0])
+        for (let i = 1; i < arr.length; i++) {
+            citySelectedLinkedList.push(arr[i])
+        }
+
+        //change region value
+        const regionID = province.regionID;
+        const region = regionLinkedList.getByPropertyNameAndValue('regionID', regionID);
+        const regionName = region.regionName;
+        const jsSelectInputRegion = document.querySelector('.jsSelectInputRegion');
+        jsSelectInputRegion.value = regionName;
+        jsSelectInputRegion.setAttribute('data-id', regionID);
+        jsSelectInputRegion.setAttribute('data-topid', region.countryID);
+
+        //update provinceSelectedLinkedList value
+        arr = provinceLinkedList.getSelectedValueArr('regionID', regionID)
+        provinceSelectedLinkedList = new LinkedList(arr[0])
+        for (let i = 1; i < arr.length; i++) {
+            provinceSelectedLinkedList.push(arr[i])
+        }
+
+        //change country value
+        const countryID = region.countryID
+        const country = countryLinkedList.getByPropertyNameAndValue('countryID', countryID);
+        const countryName = country.countryName
+
+        const jsSelectInputCountry = document.querySelector('.jsSelectInputCountry');
+        jsSelectInputCountry.value = countryName;
+        jsSelectInputCountry.setAttribute('data-id', countryID)
+    }
+
+    async function handleClickNewEmpSelectLiBarangay(e) {
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpSelectUl');
+        jsNewEmpSelectUl.classList.toggle('display-none');
+
+        const jsSelectInput = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsSelectInput');
+        jsSelectInput.value = e.target.textContent;
+        jsSelectInput.setAttribute('data-id', e.target.getAttribute('data-id'));
+
+        if (e.target.hasAttribute('data-topid')) {
+            jsSelectInput.setAttribute('data-topid', e.target.getAttribute('data-topid'));
+        }
+
     }
 
     function handleClickCancelBtn(e) {
@@ -797,6 +1371,12 @@
             restoreDataBenifits()
         } else if (e.target.getAttribute('name') == 'contact') {
             restoreDataContacts()
+        } else if (e.target.getAttribute('name') == 'jobdescription') {
+            restoreDataJobDescription()
+        } else if (e.target.getAttribute('name') == 'compensation') {
+            restoreDataCompensation()
+        } else if (e.target.getAttribute('name') == 'address') {
+            restoreDataAddresses()
         }
     }
 
@@ -851,13 +1431,108 @@
     }
 
     function restoreDataJobDescription() {
+        const jsSelectInputPosition = document.querySelector('.jsSelectInputPosition');
+        jsSelectInputPosition.value = jobDescriptionDataObj.position;
+        jsSelectInputPosition.setAttribute('data-id', jobDescriptionDataObj.positionID)
+
+        const jsSelectInputDepartment = document.querySelector('.jsSelectInputDepartment');
+        jsSelectInputDepartment.value = jobDescriptionDataObj.department;
+        jsSelectInputDepartment.setAttribute('data-id', jobDescriptionDataObj.departmentID)
+
+        const jsPureInputRemarks = document.querySelector('.jsPureInputRemarks');
+        jsPureInputRemarks.value = jobDescriptionDataObj.remarks;
 
     }
 
     function restoreDataCompensation() {
+        const jsSelectInputRatePeriod = document.querySelector('.jsSelectInputRatePeriod');
+        jsSelectInputRatePeriod.value = compensationDataObj.ratePeriod;
+        jsSelectInputRatePeriod.setAttribute('data-id', compensationDataObj.ratePeriodID)
 
+        const jsPureInputBasicSalary = document.querySelector('.jsPureInputBasicSalary');
+        jsPureInputBasicSalary.value = compensationDataObj.basicSalary;
+
+        const jsPureInputAllowance = document.querySelector('.jsPureInputAllowance');
+        jsPureInputAllowance.value = compensationDataObj.allowance;
+
+        const jsSelectInputSalaryCondition = document.querySelector('.jsSelectInputSalaryCondition');
+        jsSelectInputSalaryCondition.value = compensationDataObj.salaryCondition;
+        jsSelectInputSalaryCondition.setAttribute('data-id', compensationDataObj.salaryConditionID)
     }
 
+    async function restoreDataAddresses() {
+        const jsSelectInputCountry = document.querySelector('.jsSelectInputCountry');
+        jsSelectInputCountry.value = addressDataObj.countryName;
+        jsSelectInputCountry.setAttribute('data-id', countryID);
+
+        const jsSelectInputRegion = document.querySelector('.jsSelectInputRegion');
+        jsSelectInputRegion.value = addressDataObj.regionName;
+        jsSelectInputRegion.setAttribute('data-id', addressDataObj.regionID);
+
+        if (addressDataObj.regionID == '') {
+            provinceSelectedLinkedList = null;
+        } else {
+            let arr = provinceLinkedList.getSelectedValueArr('regionID', addressDataObj.regionID)
+            provinceSelectedLinkedList = new LinkedList(arr[0])
+            for (let i = 1; i < arr.length; i++) {
+                provinceSelectedLinkedList.push(arr[i])
+            }
+        }
+
+
+        const jsSelectInputProvince = document.querySelector('.jsSelectInputProvince');
+        jsSelectInputProvince.value = addressDataObj.provinceName;
+        jsSelectInputProvince.setAttribute('data-id', addressDataObj.provinceID);
+
+        if (addressDataObj.provinceID == '') {
+            citySelectedLinkedList = null;
+        } else {
+            let arr = cityLinkedList.getSelectedValueArr('regionID', addressDataObj.provinceID)
+            citySelectedLinkedList = new LinkedList(arr[0])
+            for (let i = 1; i < arr.length; i++) {
+                citySelectedLinkedList.push(arr[i])
+            }
+        }
+
+        const jsSelectInputCity = document.querySelector('.jsSelectInputCity');
+        jsSelectInputCity.value = addressDataObj.cityName;
+        jsSelectInputCity.setAttribute('data-id', addressDataObj.cityID);
+
+        if (addressDataObj.cityID == '') {
+            barangaySelectedLinkedList = null;
+        } else {
+            const cityID = addressDataObj.cityID
+            const formData = new FormData();
+            formData.append('cityID', cityID)
+
+            const options = {
+                method: 'POST',
+                body: formData
+            }
+
+            const barangayData = await fetchData.postData('get-new-employee-barangay-list', options)
+            console.log(barangayData)
+
+            let arr = Array.from(barangayData.barangayList)
+
+            barangaySelectedLinkedList = new LinkedList(arr[0]);
+            for (let i = 1; i < arr.length; i++) {
+                barangaySelectedLinkedList.push(arr[i])
+            }
+        }
+
+
+        const jsSelectInputBarangay = document.querySelector('.jsSelectInputBarangay');
+        jsSelectInputBarangay.value = addressDataObj.barangayName;
+        jsSelectInputBarangay.setAttribute('data-id', addressDataObj.barangayID);
+
+        const jsPureInputAddressLine1 = document.querySelector('.jsPureInputAddressLine1');
+        jsPureInputAddressLine1.value = addressDataObj.addressLine1;
+
+        const jsPureInputAddressLine2 = document.querySelector('.jsPureInputAddressLine2');
+        jsPureInputAddressLine2.value = addressDataObj.addressLine2;
+
+    }
 
     function checkIfThereAreAcitveInputAndSaveBtn() {
         let isThereActiveSaveButton = false;
@@ -924,7 +1599,7 @@
         }
     }
 
-    function validateInputPersonalInfo(e) {
+    function validateInputInformation(e) {
         let isValid = true;
         //check if required
         const inputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('input');

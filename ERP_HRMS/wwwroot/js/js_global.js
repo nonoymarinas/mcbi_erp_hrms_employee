@@ -434,6 +434,20 @@ class LinkedList {
         return result
     }
 
+    getSelectedValueArr(propertyName, value) {
+        let results =[]
+        let temp = this.head
+        for (let i = 0; i < this.length; i++) {
+            if (temp.value[propertyName] == value) {
+                results.push(temp.value)
+                temp = temp.next
+            } else {
+                temp = temp.next
+            }
+        }
+        return results
+    }
+
     getAll() {
         let results = []
         let temp = this.head
