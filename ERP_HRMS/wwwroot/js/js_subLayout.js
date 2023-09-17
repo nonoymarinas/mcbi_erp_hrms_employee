@@ -127,7 +127,7 @@ async function clickMainMenuEmployee(e) {
 async function clickMainMenuNewEmployee() {
     //fetch data needed for new employee
     let newEmpData = await fetchData.getData('new-employee-ref-data')
-    console.log(newEmpData)
+    if (newEmpData == null) return;
     //fetch view for display
     const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
     const view = await fetchData.viewData('new-employee-main-page');

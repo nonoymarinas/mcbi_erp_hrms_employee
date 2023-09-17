@@ -128,21 +128,12 @@
     };
 
     let defaultValueSelectLi = {
-        value: '-Select-',
+        value: '-none-',
         dataID: 0,
     };
 
     (function defaultSelection() {
-        //civil status default
-        const jsSelectInputCivilStatus = document.querySelector('.jsSelectInputCivilStatus');
-        jsSelectInputCivilStatus.value = defaultValueSelectLi.value;
-        jsSelectInputCivilStatus.setAttribute('data-id', defaultValueSelectLi.dataID)
-
-        //gender default
-        const jsSelectInputGender = document.querySelector('.jsSelectInputGender');
-        jsSelectInputGender.value = defaultValueSelectLi.value;
-        jsSelectInputGender.setAttribute('data-id', defaultValueSelectLi.dataID)
-
+        
         //position default
         const jsSelectInputPosition = document.querySelector('.jsSelectInputPosition');
         jsSelectInputPosition.value = defaultValueSelectLi.value;
@@ -164,6 +155,19 @@
         jsSelectInputSalaryCondition.setAttribute('data-id', defaultValueSelectLi.dataID)
     })();
 
+    (function defaultDisableCancelButtons () {
+
+        const jsNewEmpCancelBtns = document.querySelectorAll('.jsNewEmpCancelBtn');
+        jsNewEmpCancelBtns.forEach(button => {
+            button.removeEventListener('click', handleClickCancelBtn);
+            button.classList.add('disbale-cancel-btn');
+        });
+
+        const jsNewEmpCancelBtnAddress = document.querySelector('.jsNewEmpCancelBtnAddress');
+        jsNewEmpCancelBtnAddress.removeEventListener('click', handleClickCancelBtnAddress);
+        jsNewEmpCancelBtnAddress.classList.add('disbale-cancel-btn');
+
+    })();
 
     const jsNewEmpGroupTitleSaveEditBtns = document.querySelectorAll('.jsNewEmpGroupTitleSaveEditBtn');
     jsNewEmpGroupTitleSaveEditBtns.forEach(button => {
@@ -465,6 +469,9 @@
         //validate inputs
         if (!validateInputInformation(e)) return
 
+        //validate regex
+        if (!validateBenifitsRegex()) return
+
         //save actual data
         const formData = new FormData();
         formData.append('UserMasterPersonID', 1);
@@ -609,7 +616,7 @@
         //actual fetch to database
         const addressReturnData = await fetchData.postData('save-new-employee-address', options);
         if (addressReturnData == null) return;
-        console.log(addressReturnData)
+        
 
         //update local data if save is successfull
         addressDataObj.countryID = addressReturnData.countryID
@@ -625,16 +632,125 @@
         addressDataObj.addressLine1 = addressReturnData.addressLine1
         addressDataObj.addressLine2 = addressReturnData.addressLine2
 
-        console.log(addressDataObj)
+        //disable address input and cancel button
+        disableAddressInputAndCancelBtn();
 
+    }
+
+    function handleClickEditAddress(e) {
+        //enable button
+        e.target.addEventListener('click', handleClickSaveAddress);
+        e.target.removeEventListener('click', handleClickEditAddress);
+        e.target.textContent = 'Save'
+
+
+        //enable inputs
+        const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
+        jsPureInputs.forEach(input => {
+            input.removeAttribute('disabled');
+            input.classList.remove('new-emp-input-disabled');
+        });
+
+        //enable select input - country
+        (function () {
+            const jsNewEmpSelectMainContCountry = document.querySelector('.jsNewEmpSelectMainContCountry');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContCountry.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContCountry.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressCountry)
+            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContCountry.querySelector('.jsSelectInput');
+            jsSelectInput.removeAttribute('disabled');
+
+        })();
+
+        //enable select input - region
+        (function () {
+            const jsNewEmpSelectMainContRegion = document.querySelector('.jsNewEmpSelectMainContRegion');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContRegion.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContRegion.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressRegion)
+            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContRegion.querySelector('.jsSelectInput');
+            jsSelectInput.removeAttribute('disabled');
+
+           
+        })();
+
+        //enable select input - province
+        (function () {
+            const jsNewEmpSelectMainContProvince = document.querySelector('.jsNewEmpSelectMainContProvince');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContProvince.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContProvince.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressProvince)
+            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContProvince.querySelector('.jsSelectInput');
+            jsSelectInput.removeAttribute('disabled');
+
+            
+        })();
+
+        //enable select input - city
+        (function () {
+            const jsNewEmpSelectMainContCity = document.querySelector('.jsNewEmpSelectMainContCity');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContCity.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContCity.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressCity)
+            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContCity.querySelector('.jsSelectInput');
+            jsSelectInput.removeAttribute('disabled');
+
+        })();
+
+        //enable select input - barangay
+        (function () {
+            const jsNewEmpSelectMainContBarangay = document.querySelector('.jsNewEmpSelectMainContBarangay');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContBarangay.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContBarangay.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressBarangay)
+            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContBarangay.querySelector('.jsSelectInput');
+            jsSelectInput.removeAttribute('disabled');
+
+        })();
+
+        //enable and attached event listener to cancel button
+        const jsNewEmpCancelBtnAddress = document.querySelector('.jsNewEmpCancelBtnAddress');
+        jsNewEmpCancelBtnAddress.addEventListener('click', handleClickCancelBtnAddress);
+        jsNewEmpCancelBtnAddress.classList.remove('disbale-cancel-btn');
+
+    }
+
+    function disableAddressInputAndCancelBtn() {
         //disable button
-        e.target.removeEventListener('click', handleClickSaveAddress);
-        e.target.addEventListener('click', handleClickEditAddress);
-        e.target.textContent = 'Edit'
+        const saveButton = document.querySelector('.jsNewEmpGroupTitleSaveEditBtnAddress')
+        saveButton.removeEventListener('click', handleClickSaveAddress);
+        saveButton.addEventListener('click', handleClickEditAddress);
+        saveButton.textContent = 'Edit'
 
 
         //disable inputs
-        const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
+        const jsNewEmpSubContentContAddress = document.querySelector('.jsNewEmpSubContentContAddress');
+        const jsPureInputs = jsNewEmpSubContentContAddress.querySelectorAll('.jsPureInput');
         jsPureInputs.forEach(input => {
             input.setAttribute('disabled', true);
             input.classList.add('new-emp-input-disabled');
@@ -729,13 +845,11 @@
             const jsNewEmpSelectUl = jsNewEmpSelectMainContBarangay.querySelector('.jsNewEmpSelectUl');
             jsNewEmpSelectUl.classList.add('display-none')
         })();
- 
-    }
 
-    function handleClickEditAddress() {
-        //enable and attached event listener to cancel button
+        //disable and remove event listener to cancel button
         const jsNewEmpCancelBtnAddress = document.querySelector('.jsNewEmpCancelBtnAddress');
-        jsNewEmpCancelBtnAddress.addEventListener('click', handleClickCancelBtn)
+        jsNewEmpCancelBtnAddress.removeEventListener('click', handleClickCancelBtnAddress);
+        jsNewEmpCancelBtnAddress.classList.add('disbale-cancel-btn');
     }
 
     async function handleClickSaveJobDescriptions(e) {
@@ -992,6 +1106,10 @@
             input.classList.remove('new-emp-input-disabled');
         }
 
+        //activate cancel button 
+        const jsNewEmpCancelBtn = e.target.closest('.jsNewEmpSubContentCont').querySelector('.jsNewEmpCancelBtn');
+        jsNewEmpCancelBtn.addEventListener('click', handleClickCancelBtn);
+        jsNewEmpCancelBtn.classList.remove('disbale-cancel-btn');
     }
 
     async function handleClickSaveInputBtn(e) {
@@ -1043,9 +1161,13 @@
         //update local data
         saveIndInfoToLocalDataObjectAfterUpdate(updateData)
 
-
         //change button and disable input
         disableInputAndTurnButtonToEdit(e.target)
+
+        //disable cancel button 
+        const jsNewEmpCancelBtn = e.target.closest('.jsNewEmpSubContentCont').querySelector('.jsNewEmpCancelBtn');
+        jsNewEmpCancelBtn.removeEventListener('click', handleClickCancelBtn);
+        jsNewEmpCancelBtn.classList.add('disbale-cancel-btn');
     }
 
     function handleClickArrowCivilStatusSelect(e) {
@@ -1057,11 +1179,6 @@
 
         let arr = civilStatusLinkedList.getAll();
         let htmlString;
-
-        htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id=${defaultValueSelectLi.dataID}>${defaultValueSelectLi.value}<li/>`
-        let jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
-        jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
-        jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
 
         arr.forEach(item => {
             htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.civilStatusID}">${item.civilStatusName}<li/>`
@@ -1080,11 +1197,6 @@
 
         let arr = genderLinkedList.getAll();
         let htmlString;
-
-        htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id=${defaultValueSelectLi.dataID}>${defaultValueSelectLi.value}<li/>`
-        let jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
-        jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
-        jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
 
         arr.forEach(item => {
             htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.genderID}">${item.genderName}<li/>`
@@ -1288,8 +1400,7 @@
         }
 
         const barangayData = await fetchData.postData('get-new-employee-barangay-list', options)
-        console.log(barangayData)
-
+        
         let arr = Array.from(barangayData.barangayList)
 
         barangaySelectedLinkedList = new LinkedList(arr[0]);
@@ -1375,9 +1486,20 @@
             restoreDataJobDescription()
         } else if (e.target.getAttribute('name') == 'compensation') {
             restoreDataCompensation()
-        } else if (e.target.getAttribute('name') == 'address') {
-            restoreDataAddresses()
         }
+
+        //disable cancel button
+        e.target.removeEventListener('click', handleClickCancelBtn);
+        e.target.classList.add('disbale-cancel-btn');
+    }
+
+    function handleClickCancelBtnAddress(e) {
+
+        //restore previous value
+        restoreDataAddresses()
+
+        //disable address input and cancel button
+        disableAddressInputAndCancelBtn();
     }
 
     function restoreDataPersonalInfo() {
@@ -1463,7 +1585,7 @@
     async function restoreDataAddresses() {
         const jsSelectInputCountry = document.querySelector('.jsSelectInputCountry');
         jsSelectInputCountry.value = addressDataObj.countryName;
-        jsSelectInputCountry.setAttribute('data-id', countryID);
+        jsSelectInputCountry.setAttribute('data-id', addressDataObj.countryID);
 
         const jsSelectInputRegion = document.querySelector('.jsSelectInputRegion');
         jsSelectInputRegion.value = addressDataObj.regionName;
@@ -1605,7 +1727,7 @@
         const inputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('input');
         inputs.forEach(input => {
             if (input.hasAttribute('required')) {
-                if (isNullOrWhiteSpace(input.value.trim()) == true) {
+                if (isNullOrWhiteSpace(input.value.trim()) == true || input.getAttribute('data-id') == 0 || input.getAttribute('data-id') == 'undefined') {
                     if (input.classList.contains('jsSelectInput')) {
                         input.closest('.jsNewEmpSelectInputArrowCont').classList.add('invalid')
                         isValid = false;
@@ -1626,6 +1748,51 @@
         })
 
         return isValid;
+    }
+
+    function validateBenifitsRegex() {
+        let isValid = true;
+
+        //sss number
+        const jsPureInputSssNumber = document.querySelector('.jsPureInputSssNumber');
+        if (!jsPureInputSssNumber.hasAttribute('disabled')) {
+            if (!isNullOrWhiteSpace(jsPureInputSssNumber.value)) {
+                if (!regexPatterns.sssNumber.test(jsPureInputSssNumber.value)) {
+                    jsPureInputSssNumber.classList.add('invalid');
+                    isValid = false
+                } else {
+                    jsPureInputSssNumber.classList.remove('invalid');
+                }
+            }
+        }
+
+        //pag-ibig
+        const jsPureInputPagibigNumber = document.querySelector('.jsPureInputPagibigNumber');
+        if (!jsPureInputPagibigNumber.hasAttribute('disabled')) {
+            if (!isNullOrWhiteSpace(jsPureInputPagibigNumber.value)) {
+                if (!regexPatterns.pagibigNumber.test(jsPureInputPagibigNumber.value)) {
+                    jsPureInputPagibigNumber.classList.add('invalid');
+                    isValid = false
+                } else {
+                    jsPureInputPagibigNumber.classList.remove('invalid');
+                }
+            }
+        }
+
+        //philhealth
+        const jsPureInputPhilhealthNumber = document.querySelector('.jsPureInputPhilhealthNumber');
+        if (!jsPureInputPhilhealthNumber.hasAttribute('disabled')) {
+            if (!isNullOrWhiteSpace(jsPureInputPhilhealthNumber.value)) {
+                if (!regexPatterns.philihealthNumber.test(jsPureInputPhilhealthNumber.value)) {
+
+                    jsPureInputPhilhealthNumber.classList.add('invalid');
+                    isValid = false
+                } else {
+                    jsPureInputPhilhealthNumber.classList.remove('invalid');
+                }
+            }
+        }
+        return isValid
     }
 
     function saveIndInfoToLocalDataObjectAfterUpdate(returnData) {

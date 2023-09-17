@@ -98,17 +98,17 @@
                 <div class="new-emp-item-group-main-cont">
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">SSS No.:</label>
-                        <input name="SssNumber" class="new-emp-pure-input  jsPureInput jsPureInputSssNumber" required/>
+                        <input name="SssNumber" class="new-emp-pure-input  jsPureInput jsPureInputSssNumber" placeholder="12-1234567-1" required/>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
                     <div class="new-emp-ind-item-cont jsEmpDetIndCont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Philhealth No.:</label>
-                        <input name="PhilHealthNumber" class="new-emp-pure-input jsPureInput jsPureInputPhilhealthNumber" />
+                        <input name="PhilHealthNumber" class="new-emp-pure-input jsPureInput jsPureInputPhilhealthNumber" placeholder="12-123456789-1"/>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Pagibig No.:</label>
-                        <input name="PagIbigNumber" class="new-emp-pure-input jsPureInput jsPureInputPagibigNumber" />
+                        <input name="PagIbigNumber" class="new-emp-pure-input jsPureInput jsPureInputPagibigNumber" placeholder="1234-1234-1234" />
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
@@ -123,7 +123,7 @@
             <div class="new-emp-sub-content-cont jsNewEmpSubContentCont">
                 <div class="new-emp-sub-group-title-cont">
                     <h4 class="employee-details-item-header-title-text">Contacts</h4>
-                    <button name="contact" class="new-emp-sub-group-title-save-btn jsNewEmpGroupTitleSaveEditBtn">Save</button>
+                    <button name="contact" class="new-emp-sub-group-title-save-btn jsNewEmpGroupTitleSaveEditBtn ">Save</button>
                     <button name="contact" class="new-emp-sub-group-title-cancel-btn jsNewEmpCancelBtn jsNewEmpCancelBtnContacts">Cancel</button>
                 </div>
                 <div class="new-emp-item-group-main-cont">
@@ -146,11 +146,11 @@
                 </div>
             </div>
             @*address*@
-            <div class="new-emp-sub-content-cont jsNewEmpSubContentCont">
+            <div class="new-emp-sub-content-cont jsNewEmpSubContentCont jsNewEmpSubContentContAddress">
                 <div class="new-emp-sub-group-title-cont jsEmpDetIndCont">
                     <h4 class="employee-details-item-header-title-text">Address</h4>
-                    <button name="address" class="new-emp-sub-group-title-save-btn jsNewEmpAddressEditBtn jsNewEmpGroupTitleSaveEditBtn">Save</button>
-                    <button name="address" class="new-emp-sub-group-title-cancel-btn jsNewEmpCancelBtn jsNewEmpCancelBtnAddress">Cancel</button>
+                    <button name="address" class="new-emp-sub-group-title-save-btn jsNewEmpAddressEditBtn jsNewEmpGroupTitleSaveEditBtn jsNewEmpGroupTitleSaveEditBtnAddress">Save</button>
+                    <button name="address" class="new-emp-sub-group-title-cancel-btn jsNewEmpCancelBtnAddress">Cancel</button>
                 </div>
                 <div class="new-emp-item-group-main-cont">
                     @*country*@
@@ -165,6 +165,7 @@
                                     </svg>
                                 </div>
                             </div>
+
                             <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
                             </ul>
                         </div>
@@ -292,7 +293,7 @@
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Remarks:</label>
-                        <input name="Remarks" class="new-emp-pure-input jsPureInput jsPureInputRemarks" value="None" />
+                        <input name="Remarks" class="new-emp-pure-input jsPureInput jsPureInputRemarks" />
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
 
