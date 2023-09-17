@@ -171,10 +171,13 @@ input[type="date"] {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 210px;
-    width: 210px;
+    height: 250px;
+    width: 250px;
     border-radius: 10px;
     border: 1px solid #999;
+    overflow:hidden;
+    border:5px solid #fff;
+    margin-left:10px;
 }
 
 .new-emp-sub-cont {
@@ -215,7 +218,7 @@ input[type="date"] {
 
 .new-emp-content-title-cont {
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .personalinfo-item-sub-cont {
@@ -254,6 +257,16 @@ input[type="date"] {
         background: #d2d2d2;
     }
 
+.new-emp-image-photo{
+    max-height:100%;
+    max-width:100%;
+}
+.imag-main{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:100;
+}
 @media only screen and (min-width: 450px) {
     .new-emp-label-persinfo {
         display: none;

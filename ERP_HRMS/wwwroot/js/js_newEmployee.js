@@ -133,7 +133,7 @@
     };
 
     (function defaultSelection() {
-        
+
         //position default
         const jsSelectInputPosition = document.querySelector('.jsSelectInputPosition');
         jsSelectInputPosition.value = defaultValueSelectLi.value;
@@ -155,7 +155,7 @@
         jsSelectInputSalaryCondition.setAttribute('data-id', defaultValueSelectLi.dataID)
     })();
 
-    (function defaultDisableCancelButtons () {
+    (function defaultDisableCancelButtons() {
 
         const jsNewEmpCancelBtns = document.querySelectorAll('.jsNewEmpCancelBtn');
         jsNewEmpCancelBtns.forEach(button => {
@@ -168,6 +168,12 @@
         jsNewEmpCancelBtnAddress.classList.add('disbale-cancel-btn');
 
     })();
+
+    const jsNewEmpPhotoCont = document.querySelector('.jsNewEmpPhotoCont');
+    jsNewEmpPhotoCont.addEventListener('click', handleClickImageContainer)
+
+    const jsNewEmpImageInputFile = document.querySelector('.jsNewEmpImageInputFile');
+    jsNewEmpImageInputFile.addEventListener('change', handleChangeImageFileInput)
 
     const jsNewEmpGroupTitleSaveEditBtns = document.querySelectorAll('.jsNewEmpGroupTitleSaveEditBtn');
     jsNewEmpGroupTitleSaveEditBtns.forEach(button => {
@@ -227,6 +233,69 @@
             arrow.addEventListener('input', handleInputAddressCity)
         }
     })
+
+    function handleClickImageContainer() {
+        document.querySelector('.jsNewEmpImageInputFile').click();
+    }
+
+    async function handleChangeImageFileInput(e) {
+        const file = e.target.files[0]
+        const fileReader = new FileReader();
+        const maxSize = 600;
+        const canvas = document.createElement('canvas');
+        const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png']
+
+        if (file && acceptedImageTypes.includes(file['type'])) {
+
+            fileReader.onload = (event) => {
+                const img = new Image();
+                img.classList.add('jsNewEmpImagePhoto')
+                img.onload = async function () {
+                    let width = img.naturalWidth;
+                    let height = img.naturalHeight;
+
+                    console.log(width, height)
+
+                    if (width > maxSize || height > maxSize) {
+                        if (width > height) {
+                            height *= maxSize / width;
+                            width = maxSize;
+                        } else {
+                            width *= maxSize / height;
+                            height = maxSize;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const resizedDataURL = canvas.toDataURL('image/jpeg', 0.7); // You can adjust the quality (0.7) as needed
+                        img.src = resizedDataURL;
+
+                        const blob =  await (await fetch(resizedDataURL)).blob();
+
+                        const formData = new FormData();
+                    }
+
+                    if (parseFloat(img.naturalHeight) >= parseFloat(img.naturalWidth)) {
+                        img.classList.remove('max-height-100');
+                        img.classList.add('max-width-100');
+                    } else {
+                        img.classList.add('max-height-100');
+                        img.classList.remove('max-width-100');
+                    }
+
+                    document.querySelector('.jsNewEmpPhotoCont').innerHTML = '';
+                    document.querySelector('.jsNewEmpPhotoCont').appendChild(img);
+                }
+                img.src = event.target.result;
+
+            }
+        }
+        fileReader.readAsDataURL(file)
+    }
 
     function handleClickArrowAddressCountry(e) {
         const jsNewEmpSelectUl = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
@@ -616,7 +685,7 @@
         //actual fetch to database
         const addressReturnData = await fetchData.postData('save-new-employee-address', options);
         if (addressReturnData == null) return;
-        
+
 
         //update local data if save is successfull
         addressDataObj.countryID = addressReturnData.countryID
@@ -681,7 +750,7 @@
             const jsSelectInput = jsNewEmpSelectMainContRegion.querySelector('.jsSelectInput');
             jsSelectInput.removeAttribute('disabled');
 
-           
+
         })();
 
         //enable select input - province
@@ -698,7 +767,7 @@
             const jsSelectInput = jsNewEmpSelectMainContProvince.querySelector('.jsSelectInput');
             jsSelectInput.removeAttribute('disabled');
 
-            
+
         })();
 
         //enable select input - city
@@ -1400,7 +1469,7 @@
         }
 
         const barangayData = await fetchData.postData('get-new-employee-barangay-list', options)
-        
+
         let arr = Array.from(barangayData.barangayList)
 
         barangaySelectedLinkedList = new LinkedList(arr[0]);
