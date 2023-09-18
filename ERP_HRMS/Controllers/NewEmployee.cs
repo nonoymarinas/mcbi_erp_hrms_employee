@@ -8,6 +8,11 @@ namespace ERP_HRMS.Controllers
 {
     public class NewEmployee : Controller
     {
+        private readonly AzureStorageAccountsOptions _azureOptions;
+        public NewEmployee(IOptions<AzureStorageAccountsOptions> azureOptions)
+        {
+            _azureOptions = azureOptions.Value;
+        }
         [Route("new-employee-main-page")]
         public IActionResult NewEmployeeMainPage()
         {
@@ -138,6 +143,13 @@ namespace ERP_HRMS.Controllers
         {
             NewEmployeeAllInformationLogic dataLogic = new(cityID);
             return Json(await dataLogic.GetBarangayListByCityID());
+        }
+
+        [Route("upload-new-emp-photo-image")]
+        public async Task<IActionResult> UpdateNewEmployeePhotoImage(ParamUploadPhotoImageModel image)
+        {
+            NewEmployeePhotoImageLogic dataLogic = new(image, _azureOptions);
+            return Json(await dataLogic.UploadPhotoImages());
         }
     }
 

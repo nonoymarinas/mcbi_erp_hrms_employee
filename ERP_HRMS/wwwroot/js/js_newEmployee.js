@@ -235,18 +235,24 @@
     })
 
     function handleClickImageContainer() {
-        document.querySelector('.jsNewEmpImageInputFile').click();
+        //document.querySelector('.jsNewEmpImageInputFile').click();
+        if (persInfoDataObj.isPersonalInfoSaved) {
+            document.querySelector('.jsNewEmpImageInputFile').click();
+        } else {
+            alertCustom.isConfirmedOk(alertContainer.infolAlert,'Save personal information first,</br>before you can upload image!')
+        }
+        
     }
 
     async function handleChangeImageFileInput(e) {
         const file = e.target.files[0]
         const fileReader = new FileReader();
-        const maxSize = 600;
+        const maxSize = 800;
         const canvas = document.createElement('canvas');
         const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png']
 
         if (file && acceptedImageTypes.includes(file['type'])) {
-
+            const fileName = file.name;
             fileReader.onload = (event) => {
                 const img = new Image();
                 img.classList.add('jsNewEmpImagePhoto')
@@ -274,9 +280,20 @@
                         const resizedDataURL = canvas.toDataURL('image/jpeg', 0.7); // You can adjust the quality (0.7) as needed
                         img.src = resizedDataURL;
 
-                        const blob =  await (await fetch(resizedDataURL)).blob();
-
+                        const blob = await (await fetch(resizedDataURL)).blob();
+                        console.log(blob);
                         const formData = new FormData();
+                        formData.append('UserMasterPersonID', 1)
+                        formData.append('MasterPersonID',1)
+                        formData.append('ImageFile', blob, fileName)
+
+                        const options = {
+                            method: 'POST',
+                            body: formData
+                        }
+
+                        const data = await fetchData.postData('upload-new-emp-photo-image', options)
+                        console.log(data)
                     }
 
                     if (parseFloat(img.naturalHeight) >= parseFloat(img.naturalWidth)) {
