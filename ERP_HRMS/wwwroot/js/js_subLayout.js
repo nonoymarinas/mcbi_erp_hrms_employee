@@ -134,6 +134,10 @@ async function clickMainMenuNewEmployee() {
     const jsNewEmpMainCont = view.querySelector('.jsNewEmpMainCont');
     jsSublayout01ContentSubCont.innerHTML = '';
     jsSublayout01ContentSubCont.appendChild(jsNewEmpMainCont);
+
+    //needed to determine if function is new employee or all employee
+    persInfoDataObj.isAllEmployeeFunction = false;
+
     await newEmployee(newEmpData);
 }
 

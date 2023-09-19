@@ -66,67 +66,6 @@
     }
 
 
-
-
-    let persInfoDataObj = {
-        masterPersonID: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        dateOfBirth: '',
-        civilStatusID: '',
-        civilStatus: '',
-        genderID: '',
-        gender: '',
-        employeeNumber: '',
-        isPersonalInfoSaved: false,
-    }
-
-    let benifitsDataObj = {
-        sssNo: '',
-        philHealthNo: '',
-        pagibigNo: '',
-        tinNo: '',
-    }
-
-    let contactsDataObj = {
-        mobileNo: '',
-        landlineNo: '',
-        emailAdd: '',
-    }
-
-    let addressDataObj = {
-        countryID: '',
-        countryName: '',
-        regionID: '',
-        regionName: '',
-        provinceID: '',
-        provinceName: '',
-        cityID: '',
-        cityName: '',
-        barangayID: '',
-        barangayName: '',
-        addressLine1: '',
-        addressLine2: '',
-    }
-
-    let jobDescriptionDataObj = {
-        position: '',
-        positionID: '',
-        department: '',
-        departmentID: '',
-        remarks: '',
-    }
-
-    let compensationDataObj = {
-        ratePeriod: '',
-        ratePeriodID: '',
-        basicSalary: '',
-        allowance: '',
-        salaryConditionID: '',
-        salaryCondition: '',
-    };
-
     let defaultValueSelectLi = {
         value: '-none-',
         dataID: 0,
@@ -234,14 +173,15 @@
         }
     })
 
+
     function handleClickImageContainer() {
         //document.querySelector('.jsNewEmpImageInputFile').click();
         if (persInfoDataObj.isPersonalInfoSaved) {
             document.querySelector('.jsNewEmpImageInputFile').click();
         } else {
-            alertCustom.isConfirmedOk(alertContainer.infolAlert,'Save personal information first,</br>before you can upload image!')
+            alertCustom.isConfirmedOk(alertContainer.infolAlert, 'Save personal information first,</br>before you can upload image!')
         }
-        
+
     }
 
     async function handleChangeImageFileInput(e) {
@@ -278,13 +218,15 @@
                         ctx.drawImage(img, 0, 0, width, height);
 
                         const resizedDataURL = canvas.toDataURL('image/jpeg', 0.7); // You can adjust the quality (0.7) as needed
+                        img.src = '';
                         img.src = resizedDataURL;
+
 
                         const blob = await (await fetch(resizedDataURL)).blob();
                         console.log(blob);
                         const formData = new FormData();
                         formData.append('UserMasterPersonID', 1)
-                        formData.append('MasterPersonID',1)
+                        formData.append('MasterPersonID', persInfoDataObj.masterPersonID)
                         formData.append('ImageFile', blob, fileName)
 
                         const options = {
@@ -292,8 +234,19 @@
                             body: formData
                         }
 
-                        const data = await fetchData.postData('upload-new-emp-photo-image', options)
-                        console.log(data)
+                        //add spinner
+                        const spinner = spinnerType01()
+                        document.querySelector('.jsNewEmpPhotoCont').appendChild(spinner);
+
+                        const photImageData = await fetchData.postData('upload-new-emp-photo-image', options)
+
+                        //remove spinner
+                        document.querySelector('.jsSpinnerCont').remove();
+
+                        const baseUrl = 'https://speedxstorageaccount.blob.core.windows.net/speedxcontainer/'
+                        const imageUrl = baseUrl + photImageData.photoImageFileName
+
+                        //document.querySelector('.jsImageMain').src = imageUrl
                     }
 
                     if (parseFloat(img.naturalHeight) >= parseFloat(img.naturalWidth)) {
@@ -486,11 +439,16 @@
         const jsPureInputEmployeeNumber = e.target.closest('.jsNewEmpSubContentCont').querySelector('.jsPureInputEmployeeNumber');
         jsPureInputEmployeeNumber.value = persInfoDataObj.employeeNumber
 
-        //disable button
-        e.target.removeEventListener('click', handleClickSavePersonalInfo);
-        e.target.classList.add('new-emp-btn-disabled');
+        persInfoChangeModeAfterClickSaved()
+    }
 
-        const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
+    function persInfoChangeModeAfterClickSaved() {
+        //disable button
+        const jsNewEmpGroupTitleSaveEditBtnPersInfo = document.querySelector('.jsNewEmpGroupTitleSaveEditBtnPersInfo');
+        jsNewEmpGroupTitleSaveEditBtnPersInfo.removeEventListener('click', handleClickSavePersonalInfo);
+        jsNewEmpGroupTitleSaveEditBtnPersInfo.classList.add('new-emp-btn-disabled');
+
+        const jsInputEditBtns = jsNewEmpGroupTitleSaveEditBtnPersInfo.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
         jsInputEditBtns.forEach(button => {
             button.addEventListener('click', handleClickEditInputBtn);
             button.classList.remove('new-emp-btn-disabled');
@@ -498,7 +456,7 @@
         })
 
         //disable pure inputs - all
-        const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
+        const jsPureInputs = jsNewEmpGroupTitleSaveEditBtnPersInfo.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
         jsPureInputs.forEach(input => {
             input.setAttribute('disabled', true);
             input.classList.add('new-emp-input-disabled');
@@ -585,11 +543,16 @@
         benifitsDataObj.tinNo = benifitsReturnData.tinNumber
 
 
-        //disable button
-        e.target.removeEventListener('click', handleClickSaveBenifits);
-        e.target.classList.add('new-emp-btn-disabled');
+        benifitsChangeModeAfterClickSaved()
+    }
 
-        const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
+    function benifitsChangeModeAfterClickSaved() {
+        const jsNewEmpGroupTitleSaveEditBtnBenifits = document.querySelector('.jsNewEmpGroupTitleSaveEditBtnBenifits');
+        //disable button
+        jsNewEmpGroupTitleSaveEditBtnBenifits.removeEventListener('click', handleClickSaveBenifits);
+        jsNewEmpGroupTitleSaveEditBtnBenifits.classList.add('new-emp-btn-disabled');
+
+        const jsInputEditBtns = jsNewEmpGroupTitleSaveEditBtnBenifits.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
         jsInputEditBtns.forEach(button => {
             button.addEventListener('click', handleClickEditInputBtn);
             button.classList.remove('new-emp-btn-disabled');
@@ -597,7 +560,7 @@
         })
 
         //disable pure inputs - all
-        const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
+        const jsPureInputs = jsNewEmpGroupTitleSaveEditBtnBenifits.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
         jsPureInputs.forEach(input => {
             input.setAttribute('disabled', true);
             input.classList.add('new-emp-input-disabled');
@@ -642,13 +605,19 @@
         contactsDataObj.landlineNo = contactsReturnData.landLineNumber
         contactsDataObj.emailAdd = contactsReturnData.emailAddress
 
-        console.log(contactsDataObj)
+
+        //change mode
+        contactsChangeModeAfterClickSaved()
+    }
+
+    function contactsChangeModeAfterClickSaved() {
+        const jsNewEmpGroupTitleSaveEditBtnContacts = document.querySelector('.jsNewEmpGroupTitleSaveEditBtnContacts');
 
         //disable button
-        e.target.removeEventListener('click', handleClickSaveContacts);
-        e.target.classList.add('new-emp-btn-disabled');
+        jsNewEmpGroupTitleSaveEditBtnContacts.removeEventListener('click', handleClickSaveContacts);
+        jsNewEmpGroupTitleSaveEditBtnContacts.classList.add('new-emp-btn-disabled');
 
-        const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
+        const jsInputEditBtns = jsNewEmpGroupTitleSaveEditBtnContacts.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
         jsInputEditBtns.forEach(button => {
             button.addEventListener('click', handleClickEditInputBtn);
             button.classList.remove('new-emp-btn-disabled');
@@ -656,7 +625,7 @@
         })
 
         //disable inputs
-        const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
+        const jsPureInputs = jsNewEmpGroupTitleSaveEditBtnContacts.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
         jsPureInputs.forEach(input => {
             input.setAttribute('disabled', true);
             input.classList.add('new-emp-input-disabled');
@@ -718,115 +687,12 @@
         addressDataObj.addressLine1 = addressReturnData.addressLine1
         addressDataObj.addressLine2 = addressReturnData.addressLine2
 
-        //disable address input and cancel button
-        disableAddressInputAndCancelBtn();
+        //change mode
+        addressChangeModeAfterClickSaved();
 
     }
 
-    function handleClickEditAddress(e) {
-        //enable button
-        e.target.addEventListener('click', handleClickSaveAddress);
-        e.target.removeEventListener('click', handleClickEditAddress);
-        e.target.textContent = 'Save'
-
-
-        //enable inputs
-        const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
-        jsPureInputs.forEach(input => {
-            input.removeAttribute('disabled');
-            input.classList.remove('new-emp-input-disabled');
-        });
-
-        //enable select input - country
-        (function () {
-            const jsNewEmpSelectMainContCountry = document.querySelector('.jsNewEmpSelectMainContCountry');
-
-            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContCountry.querySelector('.jsNewEmpSelectInputArrowCont');
-            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
-
-            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContCountry.querySelector('.jsNewEmpSelectArrowContAdress');
-            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressCountry)
-            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
-
-            const jsSelectInput = jsNewEmpSelectMainContCountry.querySelector('.jsSelectInput');
-            jsSelectInput.removeAttribute('disabled');
-
-        })();
-
-        //enable select input - region
-        (function () {
-            const jsNewEmpSelectMainContRegion = document.querySelector('.jsNewEmpSelectMainContRegion');
-
-            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContRegion.querySelector('.jsNewEmpSelectInputArrowCont');
-            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
-
-            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContRegion.querySelector('.jsNewEmpSelectArrowContAdress');
-            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressRegion)
-            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
-
-            const jsSelectInput = jsNewEmpSelectMainContRegion.querySelector('.jsSelectInput');
-            jsSelectInput.removeAttribute('disabled');
-
-
-        })();
-
-        //enable select input - province
-        (function () {
-            const jsNewEmpSelectMainContProvince = document.querySelector('.jsNewEmpSelectMainContProvince');
-
-            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContProvince.querySelector('.jsNewEmpSelectInputArrowCont');
-            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
-
-            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContProvince.querySelector('.jsNewEmpSelectArrowContAdress');
-            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressProvince)
-            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
-
-            const jsSelectInput = jsNewEmpSelectMainContProvince.querySelector('.jsSelectInput');
-            jsSelectInput.removeAttribute('disabled');
-
-
-        })();
-
-        //enable select input - city
-        (function () {
-            const jsNewEmpSelectMainContCity = document.querySelector('.jsNewEmpSelectMainContCity');
-
-            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContCity.querySelector('.jsNewEmpSelectInputArrowCont');
-            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
-
-            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContCity.querySelector('.jsNewEmpSelectArrowContAdress');
-            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressCity)
-            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
-
-            const jsSelectInput = jsNewEmpSelectMainContCity.querySelector('.jsSelectInput');
-            jsSelectInput.removeAttribute('disabled');
-
-        })();
-
-        //enable select input - barangay
-        (function () {
-            const jsNewEmpSelectMainContBarangay = document.querySelector('.jsNewEmpSelectMainContBarangay');
-
-            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContBarangay.querySelector('.jsNewEmpSelectInputArrowCont');
-            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
-
-            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContBarangay.querySelector('.jsNewEmpSelectArrowContAdress');
-            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressBarangay)
-            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
-
-            const jsSelectInput = jsNewEmpSelectMainContBarangay.querySelector('.jsSelectInput');
-            jsSelectInput.removeAttribute('disabled');
-
-        })();
-
-        //enable and attached event listener to cancel button
-        const jsNewEmpCancelBtnAddress = document.querySelector('.jsNewEmpCancelBtnAddress');
-        jsNewEmpCancelBtnAddress.addEventListener('click', handleClickCancelBtnAddress);
-        jsNewEmpCancelBtnAddress.classList.remove('disbale-cancel-btn');
-
-    }
-
-    function disableAddressInputAndCancelBtn() {
+    function addressChangeModeAfterClickSaved() {
         //disable button
         const saveButton = document.querySelector('.jsNewEmpGroupTitleSaveEditBtnAddress')
         saveButton.removeEventListener('click', handleClickSaveAddress);
@@ -977,11 +843,17 @@
         jobDescriptionDataObj.departmentID = jobdescReturnData.departmentID
         jobDescriptionDataObj.remarks = jobdescReturnData.remarks
 
-        //disable button
-        e.target.removeEventListener('click', handleClickSaveJobDescriptions);
-        e.target.classList.add('new-emp-btn-disabled');
+        //change mode
+        jobDescChangeModeAfterClickSaved()
+    }
 
-        const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
+    function jobDescChangeModeAfterClickSaved() {
+        const jsNewEmpGroupTitleSaveEditBtnJobDesc = document.querySelector('.jsNewEmpGroupTitleSaveEditBtnJobDesc');
+        //disable button
+        jsNewEmpGroupTitleSaveEditBtnJobDesc.removeEventListener('click', handleClickSaveJobDescriptions);
+        jsNewEmpGroupTitleSaveEditBtnJobDesc.classList.add('new-emp-btn-disabled');
+
+        const jsInputEditBtns = jsNewEmpGroupTitleSaveEditBtnJobDesc.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
         jsInputEditBtns.forEach(button => {
             button.addEventListener('click', handleClickEditInputBtn);
             button.classList.remove('new-emp-btn-disabled');
@@ -989,7 +861,7 @@
         })
 
         //disable inputs
-        const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
+        const jsPureInputs = jsNewEmpGroupTitleSaveEditBtnJobDesc.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
         jsPureInputs.forEach(input => {
             input.setAttribute('disabled', true);
             input.classList.add('new-emp-input-disabled');
@@ -1071,7 +943,7 @@
         const compensationReturnData = await fetchData.postData('save-new-employee-compensation', options);
         if (compensationReturnData == null) return;
 
-        console.log(compensationReturnData)
+
 
         compensationDataObj.ratePeriod = compensationReturnData.ratePeriodName
         compensationDataObj.ratePeriodID = compensationReturnData.ratePeriodID
@@ -1080,30 +952,28 @@
         compensationDataObj.salaryCondition = compensationReturnData.salaryConditionName
         compensationDataObj.salaryConditionID = compensationReturnData.salaryConditionID
 
-        console.log(compensationDataObj);
+        //change mode
+        compensationChangeModeAfterClickSaved()
+    }
 
-
-
+    function compensationChangeModeAfterClickSaved() {
+        const jsNewEmpGroupTitleSaveEditBtnCompensation = document.querySelector('.jsNewEmpGroupTitleSaveEditBtnCompensation');
         //disable button
-        (function () {
-            e.target.removeEventListener('click', handleClickSaveCompensations);
-            e.target.classList.add('new-emp-btn-disabled');
+        jsNewEmpGroupTitleSaveEditBtnCompensation.removeEventListener('click', handleClickSaveCompensations);
+        jsNewEmpGroupTitleSaveEditBtnCompensation.classList.add('new-emp-btn-disabled');
 
-            const jsInputEditBtns = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
-            jsInputEditBtns.forEach(button => {
-                button.addEventListener('click', handleClickEditInputBtn);
-                button.classList.remove('new-emp-btn-disabled');
-            })
-        })();
+        const jsInputEditBtns = jsNewEmpGroupTitleSaveEditBtnCompensation.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
+        jsInputEditBtns.forEach(button => {
+            button.addEventListener('click', handleClickEditInputBtn);
+            button.classList.remove('new-emp-btn-disabled');
+        })
 
         //disable inputs
-        (function () {
-            const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
-            jsPureInputs.forEach(input => {
-                input.setAttribute('disabled', true);
-                input.classList.add('new-emp-input-disabled');
-            });
-        })();
+        const jsPureInputs = jsNewEmpGroupTitleSaveEditBtnCompensation.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
+        jsPureInputs.forEach(input => {
+            input.setAttribute('disabled', true);
+            input.classList.add('new-emp-input-disabled');
+        });
 
 
         //disable select input - rate period
@@ -1145,6 +1015,109 @@
         //enable and attached event listener to cancel button
         const jsNewEmpCancelBtnCompensation = document.querySelector('.jsNewEmpCancelBtnCompensation');
         jsNewEmpCancelBtnCompensation.addEventListener('click', handleClickCancelBtn)
+    }
+
+    function handleClickEditAddress(e) {
+        //enable button
+        e.target.addEventListener('click', handleClickSaveAddress);
+        e.target.removeEventListener('click', handleClickEditAddress);
+        e.target.textContent = 'Save'
+
+
+        //enable inputs
+        const jsPureInputs = e.target.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsPureInput');
+        jsPureInputs.forEach(input => {
+            input.removeAttribute('disabled');
+            input.classList.remove('new-emp-input-disabled');
+        });
+
+        //enable select input - country
+        (function () {
+            const jsNewEmpSelectMainContCountry = document.querySelector('.jsNewEmpSelectMainContCountry');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContCountry.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContCountry.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressCountry)
+            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContCountry.querySelector('.jsSelectInput');
+            jsSelectInput.removeAttribute('disabled');
+
+        })();
+
+        //enable select input - region
+        (function () {
+            const jsNewEmpSelectMainContRegion = document.querySelector('.jsNewEmpSelectMainContRegion');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContRegion.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContRegion.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressRegion)
+            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContRegion.querySelector('.jsSelectInput');
+            jsSelectInput.removeAttribute('disabled');
+
+
+        })();
+
+        //enable select input - province
+        (function () {
+            const jsNewEmpSelectMainContProvince = document.querySelector('.jsNewEmpSelectMainContProvince');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContProvince.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContProvince.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressProvince)
+            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContProvince.querySelector('.jsSelectInput');
+            jsSelectInput.removeAttribute('disabled');
+
+
+        })();
+
+        //enable select input - city
+        (function () {
+            const jsNewEmpSelectMainContCity = document.querySelector('.jsNewEmpSelectMainContCity');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContCity.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContCity.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressCity)
+            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContCity.querySelector('.jsSelectInput');
+            jsSelectInput.removeAttribute('disabled');
+
+        })();
+
+        //enable select input - barangay
+        (function () {
+            const jsNewEmpSelectMainContBarangay = document.querySelector('.jsNewEmpSelectMainContBarangay');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContBarangay.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.remove('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowContAdress = jsNewEmpSelectMainContBarangay.querySelector('.jsNewEmpSelectArrowContAdress');
+            jsNewEmpSelectArrowContAdress.addEventListener('click', handleClickArrowAddressBarangay)
+            jsNewEmpSelectArrowContAdress.classList.remove('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContBarangay.querySelector('.jsSelectInput');
+            jsSelectInput.removeAttribute('disabled');
+
+        })();
+
+        //enable and attached event listener to cancel button
+        const jsNewEmpCancelBtnAddress = document.querySelector('.jsNewEmpCancelBtnAddress');
+        jsNewEmpCancelBtnAddress.addEventListener('click', handleClickCancelBtnAddress);
+        jsNewEmpCancelBtnAddress.classList.remove('disbale-cancel-btn');
+
     }
 
     function handleClickEditInputBtn(e) {
@@ -1585,7 +1558,7 @@
         restoreDataAddresses()
 
         //disable address input and cancel button
-        disableAddressInputAndCancelBtn();
+        addressChangeModeAfterClickSaved();
     }
 
     function restoreDataPersonalInfo() {
@@ -1966,4 +1939,20 @@
             }
         }
     }
+
+    function editModeForAllEmployeeFunction() {
+        persInfoChangeModeAfterClickSaved()
+        benifitsChangeModeAfterClickSaved()
+        contactsChangeModeAfterClickSaved()
+        addressChangeModeAfterClickSaved();
+        jobDescChangeModeAfterClickSaved();
+        compensationChangeModeAfterClickSaved()
+    }
+
+    if (persInfoDataObj.isAllEmployeeFunction == true) {
+        editModeForAllEmployeeFunction()
+    }
+
 }
+
+

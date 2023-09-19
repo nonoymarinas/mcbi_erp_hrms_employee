@@ -68,14 +68,17 @@ namespace DataAccess
                     using (SqlCommand cmd = new SqlCommand())
                     {
                         cmd.Connection = conn;
-                        cmd.CommandText = "[speedx.hrms.master].[spUploadNewEmployeePhotoImageFileName]";
+                        cmd.CommandText = "[speedx.hrms.master].[spSavePhotoImageFileName]";
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
-                        cmd.Parameters["@userID"].Value = _photoImages.UserMasterPersonID;
+                        cmd.Parameters.Add(new SqlParameter("@masterPersonUserID", SqlDbType.Int));
+                        cmd.Parameters["@masterPersonUserID"].Value = _photoImages.UserMasterPersonID;
 
                         cmd.Parameters.Add(new SqlParameter("@masterPersonID", SqlDbType.Int));
                         cmd.Parameters["@masterPersonID"].Value = _photoImages.MasterPersonID;
+
+                        cmd.Parameters.Add(new SqlParameter("@photoImageFileName", SqlDbType.NVarChar));
+                        cmd.Parameters["@photoImageFileName"].Value = _photoImages.FileName;
 
 
 
