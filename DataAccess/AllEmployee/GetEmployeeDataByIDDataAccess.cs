@@ -105,91 +105,96 @@ namespace DataAccess
                                 returnData.Contacts = workersContacts;
                             }
 
-                            //reader.NextResult();
-                            //if (reader.HasRows)
-                            //{
-                            //    reader.Read();
-                            //    Compensations workersCompensation = new Compensations()
-                            //    {
-                            //        BasicSalary = Convert.ToDecimal(reader["BasicSalary"]),
-                            //        Allowance = Convert.ToDecimal(reader["Allowance"]),
-                            //        CurrencyID = Convert.ToInt32(reader["CurrencyID"]),
-                            //        Currency = reader["Currency"].ToString(),
-                            //        RatePeriodID = Convert.ToInt32(reader["RatePeriodID"]),
-                            //        RatePeriod = reader["RatePeriod"].ToString(),
-                            //        SalaryConditionID = Convert.ToInt32(reader["SalaryConditionID"]),
-                            //        SalaryCondition = reader["SalaryCondition"].ToString(),
-                            //    };
+                            reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                Compensations workersCompensation = new Compensations()
+                                {
+                                    RatePeriodID = Convert.ToInt32(reader["RatePeriodID"]),
+                                    RatePeriod = reader["RatePeriod"].ToString(),
+                                    BasicSalary = reader["BasicSalary"].ToString(),
+                                    Allowance = reader["Allowance"].ToString(),
+                                    CurrencyID = Convert.ToInt32(reader["CurrencyID"]),
+                                    Currency = reader["Currency"].ToString(),
+                                    SalaryConditionID = Convert.ToInt32(reader["SalaryConditionID"]),
+                                    SalaryCondition = reader["SalaryCondition"].ToString(),
+                                };
 
-                            //    returnData.Compensation = workersCompensation;
-                            //}
+                                returnData.Compensation = workersCompensation;
+                            }
 
-                            //reader.NextResult();
-                            //if (reader.HasRows)
-                            //{
-                            //    reader.Read();
-                            //    Country addressCountry = new Country()
-                            //    {
-                            //        CountryID = Convert.ToInt32(reader["CountryID"]),
-                            //        CountryName = reader["CountryName"].ToString(),
-                            //    };
+                            reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                JobDescription jobDescription = new()
+                                {
+                                    PositionID = Convert.ToInt32(reader["PositionID"]),
+                                    PositionName = reader["PositionName"].ToString(),
+                                    DepartmentID = Convert.ToInt32(reader["DepartmentID"]),
+                                    DepartmentName = reader["DepartmentName"].ToString(),
+                                    Remarks = reader["Remarks"].ToString(),
+                                };
+                                returnData.JobDescription = jobDescription;
+                            }
 
-                            //    returnData.EmployeeAddressCountry = addressCountry;
-                            //}
+                            reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                Country addressCountry = new Country()
+                                {
+                                    CountryID = Convert.ToInt32(reader["CountryID"]),
+                                    CountryName = reader["CountryName"].ToString(),
+                                };
 
-                            //reader.NextResult();
-                            //if (reader.HasRows)
-                            //{
-                            //    reader.Read();
-                            //    PhilippineAddress philAddress = new()
-                            //    {
-                            //        ID = Convert.ToInt32(reader["ID"]),
-                            //        PostalAddressTypeID = Convert.ToInt32(reader["PostalAddressTypeID"]),
-                            //        PostalAddressType = reader["PostalAddressType"].ToString(),
-                            //        CountryID = Convert.ToInt32(reader["CountryID"]),
-                            //        Country = reader["Country"].ToString(),
-                            //        RegionID = Convert.ToInt32(reader["RegionID"]),
-                            //        RegionName = reader["RegionName"].ToString(),
-                            //        ProvinceID = Convert.ToInt32(reader["ProvinceID"]),
-                            //        ProvinceName = reader["ProvinceName"].ToString(),
-                            //        CityOrMunicipalityID = Convert.ToInt32(reader["CityOrMunicipalityID"]),
-                            //        CityOrMunicipalName = reader["CityOrMunicipalName"].ToString(),
-                            //        BarangayID = Convert.ToInt32(reader["BarangayID"]),
-                            //        BarangayName = reader["BarangayName"].ToString(),
-                            //        AddressLine1 = reader["AddressLine1"].ToString(),
-                            //        AddressLine2 = reader["AddressLine2"].ToString()
-                            //    };
+                                returnData.EmployeeAddressCountry = addressCountry;
+                            }
 
-                            //    returnData.PhilippineAddress = philAddress;
-                            //}
+                            reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                PhilippineAddress philAddress = new()
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    PostalAddressTypeID = Convert.ToInt32(reader["PostalAddressTypeID"]),
+                                    PostalAddressType = reader["PostalAddressType"].ToString(),
+                                    CountryID = Convert.ToInt32(reader["CountryID"]),
+                                    Country = reader["Country"].ToString(),
+                                    RegionID = Convert.ToInt32(reader["RegionID"]),
+                                    RegionName = reader["RegionName"].ToString(),
+                                    ProvinceID = Convert.ToInt32(reader["ProvinceID"]),
+                                    ProvinceName = reader["ProvinceName"].ToString(),
+                                    CityOrMunicipalityID = Convert.ToInt32(reader["CityOrMunicipalityID"]),
+                                    CityOrMunicipalName = reader["CityOrMunicipalName"].ToString(),
+                                    BarangayID = Convert.ToInt32(reader["BarangayID"]),
+                                    BarangayName = reader["BarangayName"].ToString(),
+                                    AddressLine1 = reader["AddressLine1"].ToString(),
+                                    AddressLine2 = reader["AddressLine2"].ToString()
+                                };
 
-                            //reader.NextResult();
-                            //if (reader.HasRows)
-                            //{
-                            //    reader.Read();
-                            //    ForeignAddress foreignAddress = new()
-                            //    {
-                            //        ID = Convert.ToInt32(reader["ID"]),
-                            //        PostalAddressTypeID = Convert.ToInt32(reader["PostalAddressTypeID"]),
-                            //        PostalAddressType = reader["PostalAddressType"].ToString(),
-                            //        ForeignCompleteAddress = reader["ForeignCompleteAddress"].ToString(),
-                            //    };
-                            //    returnData.ForeignAddress = foreignAddress;
-                            //}
+                                returnData.PhilippineAddress = philAddress;
+                            }
 
-                            //reader.NextResult();
-                            //if (reader.HasRows)
-                            //{
-                            //    reader.Read();
-                            //    JobDescription jobDescription = new()
-                            //    {
-                            //        PositionID = Convert.ToInt32(reader["PositionID"]),
-                            //        PositionName = reader["PositionName"].ToString(),
-                            //        DepartmentID = Convert.ToInt32(reader["DepartmentID"]),
-                            //        DepartmentName = reader["DepartmentName"].ToString(),
-                            //    };
-                            //    returnData.JobDescription = jobDescription;
-                            //}
+                            reader.NextResult();
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                ForeignAddress foreignAddress = new()
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    PostalAddressTypeID = Convert.ToInt32(reader["PostalAddressTypeID"]),
+                                    PostalAddressType = reader["PostalAddressType"].ToString(),
+                                    CountryID = Convert.ToInt32(reader["CountryID"]),
+                                    Country = reader["CountryName"].ToString(),
+                                    ForeignCompleteAddress = reader["ForeignCompleteAddress"].ToString(),
+                                };
+                                returnData.ForeignAddress = foreignAddress;
+                            }
+
+
 
                             //reader.NextResult();
                             //while (reader.Read())

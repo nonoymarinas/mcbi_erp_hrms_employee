@@ -11,6 +11,7 @@ namespace BusinessModel
 		public int? UserMasterPersonID { get; set; }
 		public int? MasterPersonID { get; set; }
 		public int? AddressTypeID { get; set; }
+		public int? CountryID { get; set; }
 		public int? CityID { get; set; }
 		public int? BarangayID { get; set; }
 		public string? AddressLine1 { get; set; }

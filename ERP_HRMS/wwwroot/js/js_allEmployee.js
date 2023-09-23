@@ -1,5 +1,9 @@
 ﻿
 async function allEmployee(linkedList) {
+    
+    //this will indicate that this is all employee
+    persInfoDataObj.isAllEmployeeFunction = true;
+
     //load reference data
     const jsSearchInput = document.querySelector('.jsSearchInput');
     jsSearchInput.addEventListener('input', inputSearchName)
@@ -41,6 +45,7 @@ async function allEmployee(linkedList) {
             body: formData
         }
 
+        //fetch single employee data
         const singleEmployeeData = await fetchData.postData('single-employee-data', options)
         if (singleEmployeeData == null) return;
         console.log(singleEmployeeData)
@@ -49,7 +54,7 @@ async function allEmployee(linkedList) {
         let newEmpData = await fetchData.getData('new-employee-ref-data')
         if (newEmpData == null) return;
 
-
+        //fetch employee data UI
         const view = await fetchData.viewData('new-employee-main-page');
         const jsNewEmpMainCont = view.querySelector('.jsNewEmpMainCont');
 
@@ -58,7 +63,11 @@ async function allEmployee(linkedList) {
 
         jsSublayout01ContentSubCont.appendChild(jsNewEmpMainCont);
 
+        //attached function for employee UI
+        await newEmployee(newEmpData);
+        
 
+        //construct image URL and show image
         const baseUrl = 'https://speedxstorageaccount.blob.core.windows.net/speedxcontainer/'
         const imageUrl = baseUrl + singleEmployeeData.personalInfo.photoImageFileName
         const img = new Image();
@@ -77,7 +86,7 @@ async function allEmployee(linkedList) {
             }
         }
 
-
+        //update local employee data
 
         //personal information
         persInfoDataObj.masterPersonID = singleEmployeeData.personalInfo.masterPersonID;
@@ -91,8 +100,7 @@ async function allEmployee(linkedList) {
         persInfoDataObj.genderName = singleEmployeeData.personalInfo.genderName;
         persInfoDataObj.genderID = singleEmployeeData.personalInfo.genderID;
         persInfoDataObj.isPersonalInfoSaved = true;
-        persInfoDataObj.isAllEmployeeFunction = true;
-
+        
 
         document.querySelector('.jsPureInputFirstName').value = persInfoDataObj.firstName
         document.querySelector('.jsPureInputMiddleName').value = persInfoDataObj.middleName
@@ -115,7 +123,7 @@ async function allEmployee(linkedList) {
         document.querySelector('.jsPureInputPhilhealthNumber').value = benifitsDataObj.philHealthNo
         document.querySelector('.jsPureInputTinNumber').value = benifitsDataObj.tinNo
 
-        //contactsDataObj
+        //contacts
         contactsDataObj.mobileNo = singleEmployeeData.contacts.mobileNumber;
         contactsDataObj.landlineNo = singleEmployeeData.contacts.landLineNumber;
         contactsDataObj.emailAdd = singleEmployeeData.contacts.emailAddress;
@@ -124,7 +132,76 @@ async function allEmployee(linkedList) {
         document.querySelector('.jsPureInputLandlineNumber').value = contactsDataObj.landlineNo
         document.querySelector('.jsPureInputEmailAddress').value = contactsDataObj.emailAdd
 
+        //compensation
+        compensationDataObj.ratePeriod = singleEmployeeData.compensation.ratePeriod;
+        compensationDataObj.ratePeriodID = singleEmployeeData.compensation.ratePeriodID;
+        compensationDataObj.basicSalary = singleEmployeeData.compensation.basicSalary;
+        compensationDataObj.allowance = singleEmployeeData.compensation.allowance;
+        compensationDataObj.salaryConditionID = singleEmployeeData.compensation.salaryConditionID;
+        compensationDataObj.salaryCondition = singleEmployeeData.compensation.salaryCondition;
+        compensationDataObj.currencyID = singleEmployeeData.compensation.currencyID;
+        compensationDataObj.currency = singleEmployeeData.compensation.currency;
 
-        await newEmployee(newEmpData);
+        document.querySelector('.jsSelectInputRatePeriod').value = compensationDataObj.ratePeriod
+        document.querySelector('.jsSelectInputRatePeriod').setAttribute('data-id', compensationDataObj.ratePeriodID)
+        document.querySelector('.jsPureInputBasicSalary').value = compensationDataObj.basicSalary
+        document.querySelector('.jsPureInputAllowance').value = compensationDataObj.allowance
+        document.querySelector('.jsSelectInputSalaryCondition').value = compensationDataObj.salaryCondition
+        document.querySelector('.jsSelectInputSalaryCondition').setAttribute('data-id', compensationDataObj.salaryConditionID)
+
+        //compensation
+        jobDescriptionDataObj.positionID = singleEmployeeData.jobDescription.positionID;
+        jobDescriptionDataObj.position = singleEmployeeData.jobDescription.positionName;
+        jobDescriptionDataObj.departmentID = singleEmployeeData.jobDescription.departmentID;
+        jobDescriptionDataObj.department = singleEmployeeData.jobDescription.departmentName;
+        jobDescriptionDataObj.remarks = singleEmployeeData.jobDescription.remarks;
+
+        document.querySelector('.jsSelectInputPosition').value = jobDescriptionDataObj.position
+        document.querySelector('.jsSelectInputPosition').setAttribute('data-id', jobDescriptionDataObj.positionID)
+        document.querySelector('.jsSelectInputDepartment').value = jobDescriptionDataObj.department
+        document.querySelector('.jsSelectInputDepartment').setAttribute('data-id', jobDescriptionDataObj.departmentID)
+        document.querySelector('.jsPureInputRemarks').value = jobDescriptionDataObj.remarks
+
+        //addresses philippines
+        addressDataObj.countryID = singleEmployeeData.philippineAddress.countryID;
+        addressDataObj.countryName = singleEmployeeData.philippineAddress.country;
+        addressDataObj.regionID = singleEmployeeData.philippineAddress.regionID;
+        addressDataObj.regionName = singleEmployeeData.philippineAddress.regionName;
+        addressDataObj.provinceID = singleEmployeeData.philippineAddress.provinceID;
+        addressDataObj.provinceName = singleEmployeeData.philippineAddress.provinceName;
+        addressDataObj.cityID = singleEmployeeData.philippineAddress.cityOrMunicipalityID;
+        addressDataObj.cityName = singleEmployeeData.philippineAddress.cityOrMunicipalName;
+        addressDataObj.barangayID = singleEmployeeData.philippineAddress.barangayID;
+        addressDataObj.barangayName = singleEmployeeData.philippineAddress.barangayName;
+        addressDataObj.addressLine1 = singleEmployeeData.philippineAddress.addressLine1;
+        addressDataObj.addressLine2 = singleEmployeeData.philippineAddress.addressLine2;
+        addressDataObj.postalAddressType = singleEmployeeData.philippineAddress.postalAddressType;
+        addressDataObj.postalAddressTypeID = singleEmployeeData.philippineAddress.postalAddressTypeID;
+
+        //addresses foriegn
+        addressForiegnDataObj.countryID = singleEmployeeData.foreignAddress.countryID;
+        addressForiegnDataObj.countryName = singleEmployeeData.foreignAddress.country;
+        addressForiegnDataObj.postalAddressType = singleEmployeeData.foreignAddress.postalAddressType;
+        addressForiegnDataObj.postalAddressTypeID = singleEmployeeData.foreignAddress.postalAddressTypeID;
+        addressForiegnDataObj.foreignCompleteAddress = singleEmployeeData.foreignAddress.foreignCompleteAddress;
+
+        //check if is philippines or foriegn
+        if (singleEmployeeData.employeeAddressCountry.countryID == 1) {
+            document.querySelector('.jsSelectInputCountry').value = addressDataObj.countryName
+            document.querySelector('.jsSelectInputCountry').setAttribute('data-id', addressDataObj.countryID)
+            document.querySelector('.jsSelectInputRegion').value = addressDataObj.regionName
+            document.querySelector('.jsSelectInputRegion').setAttribute('data-id', addressDataObj.regionID)
+            document.querySelector('.jsSelectInputProvince').value = addressDataObj.provinceName
+            document.querySelector('.jsSelectInputProvince').setAttribute('data-id', addressDataObj.provinceID)
+            document.querySelector('.jsSelectInputCity').value = addressDataObj.cityName
+            document.querySelector('.jsSelectInputCity').setAttribute('data-id', addressDataObj.cityID)
+            document.querySelector('.jsSelectInputBarangay').value = addressDataObj.barangayName
+            document.querySelector('.jsSelectInputBarangay').setAttribute('data-id', addressDataObj.barangayID)
+            document.querySelector('.jsPureInputAddressLine1').value = addressDataObj.addressLine1
+            document.querySelector('.jsPureInputAddressLine2').value = addressDataObj.addressLine2
+        } else {
+            //put foriegn address here
+        }
+        
     }
 }

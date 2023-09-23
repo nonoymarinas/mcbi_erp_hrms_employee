@@ -1,4 +1,6 @@
 ﻿async function newEmployee(newEmpData) {
+    //reset local data
+    resetEmployeeLocalData()
 
     //civil status linkedlist
     let civilStatusLinkedList = new LinkedList(newEmpData.civilStatusList[0])
@@ -651,6 +653,9 @@
         formData.append('MasterPersonID', persInfoDataObj.masterPersonID);
         formData.append('AddressTypeID', 1)
 
+        const jsSelectInputCountry = document.querySelector('.jsSelectInputCountry');
+        formData.append('CountryID', jsSelectInputCountry.getAttribute('data-id'))
+
         const jsSelectInputCity = document.querySelector('.jsSelectInputCity');
         formData.append('CityID', jsSelectInputCity.getAttribute('data-id'))
 
@@ -686,6 +691,7 @@
         addressDataObj.barangayName = addressReturnData.barangayName
         addressDataObj.addressLine1 = addressReturnData.addressLine1
         addressDataObj.addressLine2 = addressReturnData.addressLine2
+        
 
         //change mode
         addressChangeModeAfterClickSaved();

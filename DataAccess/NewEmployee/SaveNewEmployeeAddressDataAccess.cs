@@ -36,6 +36,9 @@ namespace DataAccess
                     cmd.Parameters.Add(new SqlParameter("@addressTypeID", SqlDbType.Int));
                     cmd.Parameters["@addressTypeID"].Value = _address.AddressTypeID;
 
+                    cmd.Parameters.Add(new SqlParameter("@countryID", SqlDbType.Int));
+                    cmd.Parameters["@countryID"].Value = _address.CountryID;
+
                     cmd.Parameters.Add(new SqlParameter("@cityID", SqlDbType.Int));
                     cmd.Parameters["@cityID"].Value = _address.CityID;
 

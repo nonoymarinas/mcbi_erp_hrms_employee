@@ -11,6 +11,8 @@ namespace BusinessModel
         public int ID { get; set; }
         public int PostalAddressTypeID { get; set; }
         public string? PostalAddressType { get; set; }
+        public int CountryID { get; set; }
+        public string? Country { get; set; }
         public string? ForeignCompleteAddress { get; set; }
     }
 }
