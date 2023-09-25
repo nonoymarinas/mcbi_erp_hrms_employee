@@ -1,8 +1,8 @@
 ﻿(async function signIn() {
     const jsSiginLoginBtn = document.querySelector('.jsSiginLoginBtn');
-    jsSiginLoginBtn.addEventListener('click', clickSignBtn)
+    jsSiginLoginBtn.addEventListener('click', handleClickSignInBtn)
 
-    async function clickSignBtn() {
+    async function handleClickSignInBtn() {
         //if false, meaning password validation fail
         //if (await validateUsernameAndPassword() == false) return;
 
