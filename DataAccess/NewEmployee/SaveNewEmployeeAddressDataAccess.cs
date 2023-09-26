@@ -13,7 +13,7 @@ namespace DataAccess
         {
             _address = address;
         }
-       
+
         async public Task<ReturnSaveNewEmployeeAddressModel> SaveAddress()
         {
             ReturnSaveNewEmployeeAddressModel dataModel = new();
@@ -34,22 +34,22 @@ namespace DataAccess
                     cmd.Parameters["@masterPersonID"].Value = _address.MasterPersonID;
 
                     cmd.Parameters.Add(new SqlParameter("@addressTypeID", SqlDbType.Int));
-                    cmd.Parameters["@addressTypeID"].Value = _address.AddressTypeID;
+                    cmd.Parameters["@addressTypeID"].Value = (_address.AddressTypeID == null) ? DBNull.Value : _address.AddressTypeID;
 
                     cmd.Parameters.Add(new SqlParameter("@countryID", SqlDbType.Int));
-                    cmd.Parameters["@countryID"].Value = _address.CountryID;
+                    cmd.Parameters["@countryID"].Value = (_address.CountryID == null) ? DBNull.Value : _address.CountryID;
 
                     cmd.Parameters.Add(new SqlParameter("@cityID", SqlDbType.Int));
-                    cmd.Parameters["@cityID"].Value = _address.CityID;
+                    cmd.Parameters["@cityID"].Value = (_address.CityID == null) ? DBNull.Value : _address.CityID;
 
                     cmd.Parameters.Add(new SqlParameter("@barangayID", SqlDbType.Int));
-                    cmd.Parameters["@barangayID"].Value = _address.BarangayID;
+                    cmd.Parameters["@barangayID"].Value = (_address.BarangayID == null) ? DBNull.Value : _address.BarangayID;
 
                     cmd.Parameters.Add(new SqlParameter("@addLine1", SqlDbType.NVarChar));
-                    cmd.Parameters["@addLine1"].Value = _address.AddressLine1;
+                    cmd.Parameters["@addLine1"].Value = (_address.AddressLine1 == null) ? DBNull.Value : _address.AddressLine1;
 
                     cmd.Parameters.Add(new SqlParameter("@addLine2", SqlDbType.NVarChar));
-                    cmd.Parameters["@addLine2"].Value = _address.AddressLine2;
+                    cmd.Parameters["@addLine2"].Value = (_address.AddressLine2 == null) ? DBNull.Value : _address.AddressLine2;
 
 
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
@@ -92,7 +92,7 @@ namespace DataAccess
             return dataModel;
         }
 
-      
+
     }
 }
 

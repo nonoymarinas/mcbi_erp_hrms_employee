@@ -13,7 +13,7 @@ namespace DataAccess
         {
             _jobDescriptions = jobDescriptions;
         }
-       
+
         async public Task<ReturnSaveNewEmployeeJobDescriptionsModel> SaveJobDescriptions()
         {
             ReturnSaveNewEmployeeJobDescriptionsModel dataModel = new();
@@ -34,15 +34,15 @@ namespace DataAccess
                     cmd.Parameters["@masterPersonID"].Value = _jobDescriptions.MasterPersonID;
 
                     cmd.Parameters.Add(new SqlParameter("@positionID", SqlDbType.NVarChar));
-                    cmd.Parameters["@positionID"].Value = _jobDescriptions.Position;
+                    cmd.Parameters["@positionID"].Value = (_jobDescriptions.Position == null) ? DBNull.Value : _jobDescriptions.Position;
 
                     cmd.Parameters.Add(new SqlParameter("@departmentID", SqlDbType.NVarChar));
-                    cmd.Parameters["@departmentID"].Value = _jobDescriptions.Department;
+                    cmd.Parameters["@departmentID"].Value = (_jobDescriptions.Department == null) ? DBNull.Value : _jobDescriptions.Department;
 
                     cmd.Parameters.Add(new SqlParameter("@remarks", SqlDbType.NVarChar));
-                    cmd.Parameters["@remarks"].Value = _jobDescriptions.Remarks;
+                    cmd.Parameters["@remarks"].Value = (_jobDescriptions.Remarks == null) ? DBNull.Value : _jobDescriptions.Remarks;
 
-                    
+
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
                         //Check for errors and if true, retreive the error message!
@@ -76,7 +76,7 @@ namespace DataAccess
             return dataModel;
         }
 
-        
+
     }
 }
 

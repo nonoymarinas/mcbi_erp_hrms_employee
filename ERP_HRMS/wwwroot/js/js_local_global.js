@@ -1,4 +1,6 @@
-﻿let persInfoDataObj = {
+﻿const MODULE_ID = 1;
+
+let persInfoDataObj = {
     masterPersonID: '',
     firstName: '',
     middleName: '',

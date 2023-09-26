@@ -8,37 +8,39 @@ namespace DataAccess
 {
     public class GetSigninDataAccess : ISigninStatus
     {
-        private readonly ConnectionSettings _connection;
+        private readonly string _connection = GlobalValues.ConnectionString;
         private readonly ParamSignInDataModels? _signindata;
-        
-        
-        public GetSigninDataAccess(ConnectionSettings connection, ParamSignInDataModels? signindata)
+
+
+        public GetSigninDataAccess(ParamSignInDataModels? signindata)
         {
-            _connection = connection;
             _signindata = signindata;
         }
 
 
         async public Task<ReturnGetSigninDataModel> GetSigninStatus()
         {
-            
+
 
             ReturnGetSigninDataModel returnData = new();
 
-            using (SqlConnection conn = new SqlConnection(_connection.SQLString))
+            using (SqlConnection conn = new SqlConnection(_connection))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = conn;
-                    cmd.CommandText = "[erp.global.user].[spValidateLoginAndGetData]";
+                    cmd.CommandText = "[speedx.hrms.access].[spGetLoginCredentials]";
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add(new SqlParameter("@UserName", SqlDbType.NVarChar));
-                    cmd.Parameters["@UserName"].Value = _signindata.UserName;
+                    cmd.Parameters.Add(new SqlParameter("@userName", SqlDbType.NVarChar));
+                    cmd.Parameters["@userName"].Value = _signindata.UserName;
 
-                    cmd.Parameters.Add(new SqlParameter("@ErpModuleNumber", SqlDbType.Int));
-                    cmd.Parameters["@ErpModuleNumber"].Value = _signindata.ErpModuleNumber;
+                    cmd.Parameters.Add(new SqlParameter("@employeeNumber", SqlDbType.NVarChar));
+                    cmd.Parameters["@employeeNumber"].Value = _signindata.EmployeeNumber;
+
+                    cmd.Parameters.Add(new SqlParameter("@erpModuleID", SqlDbType.Int));
+                    cmd.Parameters["@erpModuleID"].Value = _signindata.ErpModuleNumber;
 
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
@@ -58,22 +60,11 @@ namespace DataAccess
                             if (reader.HasRows)
                             {
                                 reader.Read();
-                                LoginDataModel loginData = new LoginDataModel();
-                                loginData.HashSaltedIStillLoveYou = reader["HashIStillLoveYouWithSalt"].ToString();
-                                loginData.Salt = reader["Salt"].ToString();
-
-                                var IsUsernameExist = Convert.ToInt32(reader["IsUsernameExist"]);
-
-                                if (IsUsernameExist == 1)
+                                LoginDataModel loginData = new LoginDataModel()
                                 {
-                                    loginData.IsUsernameExist = true;
-
-                                }
-                                else
-                                {
-                                    loginData.IsUsernameExist = false;
-                                }
-
+                                    HashSaltedIStillLoveYou = reader["IStillLoveYou"].ToString(),
+                                    Salt = reader["Salt"].ToString(),
+                                };
                                 returnData.LoginData = loginData;
                             }
 
@@ -81,20 +72,13 @@ namespace DataAccess
                             if (reader.HasRows)
                             {
                                 reader.Read();
-                                CompanyLoginDataDataModel compLoginData = new CompanyLoginDataDataModel();
-                                compLoginData.CompanyID = Convert.ToInt32(reader["CompanyID"]);
-                                compLoginData.CompanyDisplayName = reader["CompanyDisplayName"].ToString();
-                                compLoginData.ActiveText = reader["ActiveText"].ToString();
-                                compLoginData.DisabledText = reader["DisabledText"].ToString();
-                                compLoginData.InputBorder = reader["InputBorder"].ToString();
-                                compLoginData.MainHeaderBackGround = reader["MainHeaderBackGround"].ToString();
-                                compLoginData.MainHeaderText = reader["MainHeaderText"].ToString();
-                                compLoginData.MainTitleText = reader["MainTitleText"].ToString();
-                                compLoginData.PageBackGround = reader["PageBackGround"].ToString();
-                                compLoginData.SubTitleText = reader["SubTitleText"].ToString();
-                                compLoginData.CompanyLogoURL = reader["CompanyLogoURL"].ToString();
-                                compLoginData.ConnectionString = reader["ConnectionString"].ToString();
+                                CompanyLoginDataModel compLoginData = new CompanyLoginDataModel()
+                                {
 
+                                    CompanyName = reader["CompanyName"].ToString(),
+                                    MainHeaderBackGround = reader["MainHeaderBackGround"].ToString(),
+                                    LogoImageFileName = reader["LogoImageFileName"].ToString(),
+                                };
                                 returnData.CompanyLoginData = compLoginData;
 
                             }

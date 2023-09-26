@@ -10,100 +10,69 @@ using DataAccess;
 
 namespace BusinessLogic
 {
-	public class SiginLogic : ISigninStatus, ISigninResults
+    public class SiginLogic : ISigninStatus, ISigninResults
     {
-		private readonly ConnectionSettings _connection;
+        const int keySize = 64;
+        const int iterations = 350000;
+        HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
+       
         private readonly ParamSignInDataModels? _signinData;
         private static Random random = new Random((int)DateTime.Now.Ticks);
 
-        public SiginLogic(IOptions<ConnectionSettings> connection, ParamSignInDataModels signinData)
+        public SiginLogic(ParamSignInDataModels signinData)
         {
-            _connection = connection.Value;
             _signinData = signinData;
         }
 
-       
+
         async public Task<ReturnGetSigninDataModel> GetSigninResults()
         {
             //checked if username exist in database
             ReturnGetSigninDataModel dataAccessData = await GetSigninStatus();
-            if (dataAccessData.LoginData.IsUsernameExist == false)
-            {
-                return dataAccessData;
+            if (dataAccessData.StatusCodeNumber == 11) { 
+                return dataAccessData; 
             }
 
             //begin build hash password from users input and salt from database
             var saltFromDB = dataAccessData.LoginData.Salt;
             var passwordFromUser = _signinData.IStillLoveYou;
-            var stringPasswordPlusSalt = passwordFromUser + saltFromDB;
 
-            //begin hashing
-            var sha = SHA512Managed.Create();
-            //convert password to bytes
-            var bytesPasswordWithSalt = Encoding.ASCII.GetBytes(stringPasswordPlusSalt);
-            //compute hash value
-            var hashPasswordWithSalt = sha.ComputeHash(bytesPasswordWithSalt);
-            //convert hash to string
-            var hashStringFormatPasswordWithSalt = GetStringFromHash(hashPasswordWithSalt);
+            //convert salt to bytes
+            string[] tempArr = saltFromDB.Split('-');
+            byte[] saltBytes = new byte[tempArr.Length];
+            for (int i = 0; i < tempArr.Length; i++)
+            {
+                saltBytes[i] = Convert.ToByte(tempArr[i], 16);
+            }
 
-            //get the hash password with salt from database
-            var hashPasswordWithSaltFormDB = dataAccessData.LoginData.HashSaltedIStillLoveYou;
+            var generateHashPasswordFromUser = HashPasword(_signinData.IStillLoveYou, saltBytes);
 
             //Compare the 2 hashPasswordString
-            if (hashStringFormatPasswordWithSalt != hashPasswordWithSaltFormDB)
+            if (generateHashPasswordFromUser != dataAccessData.LoginData.HashSaltedIStillLoveYou)
             {
-                dataAccessData.StatusCodeNumber = 4;
+                dataAccessData.StatusCodeNumber = 11;
                 return dataAccessData;
             }
+
             return dataAccessData;
         }
 
         async public Task<ReturnGetSigninDataModel> GetSigninStatus()
         {
-            GetSigninDataAccess dataAccess = new GetSigninDataAccess(_connection, _signinData);
+            GetSigninDataAccess dataAccess = new GetSigninDataAccess(_signinData);
             return await dataAccess.GetSigninStatus();
         }
 
-        private static string GetStringFromHash(byte[] hash)
+        private string HashPasword(string password, byte[] salt)
         {
-            StringBuilder result = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                result.Append(hash[i].ToString("X2"));
-            }
-            return result.ToString();
-        }
-
-
-        public string SaveUserNamePassword()
-        {
-            string password = "abc123";
-            var salt = RandomString(6);
-
-            var passwordWithSalt = password + salt;
-            var sha = SHA512Managed.Create();
-
-            var passwordBytes = Encoding.ASCII.GetBytes(passwordWithSalt);
-
-            var hashPasswordWithSalt = sha.ComputeHash(passwordBytes);
-
-            var passwordStr = GetStringFromHash(hashPasswordWithSalt);
-
-            return passwordStr;
-
-        }
-
-        private string RandomString(int size)
-        {
-            StringBuilder builder = new StringBuilder();
-            char ch;
-            for (int i = 0; i < size; i++)
-            {
-                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
-                builder.Append(ch);
-            }
-
-            return builder.ToString();
+            
+            var hash = Rfc2898DeriveBytes.Pbkdf2(
+                Encoding.UTF8.GetBytes(password),
+                salt,
+                iterations,
+                hashAlgorithm,
+                keySize);
+            return Convert.ToHexString(hash);
         }
 
     }

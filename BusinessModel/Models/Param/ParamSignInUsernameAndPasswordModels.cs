@@ -8,11 +8,10 @@ namespace BusinessModel
 {
     public class ParamSignInDataModels
     {
+        public string? EmployeeNumber { get; set; }
         public string? UserName { get; set; }
         public int ErpModuleNumber { get; set; }
         public string? IStillLoveYou { get; set; }
-        public string? HashSaltedIStillLoveYou { get; set; }
-        public string? Salt { get; set; }
 
     }
 }

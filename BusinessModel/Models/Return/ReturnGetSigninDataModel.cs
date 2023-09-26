@@ -11,8 +11,7 @@ namespace BusinessModel
 	{
 	
 		public LoginDataModel? LoginData { get; set; }
-
-        public CompanyLoginDataDataModel? CompanyLoginData { get; set; }
+        public CompanyLoginDataModel? CompanyLoginData { get; set; }
 
     }
 }

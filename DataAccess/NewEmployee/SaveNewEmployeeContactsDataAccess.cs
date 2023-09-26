@@ -34,17 +34,15 @@ namespace DataAccess
                     cmd.Parameters["@masterPersonID"].Value = _contacts.MasterPersonID;
 
                     cmd.Parameters.Add(new SqlParameter("@mobileNumber", SqlDbType.NVarChar));
-                    cmd.Parameters["@mobileNumber"].Value = _contacts.MobileNumber;
+                    cmd.Parameters["@mobileNumber"].Value = (_contacts.MobileNumber == null) ? DBNull.Value : _contacts.MobileNumber;
 
                     cmd.Parameters.Add(new SqlParameter("@landlineNumber", SqlDbType.NVarChar));
-                    cmd.Parameters["@landlineNumber"].Value = _contacts.LandLineNumber;
+                    cmd.Parameters["@landlineNumber"].Value = (_contacts.LandLineNumber == null) ? DBNull.Value : _contacts.LandLineNumber;
 
                     cmd.Parameters.Add(new SqlParameter("@emailAddress", SqlDbType.NVarChar));
-                    cmd.Parameters["@emailAddress"].Value = _contacts.EmailAddress;
+                    cmd.Parameters["@emailAddress"].Value = (_contacts.EmailAddress==null)? DBNull.Value: _contacts.EmailAddress;
 
                     
-
-
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
                         //Check for errors and if true, retreive the error message!

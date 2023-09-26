@@ -34,16 +34,16 @@ namespace DataAccess
                     cmd.Parameters["@masterPersonID"].Value = _benifits.MasterPersonID;
 
                     cmd.Parameters.Add(new SqlParameter("@sssNumber", SqlDbType.NVarChar));
-                    cmd.Parameters["@sssNumber"].Value = _benifits.SssNumber;
+                    cmd.Parameters["@sssNumber"].Value = (_benifits.SssNumber == null) ? DBNull.Value : _benifits.SssNumber;
 
                     cmd.Parameters.Add(new SqlParameter("@philhealthNumber", SqlDbType.NVarChar));
-                    cmd.Parameters["@philhealthNumber"].Value = _benifits.PhilHealthNumber;
+                    cmd.Parameters["@philhealthNumber"].Value = (_benifits.PhilHealthNumber == null) ? DBNull.Value : _benifits.PhilHealthNumber;
 
                     cmd.Parameters.Add(new SqlParameter("@pagibigNumber", SqlDbType.NVarChar));
-                    cmd.Parameters["@pagibigNumber"].Value = _benifits.PagIbigNumber;
+                    cmd.Parameters["@pagibigNumber"].Value = (_benifits.PagIbigNumber == null) ? DBNull.Value : _benifits.PagIbigNumber;
 
                     cmd.Parameters.Add(new SqlParameter("@tinNumber", SqlDbType.NVarChar));
-                    cmd.Parameters["@tinNumber"].Value = _benifits.TinNumber;
+                    cmd.Parameters["@tinNumber"].Value = (_benifits.TinNumber ==null)? DBNull.Value: _benifits.TinNumber;
 
 
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())

@@ -34,16 +34,16 @@ namespace DataAccess
                     cmd.Parameters["@masterPersonID"].Value = _compensations.MasterPersonID;
 
                     cmd.Parameters.Add(new SqlParameter("@ratePeriodID", SqlDbType.Int));
-                    cmd.Parameters["@ratePeriodID"].Value = _compensations.RatePeriod;
+                    cmd.Parameters["@ratePeriodID"].Value = (_compensations.RatePeriod == null) ? DBNull.Value : _compensations.RatePeriod;
 
                     cmd.Parameters.Add(new SqlParameter("@basicSalary", SqlDbType.NVarChar));
-                    cmd.Parameters["@basicSalary"].Value = _compensations.BasicSalary;
+                    cmd.Parameters["@basicSalary"].Value = (_compensations.BasicSalary == null) ? DBNull.Value : _compensations.BasicSalary;
 
                     cmd.Parameters.Add(new SqlParameter("@allowance", SqlDbType.NVarChar));
-                    cmd.Parameters["@allowance"].Value = _compensations.Allowance;
+                    cmd.Parameters["@allowance"].Value = (_compensations.Allowance == null) ? DBNull.Value : _compensations.Allowance;
 
                     cmd.Parameters.Add(new SqlParameter("@salaryConditionID", SqlDbType.Int));
-                    cmd.Parameters["@salaryConditionID"].Value = _compensations.SalaryCondition;
+                    cmd.Parameters["@salaryConditionID"].Value = (_compensations.SalaryCondition==null)? DBNull.Value: _compensations.SalaryCondition;
 
                     
 

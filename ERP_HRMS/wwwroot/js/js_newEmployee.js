@@ -528,6 +528,11 @@
             formData.append(input.getAttribute('name'), input.value.trim());
         })
 
+        for (const pair of formData.entries()) {
+            console.log(`${pair[0]}, ${pair[1]}`);
+        }
+
+
         const options = {
             method: 'POST',
             body: formData

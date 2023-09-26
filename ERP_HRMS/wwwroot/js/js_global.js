@@ -42,7 +42,8 @@ const alertMessages = {
     areYouSureYouWantToClose: 'Are you sure you want to close?',
     nameExistInDatabaseAndActive: 'This name exist on records and employee is active!<br>Please check!',
     nameExistInDatabaseAndNotActive: 'This name exist on records and employee is not active!<br>Please check!',
-    nameExistInDatabaseAndBlockListed: 'BEWARE!<br>This name is confirmed Blocklisted!<br>You need higher authority for this!'
+    nameExistInDatabaseAndBlockListed: 'BEWARE!<br>This name is confirmed Blocklisted!<br>You need higher authority for this!',
+  
 }
 
 const alertContainer = {
@@ -210,6 +211,9 @@ const fetchData = {
                 throw alertMessages.nameExistInDatabaseAndBlockListed
             } else if (data.statusCodeNumber == 4) {
                 dataResult = null;
+            } else if (data.statusCodeNumber == 11) {
+                dataResult = null;
+                throw alertMessages.usernamePasswordNotFound
             } else {
                 dataResult = null;
                 throw alertMessages.databaseError

@@ -4,7 +4,7 @@
 
     async function handleClickSignInBtn() {
         //if false, meaning password validation fail
-        //if (await validateUsernameAndPassword() == false) return;
+        if (await validateUsernameAndPassword() == false) return;
 
         //continue of password ok
         const jsMainLayoutCont = document.querySelector('.jsMainLayoutCont');
@@ -18,7 +18,7 @@
     }
 
     const jsSigninPasswordSvgEyesIcon = document.querySelector('.jsSigninPasswordSvgEyesIcon');
-    jsSigninPasswordSvgEyesIcon.addEventListener('click',clickEyesIconSvg)
+    jsSigninPasswordSvgEyesIcon.addEventListener('click', clickEyesIconSvg)
 
     function clickEyesIconSvg(e) {
         const jsSigninUserPasswordInput = e.target.closest('.jsSigninUserPasswordCont').querySelector('.jsSigninUserPasswordInput');
@@ -29,7 +29,7 @@
             jsSigninUserPasswordInput.setAttribute('type', 'password');
         }
 
-        
+
     }
 
 
@@ -39,45 +39,33 @@
         //check if required fields are complete or not empty
         if (isSigninRequiredFieldsComplete() == false) return isUsernameAndPasswordValid;
 
-        //check if required input meet the regex
-        if (isRegexSignValidationPassed() == false) return isUsernameAndPasswordValid;
-
+        const jsSigninEmployeeNumberInput = document.querySelector('.jsSigninEmployeeNumberInput');
         const jsSigninUserEmailInput = document.querySelector('.jsSigninUserEmailInput');
         const jsSigninUserPasswordInput = document.querySelector('.jsSigninUserPasswordInput');
 
+        const employeeNumber = (jsSigninEmployeeNumberInput.value).trim();
         const userName = (jsSigninUserEmailInput.value).trim();
         const iStillLoveYou = (jsSigninUserPasswordInput.value).trim();
 
 
         const formData = new FormData();
+        formData.append('EmployeeNumber', employeeNumber);
         formData.append('UserName', userName);
         formData.append('IStillLoveYou', iStillLoveYou)
-        formData.append('ErpModuleNumber', 1)
+        formData.append('ErpModuleNumber', MODULE_ID)
 
         const options = {
             method: 'POST',
-            body:formData
+            body: formData
         }
 
-        const data = await fetchData.postData('signin-username-password', options);
-      
-        if (data!=null) {
-            if (data.statusCodeNumber == 1) {
-                isUsernameAndPasswordValid = true;
-                document.querySelector('.jsErrorLoginText').classList.add('display-none')
-
-                //update company object data
-                updateCompanyDetailsObject()
-            } 
-        } else {
-            isUsernameAndPasswordValid = false;
+        const loginReturnData = await fetchData.postData('signin-username-password', options);
+        if (loginReturnData == null) {
             document.querySelector('.jsErrorLoginText').classList.remove('display-none')
-        } 
-
-        function updateCompanyDetailsObject() {
-            companyDetailsData.mainHeaderBackGround = data.companyLoginData.mainHeaderBackGround
+        } else {
+            companyDetailsData.mainHeaderBackGround = loginReturnData.companyLoginData.mainHeaderBackGround
+            isUsernameAndPasswordValid = true;
         }
-
 
         return isUsernameAndPasswordValid;
     }
@@ -102,30 +90,6 @@
         }
 
         return isValid;
-    }
-
-    function isRegexSignValidationPassed() {
-        let isValid = true;
-
-        //username
-        //const jsSigninUserEmailInput = document.querySelector('.jsSigninUserEmailInput');
-        //if (!regexPatterns.emailAddress.test(jsSigninUserEmailInput.value)) {
-        //    jsSigninUserEmailInput.classList.add('invalid');
-        //    isValid = false
-        //} else {
-        //    jsSigninUserEmailInput.classList.remove('invalid');
-        //}
-
-        //password
-        const jsSigninUserPasswordInput = document.querySelector('.jsSigninUserPasswordInput');
-        if (!regexPatterns.iStillLoveYou.test(jsSigninUserPasswordInput.value)) {
-            jsSigninUserPasswordInput.parentNode.classList.add('invalid');
-            isValid = false
-        } else {
-            jsSigninUserPasswordInput.parentNode.classList.remove('invalid');
-        }
-
-        return isValid
     }
 
 })();
