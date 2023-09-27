@@ -24,7 +24,6 @@ namespace BusinessLogic
             _signinData = signinData;
         }
 
-
         async public Task<ReturnGetSigninDataModel> GetSigninResults()
         {
             //checked if username exist in database
