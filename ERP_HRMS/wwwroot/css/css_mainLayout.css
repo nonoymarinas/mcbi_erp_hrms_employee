@@ -10,9 +10,6 @@ html {
     --headerheigth: 60px;
     --footerheigth: 50px;
     --minimumContentWidth: 375px;
-}
-
-html {
     height: 100%;
 }
 
@@ -26,7 +23,10 @@ body {
     font-family: Poppins,SansSerif,Verdana, Geneva, Tahoma;
     min-height: 100vh;
     width: 100%;
-    background: #1a1a1a;
+    --speedxVeryDark: #272829;
+    --speedxMediumDark: #394867;
+    --speedxLightGray: #61677A;
+    --speedxOffWhite: #D8D9DA;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {

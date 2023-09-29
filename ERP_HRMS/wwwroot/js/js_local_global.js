@@ -1,5 +1,5 @@
-﻿const MODULE_ID = 1;
-
+﻿let MODULE_ID = 1;
+let baseUrl = `https://speedxstorageaccount.blob.core.windows.net/speedxcontainer/`
 let persInfoDataObj = {
     masterPersonID: '',
     firstName: '',
@@ -11,6 +11,7 @@ let persInfoDataObj = {
     genderID: '',
     gender: '',
     employeeNumber: '',
+    imageFileName:'',
     isPersonalInfoSaved: false,
     isAllEmployeeFunction: false
 }
@@ -137,4 +138,6 @@ function resetEmployeeLocalData() {
     compensationDataObj.salaryCondition = ''
     compensationDataObj.currencyID = ''
     compensationDataObj.currency = ''
+
+    
 }

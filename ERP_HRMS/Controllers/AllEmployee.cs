@@ -13,6 +13,11 @@ namespace ERP_HRMS.Controllers
         {
             return View();
         }
+        //[Route("all-employee-main-page")]
+        public IActionResult AllEmployeeMainPage()
+        {
+            return View();
+        }
 
         [Route("all-employee-data")]
         async public Task<IActionResult> GetMasterPersonData()

@@ -48,7 +48,9 @@ namespace DataAccess
                                         EmployeeNumber = reader["EmployeeNumber"].ToString(),
                                         FirstName = reader["FirstName"].ToString(),
                                         MiddleName = reader["MiddleName"].ToString(),
-                                        LastName = reader["LastName"].ToString()
+                                        LastName = reader["LastName"].ToString(),
+                                        Position = reader["PositionName"].ToString(),
+                                        ImageFileName = reader["ImageFileName"].ToString(),
                                     };
 
                                     dataList.Add(dataModel);

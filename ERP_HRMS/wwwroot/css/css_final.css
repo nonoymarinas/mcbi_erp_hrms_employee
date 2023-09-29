@@ -112,3 +112,17 @@
 .max-width-100 {
     max-width: 100%;
 }
+.background-speedx-dark {
+    background: var(--speedxVeryDark)
+}
+.text-color-white {
+    color: white
+}
+
+.text-color-offwhite {
+    color: #BBB;
+}
+
+.padding-top-30px{
+    padding-top:30px;
+}

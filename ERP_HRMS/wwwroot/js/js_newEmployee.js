@@ -215,42 +215,46 @@
 
                         canvas.width = width;
                         canvas.height = height;
-
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-
-                        const resizedDataURL = canvas.toDataURL('image/jpeg', 0.7); // You can adjust the quality (0.7) as needed
-                        img.src = '';
-                        img.src = resizedDataURL;
-
-
-                        const blob = await (await fetch(resizedDataURL)).blob();
-                        console.log(blob);
-                        const formData = new FormData();
-                        formData.append('UserMasterPersonID', 1)
-                        formData.append('MasterPersonID', persInfoDataObj.masterPersonID)
-                        formData.append('ImageFile', blob, fileName)
-
-                        const options = {
-                            method: 'POST',
-                            body: formData
-                        }
-
-                        //add spinner
-                        const spinner = spinnerType01()
-                        document.querySelector('.jsNewEmpPhotoCont').appendChild(spinner);
-
-                        const photImageData = await fetchData.postData('upload-new-emp-photo-image', options)
-
-                        //remove spinner
-                        document.querySelector('.jsSpinnerCont').remove();
-
-                        const baseUrl = 'https://speedxstorageaccount.blob.core.windows.net/speedxcontainer/'
-                        const imageUrl = baseUrl + photImageData.photoImageFileName
-
-                        //document.querySelector('.jsImageMain').src = imageUrl
+                    } else {
+                        canvas.width = width;
+                        canvas.height = height;
                     }
 
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const resizedDataURL = canvas.toDataURL(); // You can adjust the quality (0.7) as needed
+
+                    const blob = await (await fetch(resizedDataURL)).blob();
+                    console.log(blob);
+                    const formData = new FormData();
+                    formData.append('UserMasterPersonID', 1)
+                    formData.append('MasterPersonID', persInfoDataObj.masterPersonID)
+                    formData.append('ImageFile', blob, fileName)
+
+                    const options = {
+                        method: 'POST',
+                        body: formData
+                    }
+
+                    //add spinner
+                    const spinner = spinnerType01()
+                    document.querySelector('.jsNewEmpPhotoCont').appendChild(spinner);
+
+                    const photImageData = await fetchData.postData('upload-new-emp-photo-image', options)
+
+                    //remove spinner
+                    document.querySelector('.jsSpinnerCont').remove();
+
+                    const baseUrl = 'https://speedxstorageaccount.blob.core.windows.net/speedxcontainer/'
+                    const imageUrl = baseUrl + photImageData.photoImageFileName
+
+                    //reassign image to src
+                    img.src = '';
+                    img.src = imageUrl;
+
+                    
+                    //css of image arrangement
                     if (parseFloat(img.naturalHeight) >= parseFloat(img.naturalWidth)) {
                         img.classList.remove('max-height-100');
                         img.classList.add('max-width-100');
@@ -588,6 +592,9 @@
         //validate inputs
         if (!validateInputInformation(e)) return
 
+        //regex 
+        if (!validateContactsRegex()) return
+
         const formData = new FormData();
         formData.append('UserMasterPersonID', 1);
         formData.append('MasterPersonID', persInfoDataObj.masterPersonID);
@@ -670,7 +677,7 @@
         const jsPureInputAddressLine1 = document.querySelector('.jsPureInputAddressLine1');
         formData.append('AddressLine1', jsPureInputAddressLine1.value)
 
-        const jsPureInputAddressLine2 = document.querySelector('.jsPureInputAddressLine1');
+        const jsPureInputAddressLine2 = document.querySelector('.jsPureInputAddressLine2');
         formData.append('AddressLine2', jsPureInputAddressLine2.value)
 
         const options = {
@@ -696,7 +703,7 @@
         addressDataObj.barangayName = addressReturnData.barangayName
         addressDataObj.addressLine1 = addressReturnData.addressLine1
         addressDataObj.addressLine2 = addressReturnData.addressLine2
-        
+
 
         //change mode
         addressChangeModeAfterClickSaved();
@@ -929,6 +936,9 @@
 
         //validate inputs
         if (!validateInputInformation(e)) return;
+
+        //regex
+        if (!validateCompensationRegex()) return;
 
         //save actual data
 
@@ -1183,6 +1193,40 @@
     }
 
     async function handleClickSaveInputBtn(e) {
+        //validate input
+        let isValid=true;
+        const input = e.target.closest('.jsNewEmpIndItemCont').querySelector('input');
+        if (input.hasAttribute('required')) {
+            if (isNullOrWhiteSpace(input.value.trim()) == true || input.getAttribute('data-id') == 0 || input.getAttribute('data-id') == 'undefined') {
+                if (input.classList.contains('jsSelectInput')) {
+                    input.closest('.jsNewEmpSelectInputArrowCont').classList.add('invalid')
+                    isValid = false;
+                } else {
+                    input.classList.add('invalid')
+                    isValid = false;
+                }
+
+            } else {
+                if (input.classList.contains('jsSelectInput')) {
+                    input.closest('.jsNewEmpSelectInputArrowCont').classList.remove('invalid')
+                } else {
+                    input.classList.remove('invalid')
+                }
+            }
+        }
+
+        if (input.getAttribute('name') == 'BasicSalary') {
+            if (!isNullOrWhiteSpace(input.value)) {
+                if (!regexPatterns.decimal.test(input.value)) {
+                    input.classList.add('invalid');
+                    isValid = false
+                } else {
+                    input.classList.remove('invalid');
+                }
+            }
+        }
+
+        if(!isValid) return
 
         const formData = new FormData();
         formData.append('MasterPersonID', persInfoDataObj.masterPersonID);
@@ -1865,6 +1909,70 @@
         return isValid
     }
 
+    function validateContactsRegex() {
+        let isValid = true;
+
+        //mobile number
+        const jsPureInputMobileNumber = document.querySelector('.jsPureInputMobileNumber');
+        if (!jsPureInputMobileNumber.hasAttribute('disabled')) {
+            if (!isNullOrWhiteSpace(jsPureInputMobileNumber.value)) {
+                if (!regexPatterns.mobileNo.test(jsPureInputMobileNumber.value)) {
+                    jsPureInputMobileNumber.classList.add('invalid');
+                    isValid = false
+                } else {
+                    jsPureInputMobileNumber.classList.remove('invalid');
+                }
+            }
+        }
+
+
+        //email address
+        const jsPureInputEmailAddress = document.querySelector('.jsPureInputEmailAddress');
+        if (!jsPureInputEmailAddress.hasAttribute('disabled')) {
+            if (!isNullOrWhiteSpace(jsPureInputEmailAddress.value)) {
+                if (!regexPatterns.emailAddress.test(jsPureInputEmailAddress.value)) {
+                    jsPureInputEmailAddress.classList.add('invalid');
+                    isValid = false
+                } else {
+                    jsPureInputEmailAddress.classList.remove('invalid');
+                }
+            }
+        }
+        return isValid
+    }
+
+    function validateCompensationRegex() {
+        let isValid = true;
+
+        //mobile number
+        const jsPureInputBasicSalary = document.querySelector('.jsPureInputBasicSalary');
+        if (!jsPureInputBasicSalary.hasAttribute('disabled')) {
+            if (!isNullOrWhiteSpace(jsPureInputBasicSalary.value)) {
+                if (!regexPatterns.mobileNo.test(jsPureInputBasicSalary.value)) {
+                    jsPureInputBasicSalary.classList.add('invalid');
+                    isValid = false
+                } else {
+                    jsPureInputBasicSalary.classList.remove('invalid');
+                }
+            }
+        }
+
+
+        //email address
+        const jsPureInputEmailAddress = document.querySelector('.jsPureInputEmailAddress');
+        if (!jsPureInputEmailAddress.hasAttribute('disabled')) {
+            if (!isNullOrWhiteSpace(jsPureInputEmailAddress.value)) {
+                if (!regexPatterns.emailAddress.test(jsPureInputEmailAddress.value)) {
+                    jsPureInputEmailAddress.classList.add('invalid');
+                    isValid = false
+                } else {
+                    jsPureInputEmailAddress.classList.remove('invalid');
+                }
+            }
+        }
+        return isValid
+    }
+
     function saveIndInfoToLocalDataObjectAfterUpdate(returnData) {
         if (returnData.name == 'FirstName') {
             persInfoDataObj.firstName = returnData.value
@@ -1963,7 +2071,6 @@
     if (persInfoDataObj.isAllEmployeeFunction == true) {
         editModeForAllEmployeeFunction()
     }
-
 }
 
 

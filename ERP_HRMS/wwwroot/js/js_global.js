@@ -706,23 +706,4 @@ const companyDetailsData = {
 let isPersonInfoSave = false;
 
 
-const allEmployeeRefData = {
-    getMasterPersonData: async function () {
-        //note: parameters is an integer (1,2,3,..) see database meaning for numbers
-        //for now 1 is for ViewSalesByDate, 2 is ViewSalesByAgent
-        let linkedList = null;
 
-
-        const data = await fetchData.getData('all-employee-data')
-        if (data != null) {
-            linkedList = new LinkedList(data.masterPersonList[0])
-            for (i = 1; i < data.masterPersonList.length; i++) {
-                linkedList.push(data.masterPersonList[i])
-            }
-        }
-
-
-
-        return linkedList;
-    },
-}

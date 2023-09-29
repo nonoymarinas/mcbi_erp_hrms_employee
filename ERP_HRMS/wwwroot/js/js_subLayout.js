@@ -142,17 +142,26 @@ async function clickMainMenuNewEmployee() {
 }
 
 async function clickMainMenuAllEmployee() {
+    //get all employee data
     //spinner on
     document.body.appendChild(spinnerType01());
-    const linkedList = await allEmployeeRefData.getMasterPersonData()
-
+    const data = await fetchData.getData('all-employee-data')
     //spinner off
     document.querySelector('.jsSpinnerCont').remove();
 
-    if (linkedList == null) return;
-    
+    if (data == null) return;
+
+    //convert to linkedlist
+    let linkedList = null;
+    if (data != null) {
+        linkedList = new LinkedList(data.masterPersonList[0])
+        for (i = 1; i < data.masterPersonList.length; i++) {
+            linkedList.push(data.masterPersonList[i])
+        }
+    }
+
     const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
-    const view = await fetchData.viewData('/AllEmployee/MainPage');
+    const view = await fetchData.viewData('/AllEmployee/AllEmployeeMainPage');
 
     const jsAllEmployeeMainCont = view.querySelector('.jsAllEmployeeMainCont');
     jsSublayout01ContentSubCont.innerHTML = '';

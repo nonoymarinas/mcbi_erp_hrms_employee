@@ -1,43 +1,70 @@
 ﻿
 async function allEmployee(linkedList) {
-    
     //this will indicate that this is all employee
     persInfoDataObj.isAllEmployeeFunction = true;
 
-    //load reference data
-    const jsSearchInput = document.querySelector('.jsSearchInput');
-    jsSearchInput.addEventListener('input', inputSearchName)
-    let jsSearchCont = document.querySelector('.jsSearchCont');
-    function inputSearchName(e) {
-        if (e.target.value == '') {
-            jsSearchCont.classList.add('display-none');
-        } else if (jsSearchCont.classList.contains('display-none')) {
-            jsSearchCont.classList.remove('display-none');
-        }
+    const allEmployeeArr = linkedList.getAll();
+    //console.log(allEmployeeArr)
+    
+    const jsAllEmpSubContentCont = document.querySelector('.jsAllEmpSubContentCont');
+    allEmployeeArr.forEach(item => {
+        loadAddSingleEmployeeToList(item)
+    })
 
-        jsSearchCont.innerHTML = '';
+    function loadAddSingleEmployeeToList(employee) {
+        const imageUrl = baseUrl + employee.imageFileName
+        const htmlString = `<div class="all-emp-item-main-cont jsAllEmpItemMainCont" data-id="${employee.masterPersonID}">
+                        <div class="all-emp-image-id-cont">
+                            <img class="all-emp-image-id" src="${imageUrl}" />
+                        </div>
+                        <div class="all-emp-name-det-cont">
+                            <h4>${employee.firstName + ' ' + employee.lastName}</h4>
+                            <label class="all-emp-item-label">${employee.position}</label>
+                        </div>
+                         <div class="all-emp-id-number-cont">
+                             <h4 class="all-emp-id-number-text">${employee.employeeNumber}</h4>
+                             <label class="all-emp-id-number-label">Employee no.</label>
+                        </div>
+                    </div>`
+
+        const jsAllEmpItemMainCont = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsAllEmpItemMainCont')
+
+        jsAllEmpItemMainCont.addEventListener('click', handleClickIndividualEmployee)
+
+        //console.log(jsAllEmpItemMainCont)
+        jsAllEmpSubContentCont.appendChild(jsAllEmpItemMainCont)
+    }
+
+
+    //load reference data
+    const jsAllEmpSearchInput = document.querySelector('.jsAllEmpSearchInput');
+    jsAllEmpSearchInput.addEventListener('input', handleInputSearchName)
+    function handleInputSearchName(e) {
+        
+        jsAllEmpSubContentCont.innerHTML = '';
         let searchDataArray = linkedList.linkedListIndexOf('fullName', e.target.value)
         for (let i = 0; i < searchDataArray.length; i++) {
-            let htmlString = `<li class="search-item-result-li jsSearchResultLi" data-id=${searchDataArray[i].masterPersonID}>${searchDataArray[i].fullName}</li>`
-            let jsSearchResultLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSearchResultLi');
+            //let htmlString = `<li class="search-item-result-li jsSearchResultLi" data-id=${searchDataArray[i].masterPersonID}>${searchDataArray[i].fullName}</li>`
+            //let jsSearchResultLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSearchResultLi');
 
-            jsSearchResultLi.addEventListener('click', clickSearchResultLi)
+            //jsSearchResultLi.addEventListener('click', clickSearchResultLi)
 
-            function clickSearchResultLi(e) {
-                jsSearchInput.setAttribute('data-id', e.target.getAttribute('data-id'));
-                jsSearchInput.value = e.target.textContent;
-                jsSearchCont.classList.add('display-none');
-            }
+            //function clickSearchResultLi(e) {
+            //    jsSearchInput.setAttribute('data-id', e.target.getAttribute('data-id'));
+            //    jsSearchInput.value = e.target.textContent;
+            //    jsSearchCont.classList.add('display-none');
+            //}
 
-            jsSearchCont.appendChild(jsSearchResultLi);
+            //jsSearchCont.appendChild(jsSearchResultLi);
+
+            loadAddSingleEmployeeToList(searchDataArray[i])
         }
 
     }
 
-    const jsAllEmpSearchBtn = document.querySelector('.jsAllEmpSearchBtn');
-    jsAllEmpSearchBtn.addEventListener('click', clickSearchBtn);
-    async function clickSearchBtn() {
-        const MasterPersonID = document.querySelector('.jsSearchInput').getAttribute('data-id');
+
+    async function handleClickIndividualEmployee(e) {
+        const MasterPersonID = e.currentTarget.getAttribute('data-id');
         const formData = new FormData();
         formData.append('MasterPersonID', MasterPersonID)
         const options = {
@@ -65,30 +92,33 @@ async function allEmployee(linkedList) {
 
         //attached function for employee UI
         await newEmployee(newEmpData);
-        
+
 
         //construct image URL and show image
-        const baseUrl = 'https://speedxstorageaccount.blob.core.windows.net/speedxcontainer/'
-        const imageUrl = baseUrl + singleEmployeeData.personalInfo.photoImageFileName
-        const img = new Image();
-        img.classList.add('jsNewEmpImagePhoto');
-        img.src = imageUrl;
-        document.querySelector('.jsNewEmpPhotoCont').innerHTML = '';
-        document.querySelector('.jsNewEmpPhotoCont').appendChild(img);
+        if (!isNullOrWhiteSpace(singleEmployeeData.personalInfo.photoImageFileName)) {
+            const imageUrl = baseUrl + singleEmployeeData.personalInfo.photoImageFileName
+            const img = new Image();
+            img.classList.add('jsNewEmpImagePhoto');
+            img.src = imageUrl;
+            document.querySelector('.jsNewEmpPhotoCont').innerHTML = '';
+            document.querySelector('.jsNewEmpPhotoCont').appendChild(img);
 
-        img.onload = function () {
-            if (parseFloat(img.clientHeight) >= parseFloat(img.clientWidth)) {
-                img.classList.remove('max-height-100');
-                img.classList.add('max-width-100');
-            } else {
-                img.classList.add('max-height-100');
-                img.classList.remove('max-width-100');
+            img.onload = function () {
+                if (parseFloat(img.clientHeight) >= parseFloat(img.clientWidth)) {
+                    img.classList.remove('max-height-100');
+                    img.classList.add('max-width-100');
+                } else {
+                    img.classList.add('max-height-100');
+                    img.classList.remove('max-width-100');
+                }
             }
         }
+
 
         //update local employee data
 
         //personal information
+        console.log(singleEmployeeData);
         persInfoDataObj.masterPersonID = singleEmployeeData.personalInfo.masterPersonID;
         persInfoDataObj.employeeNumber = singleEmployeeData.personalInfo.employeeNumber;
         persInfoDataObj.firstName = singleEmployeeData.personalInfo.firstName;
@@ -99,8 +129,8 @@ async function allEmployee(linkedList) {
         persInfoDataObj.civilStatusID = singleEmployeeData.personalInfo.civilStatusID;
         persInfoDataObj.genderName = singleEmployeeData.personalInfo.genderName;
         persInfoDataObj.genderID = singleEmployeeData.personalInfo.genderID;
+        persInfoDataObj.imageFileName = singleEmployeeData.personalInfo.photoImageFileName;
         persInfoDataObj.isPersonalInfoSaved = true;
-        
 
         document.querySelector('.jsPureInputFirstName').value = persInfoDataObj.firstName
         document.querySelector('.jsPureInputMiddleName').value = persInfoDataObj.middleName
@@ -186,22 +216,23 @@ async function allEmployee(linkedList) {
         addressForiegnDataObj.foreignCompleteAddress = singleEmployeeData.foreignAddress.foreignCompleteAddress;
 
         //check if is philippines or foriegn
-        if (singleEmployeeData.employeeAddressCountry.countryID == 1) {
-            document.querySelector('.jsSelectInputCountry').value = addressDataObj.countryName
-            document.querySelector('.jsSelectInputCountry').setAttribute('data-id', addressDataObj.countryID)
-            document.querySelector('.jsSelectInputRegion').value = addressDataObj.regionName
-            document.querySelector('.jsSelectInputRegion').setAttribute('data-id', addressDataObj.regionID)
-            document.querySelector('.jsSelectInputProvince').value = addressDataObj.provinceName
-            document.querySelector('.jsSelectInputProvince').setAttribute('data-id', addressDataObj.provinceID)
-            document.querySelector('.jsSelectInputCity').value = addressDataObj.cityName
-            document.querySelector('.jsSelectInputCity').setAttribute('data-id', addressDataObj.cityID)
-            document.querySelector('.jsSelectInputBarangay').value = addressDataObj.barangayName
-            document.querySelector('.jsSelectInputBarangay').setAttribute('data-id', addressDataObj.barangayID)
-            document.querySelector('.jsPureInputAddressLine1').value = addressDataObj.addressLine1
-            document.querySelector('.jsPureInputAddressLine2').value = addressDataObj.addressLine2
-        } else {
-            //put foriegn address here
+        if (singleEmployeeData.employeeAddressCountry !=null) {
+            if (singleEmployeeData.employeeAddressCountry.countryID == 1) {
+                document.querySelector('.jsSelectInputCountry').value = addressDataObj.countryName
+                document.querySelector('.jsSelectInputCountry').setAttribute('data-id', addressDataObj.countryID)
+                document.querySelector('.jsSelectInputRegion').value = addressDataObj.regionName
+                document.querySelector('.jsSelectInputRegion').setAttribute('data-id', addressDataObj.regionID)
+                document.querySelector('.jsSelectInputProvince').value = addressDataObj.provinceName
+                document.querySelector('.jsSelectInputProvince').setAttribute('data-id', addressDataObj.provinceID)
+                document.querySelector('.jsSelectInputCity').value = addressDataObj.cityName
+                document.querySelector('.jsSelectInputCity').setAttribute('data-id', addressDataObj.cityID)
+                document.querySelector('.jsSelectInputBarangay').value = addressDataObj.barangayName
+                document.querySelector('.jsSelectInputBarangay').setAttribute('data-id', addressDataObj.barangayID)
+                document.querySelector('.jsPureInputAddressLine1').value = addressDataObj.addressLine1
+                document.querySelector('.jsPureInputAddressLine2').value = addressDataObj.addressLine2
+            } else {
+                //put foriegn address here
+            }
         }
-        
     }
 }

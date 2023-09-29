@@ -1,14 +1,11 @@
 ﻿.new-emp-main-title-cont {
-    position: fixed;
     height: var(--subHeaderHeight);
     width: 100%;
-    top: var(--headerHeight);
-    left: 0;
     display: grid;
     grid-template-columns: 1fr 40px;
     background: #222;
-    color: #fff;
-    background: #505050;
+    color: #333;
+    background: var(--speedxOffWhite);
     padding: .3em;
     z-index: 99;
 }
@@ -18,7 +15,10 @@ input[type="date"] {
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
 }
-
+.new-emp-main-title-text{
+    letter-spacing:.1rem;
+    padding-left:10px;
+}
 .new-emp-pure-input {
     background: #f5f5f5;
     border: 1px solid rgba(5,5,5,.2);
@@ -98,7 +98,10 @@ input[type="date"] {
     .new-emp-ind-edit-btn:active {
         border: 1px dashed #555;
     }
-
+.new-emp-main-close{
+    justify-self:center;
+    align-self:center;
+}
 .new-emp-sub-group-title-cont {
     display: grid;
     grid-template-columns: 1fr 60px 60px;
@@ -139,11 +142,13 @@ input[type="date"] {
 .new-emp-select-input-arrow-cont {
     display: grid;
     grid-template-columns: 1fr 30px;
-    background: #f5f5f5;
+    background: rgba(255,255,255,1);
     border: 1px solid rgba(5,5,5,.2);
     color: #111;
 }
-
+.new-emp-svg-arrow{
+    fill:#555;
+}
 .new-emp-main-cont {
     display: flex;
     justify-content: center;
@@ -174,23 +179,26 @@ input[type="date"] {
     height: 250px;
     width: 250px;
     border-radius: 10px;
-    border: 1px solid #999;
     overflow:hidden;
-    border:5px solid #fff;
+    border:2px solid #999;
     margin-left:10px;
     position:relative;
 }
 
 .new-emp-sub-cont {
-    display: block;
-    margin-top: var(--subHeaderHeight);
-    padding: 1em;
-    max-width: 800px;
-    background: #d2d2d2;
+    /*display: block;*/
+    /*margin-top: var(--subHeaderHeight);*/
+    /*max-width: 900px;
+    background: var(--speedxOffWhite);
     width: 100%;
-    padding-bottom:120px;
-    /*border:2px groove #d9d9d9;*/
-    box-shadow:0 0 10px 5px #999;
+    padding-bottom: 120px;
+    box-shadow: 0 0 10px 5px #999;*/
+    max-width: 900px;
+    width: 100%;
+    min-height: calc(100% - var(--headerHeight)- var(--headerFooter));
+    background: var(--speedxOffWhite);
+    box-shadow: 0 0 10px 5px #999;
+    padding-bottom: 160px;
 }
 
 .new-emp-ind-item-cont-persinfo {
@@ -200,7 +208,10 @@ input[type="date"] {
     grid-gap: 10px;
     height: 30px;
 }
-
+.employee-details-item-header-title-text{
+    letter-spacing:.07rem;
+    font-weight:600;
+}
 .new-emp-ind-item-cont {
     display: grid;
     grid-template-columns: 110px 1fr 40px;
@@ -217,7 +228,9 @@ input[type="date"] {
 .new-emp-sub-content-cont {
     width: 100%;
     margin-bottom: 30px;
+    padding:0 1rem;
 }
+
 
 .new-emp-content-title-cont {
     width: 100%;
