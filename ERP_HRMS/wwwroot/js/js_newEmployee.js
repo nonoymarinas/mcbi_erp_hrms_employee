@@ -457,7 +457,7 @@
         const jsInputEditBtns = jsNewEmpGroupTitleSaveEditBtnPersInfo.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
         jsInputEditBtns.forEach(button => {
             button.addEventListener('click', handleClickEditInputBtn);
-            button.classList.remove('new-emp-btn-disabled');
+            button.classList.remove('new-emp-persinfo-btn-disabled');
             button.setAttribute('data-issavedmode', false)
         })
 

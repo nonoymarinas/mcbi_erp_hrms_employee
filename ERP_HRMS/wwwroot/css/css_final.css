@@ -65,6 +65,19 @@
     .new-emp-btn-disabled:active {
         border: none;
     }
+.new-emp-persinfo-btn-disabled {
+    border: none;
+    background: none;
+    color: #999;
+}
+
+    .new-emp-persinfo-btn-disabled:hover {
+        border: none;
+    }
+
+    .new-emp-persinfo-btn-disabled:active {
+        border: none;
+    }
 
 .new-emp-input-disabled {
     border: none;
