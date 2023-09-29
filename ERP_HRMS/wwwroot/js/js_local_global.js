@@ -1,5 +1,11 @@
 ﻿let MODULE_ID = 1;
 let baseUrl = `https://speedxstorageaccount.blob.core.windows.net/speedxcontainer/`
+
+let defaultValueSelectLi = {
+    value: '-none-',
+    dataID: 0,
+};
+
 let persInfoDataObj = {
     masterPersonID: '',
     firstName: '',

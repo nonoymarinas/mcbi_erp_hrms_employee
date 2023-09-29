@@ -54,7 +54,6 @@ namespace DataAccess
                         }
                         else
                         {
-
                             if (reader.HasRows)
                             {
                                 reader.Read();

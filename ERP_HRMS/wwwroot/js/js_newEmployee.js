@@ -68,10 +68,7 @@
     }
 
 
-    let defaultValueSelectLi = {
-        value: '-none-',
-        dataID: 0,
-    };
+   
 
     (function defaultSelection() {
 

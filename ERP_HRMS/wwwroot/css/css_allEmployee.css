@@ -17,13 +17,16 @@
 
 .all-emp-header-cont {
     background: var(--speedxVeryDark);
-    height: auto;
+    height: 180px;
 }
 
 .all-emp-content-cont {
     /*background: var(--speedxLightGray);*/
     /*min-height: calc(100vh - var(--headerHeight)- var(--headerFooter));*/
+    max-height: calc(100vh - var(--headerHeight) - var(--headerFooter) - 40px - 180px);
+    /*height:1000px;*/
     padding: 1rem;
+    overflow-y: scroll;
 }
 
 .all-emp-title-cont {
@@ -35,6 +38,7 @@
 }
 
 .all-emp-title-text {
+    height:40px;
     padding: .5rem 1rem;
 }
 

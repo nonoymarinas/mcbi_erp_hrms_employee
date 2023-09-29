@@ -5,7 +5,7 @@ async function allEmployee(linkedList) {
 
     const allEmployeeArr = linkedList.getAll();
     //console.log(allEmployeeArr)
-    
+
     const jsAllEmpSubContentCont = document.querySelector('.jsAllEmpSubContentCont');
     allEmployeeArr.forEach(item => {
         loadAddSingleEmployeeToList(item)
@@ -40,23 +40,10 @@ async function allEmployee(linkedList) {
     const jsAllEmpSearchInput = document.querySelector('.jsAllEmpSearchInput');
     jsAllEmpSearchInput.addEventListener('input', handleInputSearchName)
     function handleInputSearchName(e) {
-        
+
         jsAllEmpSubContentCont.innerHTML = '';
         let searchDataArray = linkedList.linkedListIndexOf('fullName', e.target.value)
         for (let i = 0; i < searchDataArray.length; i++) {
-            //let htmlString = `<li class="search-item-result-li jsSearchResultLi" data-id=${searchDataArray[i].masterPersonID}>${searchDataArray[i].fullName}</li>`
-            //let jsSearchResultLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsSearchResultLi');
-
-            //jsSearchResultLi.addEventListener('click', clickSearchResultLi)
-
-            //function clickSearchResultLi(e) {
-            //    jsSearchInput.setAttribute('data-id', e.target.getAttribute('data-id'));
-            //    jsSearchInput.value = e.target.textContent;
-            //    jsSearchCont.classList.add('display-none');
-            //}
-
-            //jsSearchCont.appendChild(jsSearchResultLi);
-
             loadAddSingleEmployeeToList(searchDataArray[i])
         }
 
@@ -162,24 +149,7 @@ async function allEmployee(linkedList) {
         document.querySelector('.jsPureInputLandlineNumber').value = contactsDataObj.landlineNo
         document.querySelector('.jsPureInputEmailAddress').value = contactsDataObj.emailAdd
 
-        //compensation
-        compensationDataObj.ratePeriod = singleEmployeeData.compensation.ratePeriod;
-        compensationDataObj.ratePeriodID = singleEmployeeData.compensation.ratePeriodID;
-        compensationDataObj.basicSalary = singleEmployeeData.compensation.basicSalary;
-        compensationDataObj.allowance = singleEmployeeData.compensation.allowance;
-        compensationDataObj.salaryConditionID = singleEmployeeData.compensation.salaryConditionID;
-        compensationDataObj.salaryCondition = singleEmployeeData.compensation.salaryCondition;
-        compensationDataObj.currencyID = singleEmployeeData.compensation.currencyID;
-        compensationDataObj.currency = singleEmployeeData.compensation.currency;
-
-        document.querySelector('.jsSelectInputRatePeriod').value = compensationDataObj.ratePeriod
-        document.querySelector('.jsSelectInputRatePeriod').setAttribute('data-id', compensationDataObj.ratePeriodID)
-        document.querySelector('.jsPureInputBasicSalary').value = compensationDataObj.basicSalary
-        document.querySelector('.jsPureInputAllowance').value = compensationDataObj.allowance
-        document.querySelector('.jsSelectInputSalaryCondition').value = compensationDataObj.salaryCondition
-        document.querySelector('.jsSelectInputSalaryCondition').setAttribute('data-id', compensationDataObj.salaryConditionID)
-
-        //compensation
+        //job description
         jobDescriptionDataObj.positionID = singleEmployeeData.jobDescription.positionID;
         jobDescriptionDataObj.position = singleEmployeeData.jobDescription.positionName;
         jobDescriptionDataObj.departmentID = singleEmployeeData.jobDescription.departmentID;
@@ -192,6 +162,34 @@ async function allEmployee(linkedList) {
         document.querySelector('.jsSelectInputDepartment').setAttribute('data-id', jobDescriptionDataObj.departmentID)
         document.querySelector('.jsPureInputRemarks').value = jobDescriptionDataObj.remarks
 
+        //compensation
+        compensationDataObj.ratePeriod = singleEmployeeData.compensation.ratePeriod;
+        compensationDataObj.ratePeriodID = singleEmployeeData.compensation.ratePeriodID;
+        compensationDataObj.basicSalary = singleEmployeeData.compensation.basicSalary;
+        compensationDataObj.allowance = singleEmployeeData.compensation.allowance;
+        compensationDataObj.salaryConditionID = singleEmployeeData.compensation.salaryConditionID;
+        compensationDataObj.salaryCondition = singleEmployeeData.compensation.salaryCondition;
+        compensationDataObj.currencyID = singleEmployeeData.compensation.currencyID;
+        compensationDataObj.currency = singleEmployeeData.compensation.currency;
+
+        if (compensationDataObj.ratePeriod == 0) {
+            document.querySelector('.jsSelectInputRatePeriod').value = defaultValueSelectLi.value
+            document.querySelector('.jsSelectInputRatePeriod').setAttribute('data-id', compensationDataObj.ratePeriodID)
+        } else {
+            document.querySelector('.jsSelectInputRatePeriod').value = compensationDataObj.ratePeriod
+            document.querySelector('.jsSelectInputRatePeriod').setAttribute('data-id', compensationDataObj.ratePeriodID)
+        }
+            document.querySelector('.jsPureInputBasicSalary').value = compensationDataObj.basicSalary
+        document.querySelector('.jsPureInputAllowance').value = compensationDataObj.allowance
+        if (compensationDataObj.salaryConditionID == 0) {
+            document.querySelector('.jsSelectInputSalaryCondition').value = defaultValueSelectLi.value
+            document.querySelector('.jsSelectInputSalaryCondition').setAttribute('data-id', compensationDataObj.salaryConditionID)
+        } else {
+            document.querySelector('.jsSelectInputSalaryCondition').value = compensationDataObj.salaryCondition
+            document.querySelector('.jsSelectInputSalaryCondition').setAttribute('data-id', compensationDataObj.salaryConditionID)
+        }
+            
+        
         //addresses philippines
         addressDataObj.countryID = singleEmployeeData.philippineAddress.countryID;
         addressDataObj.countryName = singleEmployeeData.philippineAddress.country;
@@ -216,7 +214,7 @@ async function allEmployee(linkedList) {
         addressForiegnDataObj.foreignCompleteAddress = singleEmployeeData.foreignAddress.foreignCompleteAddress;
 
         //check if is philippines or foriegn
-        if (singleEmployeeData.employeeAddressCountry !=null) {
+        if (singleEmployeeData.employeeAddressCountry != null) {
             if (singleEmployeeData.employeeAddressCountry.countryID == 1) {
                 document.querySelector('.jsSelectInputCountry').value = addressDataObj.countryName
                 document.querySelector('.jsSelectInputCountry').setAttribute('data-id', addressDataObj.countryID)
