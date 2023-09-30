@@ -1214,7 +1214,18 @@
 
         if (input.getAttribute('name') == 'BasicSalary') {
             if (!isNullOrWhiteSpace(input.value)) {
-                if (!regexPatterns.decimal.test(input.value)) {
+                if (!regexPatterns.decimal.test(input.value.trim())) {
+                    input.classList.add('invalid');
+                    isValid = false
+                } else {
+                    input.classList.remove('invalid');
+                }
+            }
+        }
+
+        if (input.getAttribute('name') == 'Allowance') {
+            if (!isNullOrWhiteSpace(input.value)) {
+                if (!regexPatterns.decimal.test(input.value.trim())) {
                     input.classList.add('invalid');
                     isValid = false
                 } else {
@@ -1253,11 +1264,11 @@
                 } else {
                     input.classList.remove('invalid');
                     formData.append('Name', input.getAttribute('name'))
-                    formData.append('Value', input.value)
+                    formData.append('Value', input.value.trim())
                 }
             } else {
                 formData.append('Name', input.getAttribute('name'))
-                formData.append('Value', input.value)
+                formData.append('Value', input.value.trim())
             }
         }
 
