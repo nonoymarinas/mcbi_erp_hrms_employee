@@ -1194,7 +1194,7 @@
         let isValid=true;
         const input = e.target.closest('.jsNewEmpIndItemCont').querySelector('input');
         if (input.hasAttribute('required')) {
-            if (isNullOrWhiteSpace(input.value.trim()) == true || input.getAttribute('data-id') == 0 || input.getAttribute('data-id') == 'undefined') {
+            if (isNullOrWhiteSpace(input.value.trim()) == true || input.getAttribute('data-id') == 'undefined') {
                 if (input.classList.contains('jsSelectInput')) {
                     input.closest('.jsNewEmpSelectInputArrowCont').classList.add('invalid')
                     isValid = false;
@@ -1231,10 +1231,10 @@
         if (e.target.classList.contains('jsSelectInputEditBtn')) {
             const input = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsSelectInput');
             if (input.hasAttribute('required')) {
-                if (input.getAttribute('data-id') == 'undefined' || input.getAttribute('data-id') == 0 || input.getAttribute('data-id') == null) {
+                if (input.getAttribute('data-id') == 'undefined' || input.getAttribute('data-id') == null) {
                     input.closest('.jsNewEmpSelectInputArrowCont').classList.add('invalid');
                     return;
-                } else {
+                }else {
                     input.closest('.jsNewEmpSelectInputArrowCont').classList.remove('invalid');
                     formData.append('Name', input.getAttribute('name'))
                     formData.append('Value', input.getAttribute('data-id'))
