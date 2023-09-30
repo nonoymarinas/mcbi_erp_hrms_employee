@@ -1868,7 +1868,7 @@
         const jsPureInputSssNumber = document.querySelector('.jsPureInputSssNumber');
         if (!jsPureInputSssNumber.hasAttribute('disabled')) {
             if (!isNullOrWhiteSpace(jsPureInputSssNumber.value)) {
-                if (!regexPatterns.sssNumber.test(jsPureInputSssNumber.value)) {
+                if (!regexPatterns.sssNumber.test(jsPureInputSssNumber.value.trim())) {
                     jsPureInputSssNumber.classList.add('invalid');
                     isValid = false
                 } else {
@@ -1881,7 +1881,7 @@
         const jsPureInputPagibigNumber = document.querySelector('.jsPureInputPagibigNumber');
         if (!jsPureInputPagibigNumber.hasAttribute('disabled')) {
             if (!isNullOrWhiteSpace(jsPureInputPagibigNumber.value)) {
-                if (!regexPatterns.pagibigNumber.test(jsPureInputPagibigNumber.value)) {
+                if (!regexPatterns.pagibigNumber.test(jsPureInputPagibigNumber.value.trum())) {
                     jsPureInputPagibigNumber.classList.add('invalid');
                     isValid = false
                 } else {
@@ -1894,7 +1894,7 @@
         const jsPureInputPhilhealthNumber = document.querySelector('.jsPureInputPhilhealthNumber');
         if (!jsPureInputPhilhealthNumber.hasAttribute('disabled')) {
             if (!isNullOrWhiteSpace(jsPureInputPhilhealthNumber.value)) {
-                if (!regexPatterns.philihealthNumber.test(jsPureInputPhilhealthNumber.value)) {
+                if (!regexPatterns.philihealthNumber.test(jsPureInputPhilhealthNumber.value.trim())) {
 
                     jsPureInputPhilhealthNumber.classList.add('invalid');
                     isValid = false
@@ -1913,7 +1913,7 @@
         const jsPureInputMobileNumber = document.querySelector('.jsPureInputMobileNumber');
         if (!jsPureInputMobileNumber.hasAttribute('disabled')) {
             if (!isNullOrWhiteSpace(jsPureInputMobileNumber.value)) {
-                if (!regexPatterns.mobileNo.test(jsPureInputMobileNumber.value)) {
+                if (!regexPatterns.mobileNo.test(jsPureInputMobileNumber.value.trim())) {
                     jsPureInputMobileNumber.classList.add('invalid');
                     isValid = false
                 } else {
@@ -1927,7 +1927,7 @@
         const jsPureInputEmailAddress = document.querySelector('.jsPureInputEmailAddress');
         if (!jsPureInputEmailAddress.hasAttribute('disabled')) {
             if (!isNullOrWhiteSpace(jsPureInputEmailAddress.value)) {
-                if (!regexPatterns.emailAddress.test(jsPureInputEmailAddress.value)) {
+                if (!regexPatterns.emailAddress.test(jsPureInputEmailAddress.value.trim())) {
                     jsPureInputEmailAddress.classList.add('invalid');
                     isValid = false
                 } else {
@@ -1941,11 +1941,11 @@
     function validateCompensationRegex() {
         let isValid = true;
 
-        //mobile number
+        //basic salary
         const jsPureInputBasicSalary = document.querySelector('.jsPureInputBasicSalary');
         if (!jsPureInputBasicSalary.hasAttribute('disabled')) {
             if (!isNullOrWhiteSpace(jsPureInputBasicSalary.value)) {
-                if (!regexPatterns.mobileNo.test(jsPureInputBasicSalary.value)) {
+                if (!regexPatterns.mobileNo.test(jsPureInputBasicSalary.value.trim())) {
                     jsPureInputBasicSalary.classList.add('invalid');
                     isValid = false
                 } else {
@@ -1954,19 +1954,6 @@
             }
         }
 
-
-        //email address
-        const jsPureInputEmailAddress = document.querySelector('.jsPureInputEmailAddress');
-        if (!jsPureInputEmailAddress.hasAttribute('disabled')) {
-            if (!isNullOrWhiteSpace(jsPureInputEmailAddress.value)) {
-                if (!regexPatterns.emailAddress.test(jsPureInputEmailAddress.value)) {
-                    jsPureInputEmailAddress.classList.add('invalid');
-                    isValid = false
-                } else {
-                    jsPureInputEmailAddress.classList.remove('invalid');
-                }
-            }
-        }
         return isValid
     }
 
