@@ -2,7 +2,7 @@
     console.log(companyDetailsData.mainHeaderBackGround)
     console.log(document.querySelector('.jsMainLayoutHeaderCont'))
     //update appearance and company details
-    document.querySelector('.jsMainLayoutHeaderCont').style.setProperty('--mainHeaderBackgroundColor',companyDetailsData.mainHeaderBackGround)
+    document.querySelector('.jsMainLayoutHeaderCont').style.setProperty('--mainHeaderBackgroundColor', companyDetailsData.mainHeaderBackGround)
 
     //insert padding to body
     document.querySelector('body').classList.add('body-padding-top-bottom')
@@ -17,7 +17,7 @@
     const jsMainBurgerMenu = document.querySelector('.jsMainBurgerMenu');
     jsMainBurgerMenu.addEventListener('click', clickBurgerMenu)
 
-        
+
     //click user profile main menu
     const jsMainMenuUserProfileLi = document.querySelector('.jsMainMenuUserProfileLi');
     jsMainMenuUserProfileLi.addEventListener('click', clickMainMenuUserProfile)
@@ -35,7 +35,7 @@
     const jsMainMenuEmployeeLi = document.querySelector('.jsMainMenuEmployeeLi');
     jsMainMenuEmployeeLi.addEventListener('click', clickMainMenuEmployee)
 
-   
+
     //click new employee main menu
     const jsMainMenuNewEmployeeSubLi = document.querySelector('.jsMainMenuNewEmployeeSubLi');
     jsMainMenuNewEmployeeSubLi.addEventListener('click', clickMainMenuNewEmployee)
@@ -57,16 +57,16 @@ function clickBurgerMenu() {
     const jsSubLayout01MenuSubCont = document.querySelector('.jsSubLayout01MenuSubCont');
     if (jsSubLayout01MenuSubCont.classList.contains('display-none')) {
         jsSubLayout01MenuSubCont.classList.remove('display-none')
-       
+
     } else {
         jsSubLayout01MenuSubCont.classList.toggle('menu-animate-open')
         jsSubLayout01MenuSubCont.classList.toggle('menu-animate-close')
     }
 }
 
-async function clickMainMenuUserProfile(){
+async function clickMainMenuUserProfile() {
     const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
-    
+
     const view = await fetchData.viewData('/UsersProfile/UserProfileMainPage');
 
     const jsUserProfileMainCont = view.querySelector('.jsUserProfileMainCont');
@@ -77,7 +77,7 @@ async function clickMainMenuUserProfile(){
     await userProfileMainPage();
 }
 
-async function clickMainMenuDashboard(){
+async function clickMainMenuDashboard() {
     const jsSublayout01ContentSubCont = document.querySelector('.jsSublayout01ContentSubCont');
 
     const view = await fetchData.viewData('/DashBoard/MainPage');
@@ -93,7 +93,7 @@ async function clickMenuHomeIcon() {
     const view = await fetchData.viewData('/Home/MainPage');
 
     const jsHomeMainCont = view.querySelector('.jsHomeMainCont');
-   
+
     jsSublayout01ContentSubCont.innerHTML = '';
     jsSublayout01ContentSubCont.appendChild(jsHomeMainCont);
 
@@ -101,7 +101,7 @@ async function clickMenuHomeIcon() {
 }
 
 async function clickMainMenuEmployee(e) {
-   
+
     const jsMainMenuEmployeeSubUl = document.querySelector('.jsMainMenuEmployeeSubUl');
     if (jsMainMenuEmployeeSubUl.classList.contains('display-none')) {
         jsMainMenuEmployeeSubUl.classList.remove('display-none')
@@ -154,9 +154,11 @@ async function clickMainMenuAllEmployee() {
     //convert to linkedlist
     let linkedList = null;
     if (data != null) {
-        linkedList = new LinkedList(data.masterPersonList[0])
-        for (i = 1; i < data.masterPersonList.length; i++) {
-            linkedList.push(data.masterPersonList[i])
+        if (data.masterPersonList != null) {
+            linkedList = new LinkedList(data.masterPersonList[0])
+            for (i = 1; i < data.masterPersonList.length; i++) {
+                linkedList.push(data.masterPersonList[i])
+            }
         }
     }
 

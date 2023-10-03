@@ -9,15 +9,15 @@ using BusinessModel;
 
 namespace BusinessLogic
 {
-    public class AllEmployeeLogic : IGetMasterPersonData, IGetMasterPersonByID,IGetBarangayListByCityID
+    public class AllEmployeeLogic : IGetMasterPersonData, IGetMasterPersonByID, IGetBarangayListByCityID
     {
-   
+
         private readonly ParamMasterPersonByIDModel? _masterID;
         private readonly int _cityID;
 
         public AllEmployeeLogic()
         {
-           
+
         }
 
         public AllEmployeeLogic(ParamMasterPersonByIDModel masterID)
@@ -33,17 +33,19 @@ namespace BusinessLogic
         {
             GetMasterPersonDataAccess accessData = new GetMasterPersonDataAccess();
             ReturnGetMasterPersonDataModel data = await accessData.GetMasterPersonData();
-
-            for (var i = 0; i < data.MasterPersonList.Count; i++){
-                StringBuilder fullName = new StringBuilder();
-                fullName.Append(data.MasterPersonList[i].EmployeeNumber.ToUpper());
-                fullName.Append(" ");
-                fullName.Append(data.MasterPersonList[i].FirstName.ToUpper());
-                fullName.Append(" ");
-                fullName.Append(data.MasterPersonList[i].LastName.ToUpper());
-                data.MasterPersonList[i].FullName = fullName.ToString();
+            if (data.MasterPersonList != null)
+            {
+                for (var i = 0; i < data.MasterPersonList.Count; i++)
+                {
+                    StringBuilder fullName = new StringBuilder();
+                    fullName.Append(data.MasterPersonList[i].EmployeeNumber.ToUpper());
+                    fullName.Append(" ");
+                    fullName.Append(data.MasterPersonList[i].FirstName.ToUpper());
+                    fullName.Append(" ");
+                    fullName.Append(data.MasterPersonList[i].LastName.ToUpper());
+                    data.MasterPersonList[i].FullName = fullName.ToString();
+                }
             }
-
             return data;
 
         }
