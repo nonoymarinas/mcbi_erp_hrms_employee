@@ -23,7 +23,7 @@
 .sublayout01-header-cont {
     display: grid;
     grid-template-columns: auto 1fr 60px;
-    background: #3282ff;
+    background: #111;
     padding: .3em .5em;
     align-self: center;
     position: fixed;
@@ -41,7 +41,6 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    /*position: absolute;*/
     bottom: 10px;
     left: 10px;
     padding: 9px;
@@ -59,8 +58,8 @@
     }
 
 .burger-menu-lines {
-    border: 1px solid #444;
-    background-color: #444;
+    border: 1px solid #ffffff;
+    background-color: #ffffff;
     width: 100%;
 }
 
@@ -345,7 +344,8 @@
 
 .main-layout-header-title-text {
     font-size: 1.1em;
-    font-weight: 400
+    font-weight: 400;
+    color:#eeeeee;
 }
 
 .main-menu-equipment-sub-ul {
