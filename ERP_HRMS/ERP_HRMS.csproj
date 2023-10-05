@@ -18,7 +18,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\icon\alert\" />
-    <Folder Include="wwwroot\logo\" />
+    <Folder Include="wwwroot\icon\logo\" />
+    <Folder Include="wwwroot\logo\icons\" />
   </ItemGroup>
 
   <ItemGroup>

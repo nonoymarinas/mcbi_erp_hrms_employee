@@ -22,10 +22,11 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.MapRazorPages();
+app.MapDefaultControllerRoute();
 
 app.MapControllerRoute(
 	name: "default",
-
 //pattern: "{controller=AllEmployee}/{action=AllEmployeeMainPage}/{id?}");
 pattern: "{controller=Signin}/{action=LoginWindow}/{id?}");
 
