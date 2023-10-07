@@ -60,11 +60,15 @@ let addressForiegnDataObj = {
     postalAddressTypeID: '',
 }
 
-let jobDescriptionDataObj = {
+let employmentsDataObj = {
     position: '',
     positionID: '',
     department: '',
     departmentID: '',
+    dateHired: '',
+    projectAssignment:'',
+    projectAssignmentID: '',
+    projectNumber: '',
     remarks: '',
 }
 
@@ -129,11 +133,15 @@ function resetEmployeeLocalData() {
     addressDataObj.postalAddressTypeID = ''
 
     //job description
-    jobDescriptionDataObj.position = ''
-    jobDescriptionDataObj.positionID = ''
-    jobDescriptionDataObj.department = ''
-    jobDescriptionDataObj.departmentID = ''
-    jobDescriptionDataObj.remarks = ''
+    employmentsDataObj.position = ''
+    employmentsDataObj.positionID = ''
+    employmentsDataObj.department = ''
+    employmentsDataObj.departmentID = ''
+    employmentsDataObj.dateHired = ''
+    employmentsDataObj.projectAssignment = ''
+    employmentsDataObj.projectAssignmentID = ''
+    employmentsDataObj.projectNumber = ''
+    employmentsDataObj.remarks = ''
 
     //compensation
     compensationDataObj.ratePeriod = ''

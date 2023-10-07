@@ -66,8 +66,10 @@ async function allEmployee(linkedList) {
 
         //fetch data needed for new employee form
         let newEmpData = await fetchData.getData('new-employee-ref-data')
+        
         if (newEmpData == null) return;
-
+        console.log(newEmpData)
+        
         //fetch employee data UI
         const view = await fetchData.viewData('new-employee-main-page');
         const jsNewEmpMainCont = view.querySelector('.jsNewEmpMainCont');
@@ -149,18 +151,25 @@ async function allEmployee(linkedList) {
         document.querySelector('.jsPureInputLandlineNumber').value = contactsDataObj.landlineNo
         document.querySelector('.jsPureInputEmailAddress').value = contactsDataObj.emailAdd
 
-        //job description
-        jobDescriptionDataObj.positionID = singleEmployeeData.jobDescription.positionID;
-        jobDescriptionDataObj.position = singleEmployeeData.jobDescription.positionName;
-        jobDescriptionDataObj.departmentID = singleEmployeeData.jobDescription.departmentID;
-        jobDescriptionDataObj.department = singleEmployeeData.jobDescription.departmentName;
-        jobDescriptionDataObj.remarks = singleEmployeeData.jobDescription.remarks;
-
-        document.querySelector('.jsSelectInputPosition').value = jobDescriptionDataObj.position
-        document.querySelector('.jsSelectInputPosition').setAttribute('data-id', jobDescriptionDataObj.positionID)
-        document.querySelector('.jsSelectInputDepartment').value = jobDescriptionDataObj.department
-        document.querySelector('.jsSelectInputDepartment').setAttribute('data-id', jobDescriptionDataObj.departmentID)
-        document.querySelector('.jsPureInputRemarks').value = jobDescriptionDataObj.remarks
+        //employments
+        employmentsDataObj.positionID = singleEmployeeData.jobDescription.positionID;
+        employmentsDataObj.position = singleEmployeeData.jobDescription.positionName;
+        employmentsDataObj.departmentID = singleEmployeeData.jobDescription.departmentID;
+        employmentsDataObj.department = singleEmployeeData.jobDescription.departmentName;
+        employmentsDataObj.dateHired = singleEmployeeData.jobDescription.dateHired;
+        employmentsDataObj.projectAssignmentID = singleEmployeeData.jobDescription.projectAssignmentID;
+        employmentsDataObj.projectAssignment = singleEmployeeData.jobDescription.projectAssignment;
+        employmentsDataObj.projectNumber = singleEmployeeData.jobDescription.projectNumber;
+        employmentsDataObj.remarks = singleEmployeeData.jobDescription.remarks;
+       
+        document.querySelector('.jsSelectInputPosition').value = employmentsDataObj.position
+        document.querySelector('.jsSelectInputPosition').setAttribute('data-id', employmentsDataObj.positionID)
+        document.querySelector('.jsSelectInputDepartment').value = employmentsDataObj.department
+        document.querySelector('.jsSelectInputDepartment').setAttribute('data-id', employmentsDataObj.departmentID)
+        document.querySelector('.jsPureInputDateHired').value = employmentsDataObj.dateHired
+        document.querySelector('.jsSelectInputProjectAssignment').value = `${employmentsDataObj.projectNumber} ${employmentsDataObj.projectAssignment}`
+        document.querySelector('.jsSelectInputProjectAssignment').setAttribute('data-id', employmentsDataObj.projectAssignmentID)
+        document.querySelector('.jsPureInputRemarks').value = employmentsDataObj.remarks
 
         //compensation
         compensationDataObj.ratePeriod = singleEmployeeData.compensation.ratePeriod;

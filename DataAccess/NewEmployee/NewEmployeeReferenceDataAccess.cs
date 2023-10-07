@@ -19,6 +19,7 @@ namespace DataAccess
             List<City> CityList = new();
             List<Position> PositionList = new();
             List<Department> DepartmentList = new();
+            List<Project> ProjectList = new();
             List<RatePeriod> RatePeriodList = new();
             List<SalaryCondition> SalaryConditionList = new();
 
@@ -143,6 +144,19 @@ namespace DataAccess
                                 });
                             }
                             returnData.DepartmentList = DepartmentList;
+
+                            //department
+                            reader.NextResult();
+                            while (reader.Read())
+                            {
+                                ProjectList.Add(new Project()
+                                {
+                                    ProjectID = Convert.ToInt32(reader["ProjectID"]),
+                                    ProjectNumber = reader["ProjectNumber"].ToString(),
+                                    ProjectName = reader["ProjectName"].ToString(),
+                                });
+                            }
+                            returnData.ProjectList = ProjectList;
 
                             //rate period
                             reader.NextResult();

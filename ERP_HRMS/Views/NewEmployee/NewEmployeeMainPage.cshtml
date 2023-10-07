@@ -1,6 +1,5 @@
 ﻿
 <div class="new-emp-main-cont jsNewEmpMainCont">
-    <img class="imag-main jsImageMain" />
     <div class="new-emp-sub-cont jsNewEmpSubCont">
         <div class="new-emp-main-title-cont">
             <svg class="new-emp-title-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" height="25px">
@@ -260,7 +259,7 @@
             @*job description*@
             <div class="new-emp-sub-content-cont jsNewEmpSubContentCont">
                 <div class="new-emp-sub-group-title-cont ">
-                    <h4 class="employee-details-item-header-title-text">Job Description</h4>
+                    <h4 class="employee-details-item-header-title-text">Employment</h4>
                     <button name="jobdescription" class="new-emp-sub-group-title-save-btn jsNewEmpGroupTitleSaveEditBtn jsNewEmpGroupTitleSaveEditBtnJobDesc">Save</button>
                     <button name="jobdescription" class="new-emp-sub-group-title-cancel-btn  jsNewEmpCancelBtn jsNewEmpCancelBtnJobDesc">Cancel</button>
                 </div>
@@ -296,6 +295,27 @@
                             </ul>
                         </div>
                         <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="select">edit</button>
+                    </div>
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Date hired:</label>
+                        <input type="date" name="DateHired" class="new-emp-pure-input jsPureInput jsPureInputDateHired" />
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsPureInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
+                    </div>
+                    <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
+                        <label class="new-emp-label">Proj Assign:</label>
+                        <div class="new-emp-select-main-cont jsNewEmpSelectMainContProjectAssignment">
+                            <div class="new-emp-select-input-arrow-cont jsNewEmpSelectInputArrowCont">
+                                <input name="ProjectAssignmentID" class="new-emp-select-input jsSelectInput jsSelectInputProjectAssignment" required />
+                                <div name="ProjectAssignment" class="new-emp-select-arrow-cont jsNewEmpSelectArrowCont jsNewEmpSelectArrowContProjectAssignment">
+                                    <svg class="arrow-disabled" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="15px">
+                                        <path d="M224 353.9l17-17L401 177l17-17L384 126.1l-17 17-143 143L81 143l-17-17L30.1 160l17 17L207 337l17 17z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <ul class="new-emp-select-ul display-none jsNewEmpSelectUl">
+                            </ul>
+                        </div>
+                        <button class="new-emp-ind-edit-btn new-emp-btn-disabled jsInputEditBtn jsSelectInputEditBtn" data-isactive=0 data-buttonfor="input">edit</button>
                     </div>
                     <div class="new-emp-ind-item-cont jsNewEmpIndItemCont">
                         <label class="new-emp-label">Remarks:</label>

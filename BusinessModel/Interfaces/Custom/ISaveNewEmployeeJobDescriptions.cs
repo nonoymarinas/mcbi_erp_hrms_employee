@@ -9,6 +9,6 @@ namespace BusinessModel
 	
 	public interface ISaveNewEmployeeJobDescriptions
 	{
-		public Task<ReturnSaveNewEmployeeJobDescriptionsModel> SaveJobDescriptions();
+		public Task<ReturnSaveNewEmployeeEmploymentsModel> SaveJobDescriptions();
 	}
 }

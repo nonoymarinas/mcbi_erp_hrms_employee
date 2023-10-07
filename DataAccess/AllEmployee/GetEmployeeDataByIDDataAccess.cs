@@ -133,6 +133,10 @@ namespace DataAccess
                                     PositionName = reader["PositionName"].ToString(),
                                     DepartmentID = Convert.ToInt32(reader["DepartmentID"]),
                                     DepartmentName = reader["DepartmentName"].ToString(),
+                                    DateHired = reader["DateHired"].ToString(),
+                                    ProjectAssignmentID = Convert.ToInt32(reader["ProjectAssignmentID"]),
+                                    ProjectAssignment = reader["ProjectAssignment"].ToString(),
+                                    ProjectNumber = reader["ProjectNumber"].ToString(),
                                     Remarks = reader["Remarks"].ToString(),
                                 };
                                 returnData.JobDescription = jobDescription;

@@ -17,7 +17,8 @@ namespace BusinessModel
 		public List<City>? CityList { get; set; }
 		public List<Position>? PositionList { get; set; }
 		public List<Department>? DepartmentList { get; set; }
-		public List<RatePeriod>? RatePeriodList { get; set; }
+        public List<Project>? ProjectList { get; set; }
+        public List<RatePeriod>? RatePeriodList { get; set; }
 		public List<SalaryCondition>? SalaryConditionList { get; set; }
 	}
 }

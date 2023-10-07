@@ -4,19 +4,19 @@ using BusinessModel;
 
 namespace DataAccess
 {
-    public class SaveNewEmployeeJobeDescriptionsDataAccess : ISaveNewEmployeeJobDescriptions
+    public class SaveNewEmployeeEmploymentsDataAccess : ISaveNewEmployeeJobDescriptions
     {
         private string connString = GlobalValues.ConnectionString;
-        private readonly ParamSaveNewEmployeeJobDescriptionsModel? _jobDescriptions;
+        private readonly ParamSaveNewEmployeeJobEmploymentModel? _jobDescriptions;
 
-        public SaveNewEmployeeJobeDescriptionsDataAccess(ParamSaveNewEmployeeJobDescriptionsModel? jobDescriptions)
+        public SaveNewEmployeeEmploymentsDataAccess(ParamSaveNewEmployeeJobEmploymentModel? jobDescriptions)
         {
             _jobDescriptions = jobDescriptions;
         }
 
-        async public Task<ReturnSaveNewEmployeeJobDescriptionsModel> SaveJobDescriptions()
+        async public Task<ReturnSaveNewEmployeeEmploymentsModel> SaveJobDescriptions()
         {
-            ReturnSaveNewEmployeeJobDescriptionsModel dataModel = new();
+            ReturnSaveNewEmployeeEmploymentsModel dataModel = new();
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -38,6 +38,12 @@ namespace DataAccess
 
                     cmd.Parameters.Add(new SqlParameter("@departmentID", SqlDbType.NVarChar));
                     cmd.Parameters["@departmentID"].Value = (_jobDescriptions.Department == null) ? DBNull.Value : _jobDescriptions.Department;
+
+                    cmd.Parameters.Add(new SqlParameter("@dateHired", SqlDbType.Date));
+                    cmd.Parameters["@dateHired"].Value = (_jobDescriptions.DateHired == null) ? DBNull.Value : _jobDescriptions.DateHired;
+
+                    cmd.Parameters.Add(new SqlParameter("@projectAssignmentID", SqlDbType.Date));
+                    cmd.Parameters["@projectAssignmentID"].Value = (_jobDescriptions.ProjectAssignmentID == null) ? DBNull.Value : _jobDescriptions.DateHired;
 
                     cmd.Parameters.Add(new SqlParameter("@remarks", SqlDbType.NVarChar));
                     cmd.Parameters["@remarks"].Value = (_jobDescriptions.Remarks == null) ? DBNull.Value : _jobDescriptions.Remarks;
@@ -65,6 +71,9 @@ namespace DataAccess
                                 dataModel.PositionID = Convert.ToInt32(reader["PositionID"]);
                                 dataModel.DepartmentName = reader["DepartmentName"].ToString();
                                 dataModel.DepartmentID = Convert.ToInt32(reader["DepartmentID"]);
+                                dataModel.DateHired = reader["ProjectAssignment"].ToString();
+                                dataModel.ProjectAssignment = reader["ProjectAssignment"].ToString();
+                                dataModel.ProjectAssignmentID = Convert.ToInt32(reader["ProjectAssignmentID"]);
                                 dataModel.Remarks = reader["Remarks"].ToString();
                                 dataModel.StatusCodeNumber = Convert.ToInt32(reader["StatusCodeNumber"]);
                             }

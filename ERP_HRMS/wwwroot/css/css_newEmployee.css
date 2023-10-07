@@ -311,12 +311,6 @@ input[type="date"] {
     max-width: 100%;
 }
 
-.imag-main {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-}
 
 @media only screen and (min-width: 450px) {
     .new-emp-label-persinfo {

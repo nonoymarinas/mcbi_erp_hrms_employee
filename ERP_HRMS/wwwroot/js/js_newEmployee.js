@@ -55,6 +55,12 @@
         departmentLinkedList.push(newEmpData.departmentList[i])
     }
 
+    //department linkedlist
+    let projectLinkedList = new LinkedList(newEmpData.projectList[0])
+    for (let i = 1; i < newEmpData.projectList.length; i++) {
+        projectLinkedList.push(newEmpData.projectList[i])
+    }
+
     //rate period linkedlist
     let ratePeriodLinkedList = new LinkedList(newEmpData.ratePeriodList[0])
     for (let i = 1; i < newEmpData.ratePeriodList.length; i++) {
@@ -122,7 +128,7 @@
         } else if (button.getAttribute('name') == 'contact') {
             button.addEventListener('click', handleClickSaveContacts)
         } else if (button.getAttribute('name') == 'jobdescription') {
-            button.addEventListener('click', handleClickSaveJobDescriptions)
+            button.addEventListener('click', handleClickSaveEmployments)
         } else if (button.getAttribute('name') == 'compensation') {
             button.addEventListener('click', handleClickSaveCompensations)
         } else if (button.getAttribute('name') == 'address') {
@@ -141,6 +147,8 @@
             arrow.addEventListener('click', handleClickArrowPositionSelect)
         } else if (arrow.getAttribute('name') == 'Department') {
             arrow.addEventListener('click', handleClickArrowDepartmentSelect)
+        } else if (arrow.getAttribute('name') == 'ProjectAssignment') {
+            arrow.addEventListener('click', handleClickArrowProjectAssignmentSelect)
         } else if (arrow.getAttribute('name') == 'RatePeriod') {
             arrow.addEventListener('click', handleClickArrowRatePeriodSelect)
         } else if (arrow.getAttribute('name') == 'SalaryCondition') {
@@ -819,7 +827,7 @@
         jsNewEmpCancelBtnAddress.classList.add('disbale-cancel-btn');
     }
 
-    async function handleClickSaveJobDescriptions(e) {
+    async function handleClickSaveEmployments(e) {
         //check if personal info is already saved
         if (persInfoDataObj.isPersonalInfoSaved == false) {
             alertCustom.isConfirmedOk(alertContainer.warningAlert, 'Save personal information first!')
@@ -852,12 +860,15 @@
         if (jobdescReturnData == null) return;
         console.log(jobdescReturnData)
 
-        jobDescriptionDataObj.position = jobdescReturnData.positionName
-        jobDescriptionDataObj.positionID = jobdescReturnData.positionID
-        jobDescriptionDataObj.department = jobdescReturnData.departmentName
-        jobDescriptionDataObj.departmentID = jobdescReturnData.departmentID
-        jobDescriptionDataObj.remarks = jobdescReturnData.remarks
+        employmentsDataObj.position = jobdescReturnData.positionName
+        employmentsDataObj.positionID = jobdescReturnData.positionID
+        employmentsDataObj.department = jobdescReturnData.departmentName
+        employmentsDataObj.departmentID = jobdescReturnData.departmentID
+        employmentsDataObj.projectAssignment = jobdescReturnData.projectAssignment
+        employmentsDataObj.projectAssignmentID = jobdescReturnData.projectAssignmentID
+        employmentsDataObj.remarks = jobdescReturnData.remarks
 
+        console.log(employmentsDataObj)
         //change mode
         jobDescChangeModeAfterClickSaved()
     }
@@ -865,9 +876,10 @@
     function jobDescChangeModeAfterClickSaved() {
         const jsNewEmpGroupTitleSaveEditBtnJobDesc = document.querySelector('.jsNewEmpGroupTitleSaveEditBtnJobDesc');
         //disable button
-        jsNewEmpGroupTitleSaveEditBtnJobDesc.removeEventListener('click', handleClickSaveJobDescriptions);
+        jsNewEmpGroupTitleSaveEditBtnJobDesc.removeEventListener('click', handleClickSaveEmployments);
         jsNewEmpGroupTitleSaveEditBtnJobDesc.classList.add('new-emp-btn-disabled');
 
+        //enable edit buttons
         const jsInputEditBtns = jsNewEmpGroupTitleSaveEditBtnJobDesc.closest('.jsNewEmpSubContentCont').querySelectorAll('.jsInputEditBtn');
         jsInputEditBtns.forEach(button => {
             button.addEventListener('click', handleClickEditInputBtn);
@@ -915,6 +927,24 @@
             jsSelectInput.setAttribute('disabled', true);
 
             const jsNewEmpSelectUl = jsNewEmpSelectMainContDepartment.querySelector('.jsNewEmpSelectUl');
+            jsNewEmpSelectUl.classList.add('display-none')
+        })();
+
+        //disable select input - project assignment
+        (function () {
+            const jsNewEmpSelectMainContProjectAssignment = document.querySelector('.jsNewEmpSelectMainContProjectAssignment');
+
+            const jsNewEmpSelectInputArrowCont = jsNewEmpSelectMainContProjectAssignment.querySelector('.jsNewEmpSelectInputArrowCont');
+            jsNewEmpSelectInputArrowCont.classList.add('new-emp-input-disabled');
+
+            const jsNewEmpSelectArrowCont = jsNewEmpSelectMainContProjectAssignment.querySelector('.jsNewEmpSelectArrowCont');
+            jsNewEmpSelectArrowCont.removeEventListener('click', handleClickArrowProjectAssignmentSelect)
+            jsNewEmpSelectArrowCont.classList.add('arrow-cont-disabled');
+
+            const jsSelectInput = jsNewEmpSelectMainContProjectAssignment.querySelector('.jsSelectInput');
+            jsSelectInput.setAttribute('disabled', true);
+
+            const jsNewEmpSelectUl = jsNewEmpSelectMainContProjectAssignment.querySelector('.jsNewEmpSelectUl');
             jsNewEmpSelectUl.classList.add('display-none')
         })();
 
@@ -1170,6 +1200,8 @@
                 jsNewEmpSelectArrowCont.addEventListener('click', handleClickArrowDepartmentSelect)
             } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'RatePeriod') {
                 jsNewEmpSelectArrowCont.addEventListener('click', handleClickArrowRatePeriodSelect)
+            } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'ProjectAssignment') {
+                jsNewEmpSelectArrowCont.addEventListener('click', handleClickArrowProjectAssignmentSelect)
             } else if (jsNewEmpSelectArrowCont.getAttribute('name') == 'SalaryCondition') {
                 jsNewEmpSelectArrowCont.addEventListener('click', handleClickArrowSalaryConditionSelect)
             }
@@ -1279,7 +1311,7 @@
 
         const updateData = await fetchData.postData('update-new-employee-ind-info', options)
         if (updateData == null) return;
-
+        console.log(updateData)
         //update local data
         saveIndInfoToLocalDataObjectAfterUpdate(updateData)
 
@@ -1368,6 +1400,29 @@
 
         arr.forEach(item => {
             htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.departmentID}">${item.departmentName}<li/>`
+            jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+            jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
+            jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+        })
+    }
+
+    function handleClickArrowProjectAssignmentSelect(e) {
+        const jsNewEmpSelectUl = e.target.closest('.jsNewEmpIndItemCont').querySelector('.jsNewEmpSelectUl');
+
+        jsNewEmpSelectUl.innerHTML = '';
+
+        jsNewEmpSelectUl.classList.toggle('display-none');
+
+        let arr = projectLinkedList.getAll();
+        let htmlString;
+
+        htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id=${defaultValueSelectLi.dataID}>${defaultValueSelectLi.value}<li/>`
+        let jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
+        jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
+        jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
+
+        arr.forEach(item => {
+            htmlString = `<li class="new-emp-select-li jsNewEmpSelectLi" data-id="${item.projectID}">${item.projectNumber} ${item.projectName}<li />`
             jsNewEmpSelectLi = new DOMParser().parseFromString(htmlString, 'text/html').querySelector('.jsNewEmpSelectLi')
             jsNewEmpSelectLi.addEventListener('click', handleClickNewEmpSelectLi)
             jsNewEmpSelectUl.appendChild(jsNewEmpSelectLi);
@@ -1605,7 +1660,7 @@
         } else if (e.target.getAttribute('name') == 'contact') {
             restoreDataContacts()
         } else if (e.target.getAttribute('name') == 'jobdescription') {
-            restoreDataJobDescription()
+            restoreDataEmployment()
         } else if (e.target.getAttribute('name') == 'compensation') {
             restoreDataCompensation()
         }
@@ -1674,17 +1729,24 @@
 
     }
 
-    function restoreDataJobDescription() {
+    function restoreDataEmployment() {
         const jsSelectInputPosition = document.querySelector('.jsSelectInputPosition');
-        jsSelectInputPosition.value = jobDescriptionDataObj.position;
-        jsSelectInputPosition.setAttribute('data-id', jobDescriptionDataObj.positionID)
+        jsSelectInputPosition.value = employmentsDataObj.position;
+        jsSelectInputPosition.setAttribute('data-id', employmentsDataObj.positionID)
 
         const jsSelectInputDepartment = document.querySelector('.jsSelectInputDepartment');
-        jsSelectInputDepartment.value = jobDescriptionDataObj.department;
-        jsSelectInputDepartment.setAttribute('data-id', jobDescriptionDataObj.departmentID)
+        jsSelectInputDepartment.value = employmentsDataObj.department;
+        jsSelectInputDepartment.setAttribute('data-id', employmentsDataObj.departmentID)
+
+        const jsSelectInputProjectAssignment = document.querySelector('.jsSelectInputProjectAssignment');
+        jsSelectInputProjectAssignment.value = employmentsDataObj.projectAssignment;
+        jsSelectInputProjectAssignment.setAttribute('data-id', employmentsDataObj.projectAssignmentID)
+
+        const jsPureInputDateHired = document.querySelector('.jsPureInputDateHired');
+        jsPureInputDateHired.value = employmentsDataObj.dateHired;
 
         const jsPureInputRemarks = document.querySelector('.jsPureInputRemarks');
-        jsPureInputRemarks.value = jobDescriptionDataObj.remarks;
+        jsPureInputRemarks.value = employmentsDataObj.remarks;
 
     }
 
@@ -2010,25 +2072,36 @@
         } else if (returnData.name == 'EmailAddress') {
             contactsDataObj.emailAdd = returnData.value
         } else if (returnData.name == 'Position') {
-            jobDescriptionDataObj.positionID = returnData.value
+            employmentsDataObj.positionID = returnData.value
             const arr = positionLinkedList.getAll();
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i].positionID == returnData.value) {
-                    jobDescriptionDataObj.position = arr[i].positionName;
+                    employmentsDataObj.position = arr[i].positionName;
                     break;
                 }
             }
         } else if (returnData.name == 'Department') {
-            jobDescriptionDataObj.departmentID = returnData.value
+            employmentsDataObj.departmentID = returnData.value
             const arr = departmentLinkedList.getAll();
             for (let i = 0; i < arr.length; i++) {
                 if (arr[i].departmentID == returnData.value) {
-                    jobDescriptionDataObj.department = arr[i].departmentName;
+                    employmentsDataObj.department = arr[i].departmentName;
                     break;
                 }
             }
+        } else if (returnData.name == 'ProjectAssignmentID') {
+            employmentsDataObj.projectAssignmentID = returnData.value
+            const arr = projectLinkedList.getAll();
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].projectID == returnData.value) {
+                    employmentsDataObj.projectAssignment = `${arr[i].projectNumber} ${arr[i].projectName}`;
+                    break;
+                }
+            }
+        } else if (returnData.name == 'DateHired') {
+            employmentsDataObj.dateHired = returnData.value
         } else if (returnData.name == 'Remarks') {
-            jobDescriptionDataObj.remarks = returnData.value
+            employmentsDataObj.remarks = returnData.value
         } else if (returnData.name == 'RatePeriod') {
             compensationDataObj.ratePeriodID = returnData.value
             const arr = ratePeriodLinkedList.getAll();

@@ -18,7 +18,7 @@ namespace BusinessLogic
 		private readonly ParamSaveNewEmployeeBenifitsModel? _benifits;
 		private readonly ParamSaveNewEmployeeContactsModel? _contacts;
 		private readonly ParamSaveNewEmployeeAddressModel? _address;
-		private readonly ParamSaveNewEmployeeJobDescriptionsModel? _jobDescriptions;
+		private readonly ParamSaveNewEmployeeJobEmploymentModel? _jobDescriptions;
 		private readonly ParamSaveNewEmployeeCompensationsModel? _compensations;
 		private readonly int _cityID;
 
@@ -45,7 +45,7 @@ namespace BusinessLogic
 		{
 			_address = address;
 		}
-		public NewEmployeeAllInformationLogic(ParamSaveNewEmployeeJobDescriptionsModel? jobDescriptions)
+		public NewEmployeeAllInformationLogic(ParamSaveNewEmployeeJobEmploymentModel? jobDescriptions)
 		{
 			_jobDescriptions = jobDescriptions;
 		}
@@ -92,9 +92,9 @@ namespace BusinessLogic
 			return await dataAccessData.SaveAddress();
 		}
 
-		async public Task<ReturnSaveNewEmployeeJobDescriptionsModel> SaveJobDescriptions()
+		async public Task<ReturnSaveNewEmployeeEmploymentsModel> SaveJobDescriptions()
         {
-			SaveNewEmployeeJobeDescriptionsDataAccess dataAccessData = new(_jobDescriptions);
+			SaveNewEmployeeEmploymentsDataAccess dataAccessData = new(_jobDescriptions);
 			return await dataAccessData.SaveJobDescriptions();
 		}
 
