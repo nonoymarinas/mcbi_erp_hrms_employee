@@ -11,19 +11,14 @@ namespace DataAccess
         private readonly string _connection = GlobalValues.ConnectionString;
         private readonly ParamSignInDataModels? _signindata;
 
-
         public GetSigninDataAccess(ParamSignInDataModels? signindata)
         {
             _signindata = signindata;
         }
 
-
         async public Task<ReturnGetSigninDataModel> GetSigninStatus()
         {
-
-
             ReturnGetSigninDataModel returnData = new();
-
             using (SqlConnection conn = new SqlConnection(_connection))
             {
                 conn.Open();
@@ -32,9 +27,6 @@ namespace DataAccess
                     cmd.Connection = conn;
                     cmd.CommandText = "[speedx.hrms.access].[spGetLoginCredentials]";
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.Add(new SqlParameter("@userName", SqlDbType.NVarChar));
-                    cmd.Parameters["@userName"].Value = _signindata.UserName;
 
                     cmd.Parameters.Add(new SqlParameter("@employeeNumber", SqlDbType.NVarChar));
                     cmd.Parameters["@employeeNumber"].Value = _signindata.EmployeeNumber;
@@ -62,6 +54,7 @@ namespace DataAccess
                                 reader.Read();
                                 LoginDataModel loginData = new LoginDataModel()
                                 {
+                                    MasterPersonUserID = Convert.ToInt32(reader["MasterPersonUserID"]),
                                     HashSaltedIStillLoveYou = reader["IStillLoveYou"].ToString(),
                                     Salt = reader["Salt"].ToString(),
                                 };
@@ -74,7 +67,6 @@ namespace DataAccess
                                 reader.Read();
                                 CompanyLoginDataModel compLoginData = new CompanyLoginDataModel()
                                 {
-
                                     CompanyName = reader["CompanyName"].ToString(),
                                     MainHeaderBackGround = reader["MainHeaderBackGround"].ToString(),
                                     LogoImageFileName = reader["LogoImageFileName"].ToString(),

@@ -1,6 +1,8 @@
 ﻿let MODULE_ID = 1;
 let baseUrl = `https://speedxstorageaccount.blob.core.windows.net/speedxcontainer/`
 
+let moduleUserID = 0;
+
 let defaultValueSelectLi = {
     value: '-none-',
     dataID: 0,

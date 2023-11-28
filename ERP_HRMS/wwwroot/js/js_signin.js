@@ -4,7 +4,7 @@
 
     async function handleClickSignInBtn() {
         //if false, meaning password validation fail
-        //if (await validateUsernameAndPassword() == false) return;
+        if (await validateUsernameAndPassword() == false) return;
 
         //continue of password ok
         const jsMainLayoutCont = document.querySelector('.jsMainLayoutCont');
@@ -40,17 +40,15 @@
         if (isSigninRequiredFieldsComplete() == false) return isUsernameAndPasswordValid;
 
         const jsSigninEmployeeNumberInput = document.querySelector('.jsSigninEmployeeNumberInput');
-        const jsSigninUserEmailInput = document.querySelector('.jsSigninUserEmailInput');
+        //const jsSigninUserEmailInput = document.querySelector('.jsSigninUserEmailInput');
         const jsSigninUserPasswordInput = document.querySelector('.jsSigninUserPasswordInput');
 
         const employeeNumber = (jsSigninEmployeeNumberInput.value).trim();
-        const userName = (jsSigninUserEmailInput.value).trim();
         const iStillLoveYou = (jsSigninUserPasswordInput.value).trim();
 
 
         const formData = new FormData();
         formData.append('EmployeeNumber', employeeNumber);
-        formData.append('UserName', userName);
         formData.append('IStillLoveYou', iStillLoveYou)
         formData.append('ErpModuleNumber', MODULE_ID)
 
@@ -60,6 +58,7 @@
         }
 
         const loginReturnData = await fetchData.postData('signin-username-password', options);
+        console.log(loginReturnData)
         if (loginReturnData == null) {
             document.querySelector('.jsErrorLoginText').classList.remove('display-none')
         } else {
@@ -67,18 +66,21 @@
             isUsernameAndPasswordValid = true;
         }
 
+        moduleUserID = loginReturnData.loginData.masterPersonUserID;
+        fundRequestDataObj.fundRequestDataObj = loginReturnData.loginData.masterPersonUserID;
+        console.log(moduleUserID)
         return isUsernameAndPasswordValid;
     }
 
     function isSigninRequiredFieldsComplete() {
         let isValid = true
 
-        const jsSigninUserEmailInput = document.querySelector('.jsSigninUserEmailInput');
-        if (isNullOrWhiteSpace(jsSigninUserEmailInput.value)) {
-            jsSigninUserEmailInput.classList.add('invalid');
+        const jsSigninEmployeeNumberInput = document.querySelector('.jsSigninEmployeeNumberInput');
+        if (isNullOrWhiteSpace(jsSigninEmployeeNumberInput.value)) {
+            jsSigninEmployeeNumberInput.classList.add('invalid');
             isValid = false
         } else {
-            jsSigninUserEmailInput.classList.remove('invalid');
+            jsSigninEmployeeNumberInput.classList.remove('invalid');
         }
 
         const jsSigninUserPasswordInput = document.querySelector('.jsSigninUserPasswordInput');
