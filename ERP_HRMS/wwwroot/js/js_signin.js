@@ -67,8 +67,7 @@
         }
 
         moduleUserID = loginReturnData.loginData.masterPersonUserID;
-        fundRequestDataObj.fundRequestDataObj = loginReturnData.loginData.masterPersonUserID;
-        console.log(moduleUserID)
+        
         return isUsernameAndPasswordValid;
     }
 
