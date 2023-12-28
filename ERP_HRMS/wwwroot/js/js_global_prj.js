@@ -154,6 +154,4 @@ function resetEmployeeLocalData() {
     compensationDataObj.salaryCondition = ''
     compensationDataObj.currencyID = ''
     compensationDataObj.currency = ''
-
-    
 }
