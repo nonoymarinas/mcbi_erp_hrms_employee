@@ -53,6 +53,7 @@
     jsHomeFooterMenuIcon.addEventListener('click', await clickMenuHomeIcon)
 
 };
+
 function clickBurgerMenu() {
     const jsSubLayout01MenuSubCont = document.querySelector('.jsSubLayout01MenuSubCont');
     if (jsSubLayout01MenuSubCont.classList.contains('display-none')) {
