@@ -1,27 +1,18 @@
-﻿
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\BusinessModel\BusinessModel.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="wwwroot\icon\alert\" />
     <Folder Include="wwwroot\icon\logo\" />
     <Folder Include="wwwroot\logo\icons\" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Update="wwwroot\js\js_employeeDetails.js">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
@@ -32,5 +23,7 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
+  </ItemGroup>
 </Project>
