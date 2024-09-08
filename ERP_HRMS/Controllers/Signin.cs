@@ -14,7 +14,6 @@ namespace ERP_HRMS.Controllers
             return View();
         }
 
-
         [Route("signin-username-password")]
         async public Task<IActionResult> ValidateLogin(ParamSignInDataModels signinData)
         {

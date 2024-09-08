@@ -4,7 +4,7 @@
 
     async function handleClickSignInBtn() {
         //if false, meaning password validation fail
-        //if (await validateUsernameAndPassword() == false) return;
+        if (await validateUsernameAndPassword() == false) return;
 
         //continue of password ok
         const jsMainLayoutCont = document.querySelector('.jsMainLayoutCont');
